@@ -1,0 +1,228 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="About"
+  description="What Komadrona Review is, why it exists, how it works, who maintains it, and how contributors and sources are credited."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">About the project</span>
+      <h1>A clearer way to review, without pretending to be official.</h1>
+      <p>
+        Komadrona Review is an independent, source-based study and practice project for aspiring Philippine midwives.
+        It is being built to make reviewer material easier to navigate, verify, revisit, and correct.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container hero-grid">
+      <article class="prose" style="padding-bottom: 0;">
+        <span class="eyebrow">What it is</span>
+        <h2>A structured study companion</h2>
+        <p>
+          The project organizes review material around the principal subjects identified in the current referenced
+          PRC Midwives Licensure Examination program. Topics will use traceable laws, official Philippine health and
+          education publications, current guidance, and documented corrections.
+        </p>
+        <p>
+          Review articles, practice questions, bookmarks, and locally recorded progress are intended to work together
+          as one simple study environment. Version 1 remains static and does not require an account.
+        </p>
+      </article>
+
+      <aside class="panel legal-gate" aria-labelledby="project-status">
+        <span class="badge">Foundation release</span>
+        <h2 id="project-status" style="margin-top: 1rem;">Current status</h2>
+        <ul>
+          <li>Legal, privacy, source, and licensing foundation implemented</li>
+          <li>Five review-domain structure prepared</li>
+          <li>Reference registry established</li>
+          <li>Reviewer articles and practice forms still in development</li>
+        </ul>
+        <a class="button button-secondary" href="/sources">View the source register</a>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="why-komadrona">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Why it exists</span>
+        <h2 id="why-komadrona">Review material should be traceable.</h2>
+        <p>
+          Many study resources circulate as screenshots, copied answer sets, anonymous notes, or claims without a
+          visible source. Komadrona Review takes a slower approach: identify the source, explain the concept originally,
+          record when it was checked, and correct it when necessary.
+        </p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Source-based</h3>
+          <p>
+            Articles and questions must point to an official law, issuance, guideline, or other accepted reference.
+            AI-generated text and social-media claims are not treated as final authorities.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Independent</h3>
+          <p>
+            The project is not affiliated with or endorsed by PRC, the Board of Midwifery, DOH, CHED, any school, or
+            any review center. Institutional names appear only for accurate attribution.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Correctable</h3>
+          <p>
+            Content carries a review status and source-check date. Outdated or disputed material can be marked for
+            re-verification instead of silently remaining in circulation.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="for-whom">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Who it is for</span>
+        <h2 id="for-whom">Built for independent learners.</h2>
+        <p>
+          Komadrona Review is designed primarily for students and graduates reviewing Philippine midwifery concepts,
+          especially learners who need a mobile-friendly resource that remains usable without creating an account.
+        </p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Study by subject</h3>
+          <p>Move through structured domains and topic pages rather than an unorganized collection of answer sheets.</p>
+        </article>
+
+        <article class="card">
+          <h3>Practice repeatedly</h3>
+          <p>Use original practice quizzes with explanations and unlimited retries after the forms are reviewed.</p>
+        </article>
+
+        <article class="card">
+          <h3>Track privately</h3>
+          <p>Keep completion, bookmarks, and self-recorded scores in the browser without a central learner database.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="boundaries">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Project boundaries</span>
+        <h2 id="boundaries">What it is not</h2>
+        <p>
+          Clear limits are part of the project design. Komadrona Review should never look more authoritative than the
+          evidence and review work behind it.
+        </p>
+      </div>
+
+      <ul class="status-list">
+        <li>Not an official PRC reviewer</li>
+        <li>Not medical or patient-specific advice</li>
+        <li>Not a replacement for clinical supervision</li>
+        <li>Not a passing-score guarantee</li>
+        <li>Not a repository of recalled board questions</li>
+        <li>Not an official educational record</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="credits">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Credits and attribution</span>
+        <h2 id="credits">People behind the project</h2>
+        <p>Credits are based on actual work performed and consent to be named.</p>
+      </div>
+
+      <div class="card-grid" style="grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);">
+        <article class="card">
+          <span class="badge">Creator</span>
+          <h3 style="margin-top: 1rem;">Kirch Ivan A. Balite</h3>
+          <p><strong>Creator, developer, researcher, and maintainer</strong></p>
+          <p>
+            Responsible for project direction, architecture, interface design, source governance, implementation, and
+            release maintenance.
+          </p>
+          <p class="small-print">Independent educational project based in Bohol, Philippines.</p>
+        </article>
+
+        <article class="card">
+          <span class="badge">Clinical review</span>
+          <h3 style="margin-top: 1rem;">No public reviewer credited yet</h3>
+          <p>
+            Qualified reviewers will be listed only after completing a documented review of identified material and
+            consenting to public attribution.
+          </p>
+          <p>
+            Informal advice, friendship, employment, school affiliation, or being asked a question does not make a
+            person responsible for the project or qualify them for a reviewer credit.
+          </p>
+        </article>
+      </div>
+
+      <div class="card-grid" style="margin-top: 1rem;">
+        <article class="card">
+          <h3>Code and accessibility contributors</h3>
+          <p>
+            Accepted contributors may be credited for code, testing, accessibility, research, editing, documentation,
+            or corrections. Their contribution does not imply responsibility for the complete website.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Source institutions</h3>
+          <p>
+            PRC, the Professional Regulatory Board of Midwifery, DOH, CHED, WHO, Congress, and other publishers are
+            credited through citations. Citation does not imply endorsement or approval.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Brand and publication ownership</h3>
+          <p>
+            Agency names, institutional names, trademarks, seals, and third-party publications remain the property of
+            their respective owners. Komadrona Review does not claim ownership over them.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="licensing">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Open project</span>
+        <h2 id="licensing">Licensing and contributions</h2>
+        <p>
+          The website source code is published under the MIT License. Original educational articles, original practice
+          questions, and original illustrations use the project content license unless a page states otherwise.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Contribute carefully</h3>
+        <p>
+          Contributions must be original, source-backed, privacy-safe, and free of confidential or proprietary
+          examination content. Medical material is not considered clinically reviewed merely because it was submitted.
+        </p>
+        <div class="action-row">
+          <a class="button button-secondary" href="/credits">Detailed credits policy</a>
+          <a class="button button-secondary" href="/disclaimer">Read project limitations</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
