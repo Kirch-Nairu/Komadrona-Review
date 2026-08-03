@@ -38,7 +38,8 @@ jobs:
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
           grep -q 'Know what this site is before you begin' dist/index.html
-          grep -q 'A clearer way to review' dist/about/index.html
+          grep -q 'Study midwifery with structure' dist/about/index.html
+          grep -q 'It started with Kathy' dist/about/index.html
           grep -q 'Kirch Ivan A. Balite' dist/about/index.html
 
       - name: Upload static build
