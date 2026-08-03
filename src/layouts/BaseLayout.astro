@@ -46,6 +46,16 @@ const isCurrent = (href: string) =>
           <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
           <a href="/disclaimer" aria-current={isCurrent('/disclaimer') ? 'page' : undefined}>Legal</a>
         </nav>
+
+        <details class="mobile-menu">
+          <summary aria-label="Open navigation menu">Menu</summary>
+          <nav aria-label="Mobile navigation">
+            <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
+            <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
+            <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
+            <a href="/disclaimer" aria-current={isCurrent('/disclaimer') ? 'page' : undefined}>Legal</a>
+          </nav>
+        </details>
       </div>
     </header>
 
