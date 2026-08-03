@@ -1,5 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { blueprintSource } from '../data/examBlueprint';
 import {
   domainReferenceMap,
   getReferencesByIds,
@@ -18,7 +19,7 @@ const categoryOrder: ReferenceCategory[] = [
 
 <BaseLayout
   title="Sources and References"
-  description="The verified official source registry, subject mapping, citation requirements, and review statuses used by Komadrona Review."
+  description="The verified official source registry, examination blueprint source, subject mapping, citation requirements, and review statuses used by Komadrona Review."
 >
   <header class="page-header">
     <div class="container">
@@ -53,8 +54,32 @@ const categoryOrder: ReferenceCategory[] = [
       or page, and record when that source was checked. The registry is a starting set, not an exhaustive bibliography.
     </p>
 
+    <h2>Examination-weighting source</h2>
+    <div class="card">
+      <div class="badge-row" style="margin: 0 0 0.75rem;">
+        <span class="badge">Core</span>
+        <span class="badge">{blueprintSource.year}</span>
+        <span class="badge">Verified {blueprintSource.verifiedOn}</span>
+      </div>
+      <h3>{blueprintSource.title}</h3>
+      <p>{blueprintSource.issuer}</p>
+      <p><strong>Use:</strong> {blueprintSource.use}</p>
+      <p><strong>Limit:</strong> {blueprintSource.limitation}</p>
+      <div class="action-row">
+        <a
+          class="button button-primary"
+          href={blueprintSource.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open official TOS PDF
+        </a>
+        <a class="button button-secondary" href="/exam-blueprint">View Komadrona blueprint</a>
+      </div>
+    </div>
+
     <h2>Approved Version 1 reference register</h2>
-    <p class="small-print">Registry verification date: 3 August 2026.</p>
+    <p class="small-print">Registry verification date: 4 August 2026.</p>
 
     {categoryOrder.map((category) => {
       const records = referenceRegistry.filter((reference) => reference.category === category);
@@ -96,6 +121,7 @@ const categoryOrder: ReferenceCategory[] = [
           <section class="card">
             <h3>{domain}</h3>
             <ul>
+              <li><a href="/exam-blueprint">PRC Midwifery Table of Specifications and topic weights</a></li>
               {records.map((reference) => (
                 <li><a href={`#category-${reference.category.toLowerCase().replaceAll(' ', '-')}`}>{reference.title}</a></li>
               ))}
@@ -134,6 +160,6 @@ const categoryOrder: ReferenceCategory[] = [
       <li>outdated guidance when a current official replacement exists.</li>
     </ul>
 
-    <p class="small-print">Registry and policy version: 1.1 — 3 August 2026.</p>
+    <p class="small-print">Registry and policy version: 1.2 — 4 August 2026.</p>
   </article>
 </BaseLayout>
