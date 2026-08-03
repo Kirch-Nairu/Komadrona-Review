@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const domains = [
+  {
+    title: 'Obstetrics',
+    description: 'Pregnancy, labor, delivery, postpartum care, maternal complications, and related midwifery principles.'
+  },
+  {
+    title: 'Fundamentals of Health Care',
+    description: 'Foundational health assessment, infection prevention, basic care, safety, and related sciences.'
+  },
+  {
+    title: 'Infant Care and Feeding',
+    description: 'Essential newborn care, infant assessment, feeding, growth, safety, and recognition of warning signs.'
+  },
+  {
+    title: 'Primary Health Care',
+    description: 'Community-based care, health promotion, prevention, referral, family planning, and public-health programs.'
+  },
+  {
+    title: 'Professional Growth and Development',
+    description: 'Law, ethics, professional responsibility, communication, documentation, and continuing development.'
+  }
+];
+---
+
+<BaseLayout
+  title="Review Domains"
+  description="The five principal review domains used by Komadrona Review, based on the current referenced PRC examination program."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Version 1 study map</span>
+      <h1>Review domains</h1>
+      <p>
+        These headings follow the revised April 2026 PRC Midwives Licensure Examination program. Future official
+        programs may change, so the source date remains visible.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="notice">
+        <strong>Foundation release</strong>
+        <p>
+          The site structure is available before medical review content is published. A topic will not be marked
+          source checked or clinically reviewed until the corresponding verification step is complete.
+        </p>
+      </div>
+
+      <div class="card-grid" style="margin-top: 1.5rem;">
+        {domains.map((domain, index) => (
+          <article class="card">
+            <span class="badge">Domain {index + 1}</span>
+            <h2 style="font-size: 1.55rem; margin-top: 1rem;">{domain.title}</h2>
+            <p>{domain.description}</p>
+            <p class="small-print">Status: content outline pending source review.</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container prose" style="padding-bottom: 0;">
+      <h2>Integrated supporting disciplines</h2>
+      <p>
+        The referenced PRC program states that fundamentals of sociology, principles of bacteriology, general anatomy
+        and physiology, general psychology, nutrition, parasitology, microbiology, and pharmacology are integrated
+        with the principal examination subjects.
+      </p>
+      <p>
+        Komadrona Review will attach those disciplines to the relevant clinical or professional topic instead of
+        creating disconnected memorization sections.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
