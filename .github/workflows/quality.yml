@@ -25,3 +25,23 @@ jobs:
 
       - name: Type-check and build
         run: npm run build
+
+      - name: Verify generated routes
+        run: |
+          test -f dist/index.html
+          test -f dist/disclaimer/index.html
+          test -f dist/privacy/index.html
+          test -f dist/sources/index.html
+          test -f dist/review/index.html
+          test -f dist/practice/index.html
+          test -f dist/credits/index.html
+          grep -q 'width=device-width' dist/index.html
+          grep -q 'Know what this site is before you begin' dist/index.html
+
+      - name: Upload static build
+        uses: actions/upload-artifact@v4
+        with:
+          name: komadrona-static-build
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7
