@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const plannedQuizzes = [
+  ['Obstetrics Practice 01', '25 items', 'Link pending review'],
+  ['Fundamentals of Health Care 01', '25 items', 'Link pending review'],
+  ['Infant Care and Feeding 01', '25 items', 'Link pending review'],
+  ['Primary Health Care 01', '25 items', 'Link pending review'],
+  ['Professional Growth and Development 01', '25 items', 'Link pending review'],
+  ['Mixed Practice Examination 01', '50 items', 'Link pending review']
+];
+---
+
+<BaseLayout
+  title="Practice Center"
+  description="External Google Forms practice quizzes, retry rules, score handling, and privacy boundaries for Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">External quizzes</span>
+      <h1>Practice center</h1>
+      <p>
+        Version 1 practice activities will open in Google Forms. The website will not receive quiz screenshots or
+        automatically collect scores.
+      </p>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="notice">
+        <strong>Quiz links are not public yet</strong>
+        <p>
+          Forms will be linked only after the answer key, rationale, source, and settings have been checked. Placeholder
+          cards below show the intended Version 1 set.
+        </p>
+      </div>
+
+      <div class="card-grid" style="margin-top: 1.5rem;">
+        {plannedQuizzes.map(([title, items, status]) => (
+          <article class="card">
+            <span class="badge">{items}</span>
+            <h2 style="font-size: 1.45rem; margin-top: 1rem;">{title}</h2>
+            <p>{status}</p>
+            <p class="small-print">Unlimited practice retries planned.</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container prose" style="padding-bottom: 0;">
+      <h2>How Version 1 quizzes work</h2>
+      <ul>
+        <li>The quiz opens on an external Google Forms page in a new tab.</li>
+        <li>The form is intended not to request a name, school, or email address.</li>
+        <li>Practice retries are unlimited because the quizzes are for learning, not controlled assessment.</li>
+        <li>Correct answers and explanations may be released immediately after submission.</li>
+        <li>Users may manually record a score in their own browser when local progress features are added.</li>
+        <li>No screenshot, score email, or proof of completion is required.</li>
+      </ul>
+
+      <h2>Score limitation</h2>
+      <p>
+        A self-recorded score is private study information only. It is not verified, not an official grade, and not
+        evidence of examination eligibility or readiness.
+      </p>
+
+      <h2>Before opening a form</h2>
+      <p>
+        Each quiz card will identify the number of questions, expected duration, review date, answer-release behavior,
+        and the fact that the user is leaving Komadrona Review for an external service.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
