@@ -2,6 +2,9 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/blueprint.css';
 import { blueprintSource, examBlueprint, highestPriorityAreas } from '../data/examBlueprint';
+import { assertBlueprintIntegrity } from '../data/blueprintValidation';
+
+assertBlueprintIntegrity(examBlueprint);
 
 const totalVerifiedAreas = examBlueprint.reduce(
   (total, domain) =>
