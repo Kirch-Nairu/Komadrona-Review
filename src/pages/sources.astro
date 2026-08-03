@@ -1,87 +1,131 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import {
+  domainReferenceMap,
+  getReferencesByIds,
+  referenceRegistry,
+  type ReferenceCategory
+} from '../data/referenceRegistry';
+
+const categoryOrder: ReferenceCategory[] = [
+  'Exam and education framework',
+  'Philippine law and policy',
+  'Philippine health programs',
+  'International clinical guidance',
+  'Privacy, copyright, and operations'
+];
 ---
 
 <BaseLayout
-  title="Source Policy"
-  description="The primary-source hierarchy, excluded sources, citation requirements, and review statuses used by Komadrona Review."
+  title="Sources and References"
+  description="The verified official source registry, subject mapping, citation requirements, and review statuses used by Komadrona Review."
 >
   <header class="page-header">
     <div class="container">
       <span class="eyebrow">Evidence and content governance</span>
-      <h1>Source policy</h1>
-      <p>Content must be traceable, current enough for its purpose, and written without copying protected question banks.</p>
+      <h1>Sources and references</h1>
+      <p>
+        This registry identifies the official laws, examination documents, Philippine health-program references,
+        international clinical guidance, and operational rules approved for Version 1 drafting.
+      </p>
     </div>
   </header>
 
   <article class="container prose">
-    <h2>Source hierarchy</h2>
-    <p>Komadrona Review prioritizes sources in this order:</p>
+    <div class="notice">
+      <strong>A source link is not permission to copy</strong>
+      <p>
+        Komadrona Review will write original explanations and practice questions. Official documents are used to check
+        accuracy and scope. Full books, diagrams, tables, test banks, and confidential examination content will not be
+        reproduced merely because they are accessible online.
+      </p>
+    </div>
 
-    <ol>
-      <li>Current PRC and Professional Regulatory Board of Midwifery examination programs and resolutions</li>
-      <li>Philippine statutes and official issuances relevant to midwifery practice</li>
-      <li>Current Department of Health manuals, administrative orders, circulars, and national programs</li>
-      <li>Current CHED midwifery education standards and competencies</li>
-      <li>Current WHO recommendations and other recognized international primary guidance</li>
-      <li>Peer-reviewed literature and properly licensed educational references used only as supporting material</li>
-    </ol>
+    <h2>How the registry is used</h2>
+    <p>
+      Philippine law, PRC issuances, CHED standards, and current DOH policy control Philippine legal, regulatory,
+      curriculum, and program-specific questions. WHO material supplies international evidence-informed guidance where
+      relevant, but it must be reconciled with Philippine policy, professional scope, referral systems, and facility
+      protocols before publication.
+    </p>
+    <p>
+      Every future article and practice question must cite the exact record it relies on, identify the relevant section
+      or page, and record when that source was checked. The registry is a starting set, not an exhaustive bibliography.
+    </p>
 
-    <h2>Initial official references</h2>
-    <ul class="source-list">
-      <li>
-        <strong>PRC — Revised April 2026 Midwives Licensure Examination Program</strong>
-        <span>Used to identify the five examination subject headings and integrated supporting disciplines.</span>
-        <a href="https://www.prc.gov.ph/sites/default/files/Revised%20Exam%20Program%20for%20Midwives.pdf" target="_blank" rel="noopener noreferrer">Open official PDF</a>
-      </li>
-      <li>
-        <strong>Republic Act No. 7392 — Philippine Midwifery Act of 1992</strong>
-        <span>Used for statutory scope, professional regulation, and examination-subject context.</span>
-        <a href="https://lawphil.net/statutes/repacts/ra1992/ra_7392_1992.html" target="_blank" rel="noopener noreferrer">Open Lawphil copy</a>
-      </li>
-      <li>
-        <strong>National Privacy Commission — Data Privacy Act and Implementing Rules</strong>
-        <span>Used for transparency, legitimate purpose, proportionality, security, and retention principles.</span>
-        <a href="https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/" target="_blank" rel="noopener noreferrer">Open NPC publication</a>
-      </li>
-      <li>
-        <strong>Department of Health</strong>
-        <span>Primary Philippine source for current maternal, newborn, public-health, and clinical program guidance.</span>
-        <a href="https://doh.gov.ph/" target="_blank" rel="noopener noreferrer">Open DOH website</a>
-      </li>
-      <li>
-        <strong>Commission on Higher Education</strong>
-        <span>Primary source for current Philippine midwifery education policies, standards, and competencies.</span>
-        <a href="https://ched.gov.ph/" target="_blank" rel="noopener noreferrer">Open CHED website</a>
-      </li>
-      <li>
-        <strong>World Health Organization</strong>
-        <span>International guidance used where applicable and reconciled with current Philippine policy.</span>
-        <a href="https://www.who.int/health-topics/maternal-health" target="_blank" rel="noopener noreferrer">Open WHO maternal health topic</a>
-      </li>
-    </ul>
+    <h2>Approved Version 1 reference register</h2>
+    <p class="small-print">Registry verification date: 3 August 2026.</p>
 
-    <h2>Required metadata</h2>
-    <p>Every published review topic should identify:</p>
+    {categoryOrder.map((category) => {
+      const records = referenceRegistry.filter((reference) => reference.category === category);
+
+      return (
+        <section aria-labelledby={`category-${category.toLowerCase().replaceAll(' ', '-')}`}>
+          <h3 id={`category-${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</h3>
+          <ul class="source-list">
+            {records.map((reference) => (
+              <li>
+                <div class="badge-row" style="margin: 0 0 0.75rem;">
+                  <span class="badge">{reference.priority}</span>
+                  <span class="badge">{reference.year}</span>
+                </div>
+                <strong>{reference.title}</strong>
+                <span>{reference.issuer}</span>
+                <p style="margin-top: 0.75rem;"><strong>Use:</strong> {reference.use}</p>
+                {reference.limitation && <p><strong>Limit:</strong> {reference.limitation}</p>}
+                <p class="small-print">Applies to: {reference.appliesTo.join(' · ')}</p>
+                <a href={reference.url} target="_blank" rel="noopener noreferrer">Open official source</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+
+    <h2>Initial subject-to-source map</h2>
+    <p>
+      These are the planned baseline references for each principal review domain. Individual topics will use a narrower
+      set and may require additional current DOH issuances, specialty guidelines, or peer-reviewed evidence.
+    </p>
+
+    <div class="card-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+      {Object.entries(domainReferenceMap).map(([domain, ids]) => {
+        const records = getReferencesByIds(ids);
+
+        return (
+          <section class="card">
+            <h3>{domain}</h3>
+            <ul>
+              {records.map((reference) => (
+                <li><a href={`#category-${reference.category.toLowerCase().replaceAll(' ', '-')}`}>{reference.title}</a></li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+
+    <h2>Required citation metadata</h2>
+    <p>Every published review topic and question record must identify:</p>
     <ul>
-      <li>the examination domain and topic;</li>
-      <li>the exact source title, issuing body, publication date or version, and relevant section;</li>
-      <li>the date the source was checked;</li>
-      <li>the article's content status; and</li>
-      <li>corrections or superseded guidance where relevant.</li>
+      <li>the examination domain, topic, and internal content identifier;</li>
+      <li>the exact source title, issuing body, date or version, and direct official link;</li>
+      <li>the relevant article, section, recommendation, page, or paragraph;</li>
+      <li>the date the source was checked and the person who checked it;</li>
+      <li>the content status and any qualified clinical reviewer; and</li>
+      <li>corrections, conflicts, and superseded guidance where applicable.</li>
     </ul>
 
     <h2>Content statuses</h2>
     <ul>
-      <li><strong>Draft:</strong> not available as relied-upon review material.</li>
-      <li><strong>Source checked:</strong> citations and core statements were compared with identified sources.</li>
+      <li><strong>Draft:</strong> incomplete and not cleared as relied-upon review material.</li>
+      <li><strong>Source checked:</strong> citations and core statements were compared with identified primary sources.</li>
       <li><strong>Clinically reviewed:</strong> reviewed by a qualified professional whose role and consent are recorded.</li>
       <li><strong>Needs re-verification:</strong> a source may have changed or the review interval has expired.</li>
       <li><strong>Archived:</strong> retained for correction history but removed from current study paths.</li>
     </ul>
 
-    <h2>Sources not accepted as authority</h2>
-    <p>The following may help locate a topic but cannot serve as the final source of record:</p>
+    <h2>Sources not accepted as final authority</h2>
     <ul>
       <li>unsourced social-media posts, short-form videos, anonymous blogs, and AI-generated text;</li>
       <li>Quizlet, CourseHero, Scribd uploads, and similar user-upload repositories;</li>
@@ -90,13 +134,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       <li>outdated guidance when a current official replacement exists.</li>
     </ul>
 
-    <h2>Writing and copyright rule</h2>
-    <p>
-      Explanations and practice questions must be written originally. Public access to a document does not by itself
-      authorize copying an entire table, illustration, chapter, or question bank. Short quotations must be necessary,
-      attributed, and limited. External documents should normally be linked rather than rehosted.
-    </p>
-
-    <p class="small-print">Policy version: 1.0 — 3 August 2026.</p>
+    <p class="small-print">Registry and policy version: 1.1 — 3 August 2026.</p>
   </article>
 </BaseLayout>
