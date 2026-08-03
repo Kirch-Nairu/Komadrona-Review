@@ -1,0 +1,76 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+  noindex?: boolean;
+}
+
+const {
+  title = 'Komadrona Review',
+  description = 'An independent, source-based review and practice platform for aspiring Philippine midwives.',
+  noindex = false
+} = Astro.props;
+
+const pageTitle = title === 'Komadrona Review' ? title : `${title} | Komadrona Review`;
+const currentPath = Astro.url.pathname;
+
+const isCurrent = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="description" content={description} />
+    <meta name="theme-color" content="#4B2142" />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+
+    <header class="site-header">
+      <div class="container header-inner">
+        <a class="brand" href="/" aria-label="Komadrona Review home">
+          <span class="brand-mark" aria-hidden="true">K</span>
+          <span>Komadrona Review</span>
+        </a>
+
+        <nav class="site-nav" aria-label="Primary navigation">
+          <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
+          <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
+          <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
+          <a href="/disclaimer" aria-current={isCurrent('/disclaimer') ? 'page' : undefined}>Legal</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-grid">
+        <div>
+          <p><strong>Komadrona Review</strong></p>
+          <p>
+            Independent educational project based in Bohol, Philippines. Not affiliated with or endorsed by PRC,
+            the Professional Regulatory Board of Midwifery, DOH, CHED, any school, or any review center.
+          </p>
+          <p class="small-print">Version 1 stores progress only in the user's browser.</p>
+        </div>
+
+        <nav class="footer-links" aria-label="Legal and project links">
+          <a href="/disclaimer">Disclaimer</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/sources">Source policy</a>
+          <a href="/credits">Credits</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
+</html>
