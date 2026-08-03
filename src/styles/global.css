@@ -227,6 +227,7 @@ main { min-height: calc(100vh - 13rem); }
 .section-heading p { color: var(--muted); }
 
 .card-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1rem; }
+.card-grid.two-column { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .card {
   padding: 1.35rem;
   border: 1px solid var(--line);
@@ -305,6 +306,6 @@ main { min-height: calc(100vh - 13rem); }
   .container { width: min(calc(100% - 1.25rem), var(--max-width)); }
   .brand { font-size: 0.95rem; }
   .hero { padding-top: 3rem; }
-  .card-grid, .status-list { grid-template-columns: 1fr; }
+  .card-grid, .card-grid.two-column, .status-list { grid-template-columns: 1fr; }
   .action-row .button { width: 100%; }
 }
