@@ -29,6 +29,7 @@ jobs:
       - name: Verify generated routes
         run: |
           test -f dist/index.html
+          test -f dist/about/index.html
           test -f dist/disclaimer/index.html
           test -f dist/privacy/index.html
           test -f dist/sources/index.html
@@ -37,6 +38,8 @@ jobs:
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
           grep -q 'Know what this site is before you begin' dist/index.html
+          grep -q 'A clearer way to review' dist/about/index.html
+          grep -q 'Kirch Ivan A. Balite' dist/about/index.html
 
       - name: Upload static build
         uses: actions/upload-artifact@v4
