@@ -88,7 +88,7 @@ const categoryOrder: ReferenceCategory[] = [
       set and may require additional current DOH issuances, specialty guidelines, or peer-reviewed evidence.
     </p>
 
-    <div class="card-grid" style="grid-template-columns: repeat(2, minmax(0, 1fr));">
+    <div class="card-grid two-column">
       {Object.entries(domainReferenceMap).map(([domain, ids]) => {
         const records = getReferencesByIds(ids);
 
