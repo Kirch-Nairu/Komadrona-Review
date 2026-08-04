@@ -1,0 +1,69 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { assertContentEngineIntegrity } from '../data/contentEngine';
+
+const lessons = await getCollection('lessons');
+const questions = await getCollection('questions');
+assertContentEngineIntegrity(lessons, questions);
+
+const fixture = lessons.find((lesson) => lesson.data.contentId === 'SYS-SOURCE-LABELS-001');
+if (!fixture) {
+  throw new Error('The content-engine fixture lesson is missing.');
+}
+
+const { Content } = await render(fixture);
+---
+
+<BaseLayout
+  title="Content Engine Preview"
+  description="A non-clinical fixture used to test Komadrona Review lesson metadata, rendering, source notes, and question relationships."
+  noindex={true}
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Internal engine fixture</span>
+      <h1>{fixture.data.title}</h1>
+      <p>{fixture.data.summary}</p>
+
+      <div class="badge-row">
+        <span class="badge">{fixture.data.status}</span>
+        <span class="badge">{fixture.data.riskLevel} risk</span>
+        <span class="badge">{fixture.data.estimatedMinutes} minutes</span>
+        <span class="badge">Excluded from exam coverage</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container hero-grid">
+      <article class="prose" style="padding-bottom: 0;">
+        <Content />
+      </article>
+
+      <aside class="panel legal-gate" aria-labelledby="fixture-metadata">
+        <span class="badge">Validated metadata</span>
+        <h2 id="fixture-metadata" style="margin-top: 1rem;">Lesson record</h2>
+        <p><strong>Content ID:</strong> {fixture.data.contentId}</p>
+        <p><strong>Module:</strong> {fixture.data.module}</p>
+        <p><strong>Source checker:</strong> {fixture.data.sourceChecker}</p>
+        <p><strong>Last verified:</strong> {fixture.data.lastVerified}</p>
+        <p><strong>Next review:</strong> {fixture.data.nextReview}</p>
+
+        <h3>Learning objectives</h3>
+        <ul>
+          {fixture.data.learningObjectives.map((objective) => <li>{objective}</li>)}
+        </ul>
+
+        <h3>Source locators</h3>
+        <ul>
+          {fixture.data.sources.map((source) => (
+            <li><strong>{source.referenceId}</strong>: {source.locator}</li>
+          ))}
+        </ul>
+
+        <a class="button button-primary" href="/practice">Open the linked quiz fixture</a>
+      </aside>
+    </div>
+  </section>
+</BaseLayout>
