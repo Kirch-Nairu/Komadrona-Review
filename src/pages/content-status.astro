@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { assertContentEngineIntegrity } from '../data/contentEngine';
+
+const lessons = await getCollection('lessons');
+const questions = await getCollection('questions');
+const report = assertContentEngineIntegrity(lessons, questions);
+---
+
+<BaseLayout
+  title="Content Status"
+  description="Live implementation, coverage, validation, lesson, and question status for Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Live coverage ledger</span>
+      <h1>What exists, what is validated, and what is still missing.</h1>
+      <p>
+        This page is generated from the same lesson, question, source, and examination-blueprint data used by the
+        application. Fixture content is counted separately and cannot make an examination domain appear complete.
+      </p>
+
+      <div class="blueprint-summary" aria-label="Content engine summary">
+        <div class="blueprint-stat">
+          <strong>{report.lessonCount}</strong>
+          <span>Total schema-valid lessons</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{report.questionCount}</strong>
+          <span>Total schema-valid questions</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{report.coveredBlueprintAreas}/{report.totalBlueprintAreas}</strong>
+          <span>Official areas with lesson and question coverage</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="notice">
+        <strong>The engine exists; reviewer content is not being overstated</strong>
+        <p>
+          The current {report.fixtureLessonCount} lesson and {report.fixtureQuestionCount} questions are isolated system
+          fixtures. Public examination lessons: {report.publicLessonCount}. Public examination questions:
+          {report.publicQuestionCount}. Official coverage remains at zero until source-checked reviewer modules are
+          deliberately added.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="engine-controls">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">M2 implementation</span>
+        <h2 id="engine-controls">Controls now enforced during the build</h2>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Collection schemas</h3>
+          <p>
+            Lesson and question files must satisfy strict metadata, source, answer, rationale, review, risk, and
+            publication-state schemas before Astro can build them.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Cross-reference integrity</h3>
+          <p>
+            The build verifies source IDs, lesson-question relationships, blueprint mappings, choice IDs, answer keys,
+            distractor rationales, and required review metadata.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Publication gates</h3>
+          <p>
+            Draft, expired, archived, or insufficiently reviewed material cannot be marked public. High-risk public
+            review content requires documented clinical review.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="domain-coverage">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Official-domain coverage</span>
+        <h2 id="domain-coverage">Competency areas still requiring lessons and questions</h2>
+        <p>
+          An area is counted as covered only when at least one coverage-eligible lesson and one coverage-eligible
+          question map to it. Full release targets remain stricter than this first coverage signal.
+        </p>
+      </div>
+
+      <div class="blueprint-domain-list">
+        {report.domains.map((domain) => (
+          <article class="blueprint-domain">
+            <header class="blueprint-domain-header">
+              <div>
+                <h2>{domain.domainTitle}</h2>
+                <p>{domain.lessonCount} lessons · {domain.questionCount} questions</p>
+              </div>
+              <div class="coverage-meter">
+                <strong>{domain.weightedCoveragePercent}%</strong>
+                <span>weighted area coverage</span>
+              </div>
+            </header>
+
+            <div class="blueprint-area-list">
+              {domain.areas.map((area) => (
+                <section class="blueprint-area">
+                  <div class="blueprint-area-topline">
+                    <div>
+                      <h3>{area.blueprintAreaLabel}</h3>
+                      <div class="blueprint-area-meta">
+                        <span class="badge">{area.weightPercent}% official weight</span>
+                        <span class="badge">{area.lessonCount} lessons</span>
+                        <span class="badge">{area.questionCount} questions</span>
+                      </div>
+                    </div>
+                    <strong class="weight-number">{area.covered ? 'Covered' : 'Gap'}</strong>
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="next-engine-stage">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Next M2 work</span>
+        <h2 id="next-engine-stage">From fixture proof to reusable reviewer modules</h2>
+        <p>
+          The next slice adds the reusable lesson layout, correction-history records, question-selection utilities,
+          exportable coverage reports, and the first real source packet. IndexedDB attempt and bookmark storage is
+          already proven on the Practice page; resume, progress aggregation, backup, and migrations remain later stages.
+        </p>
+      </div>
+
+      <article class="card">
+        <h3>Inspect the working vertical slice</h3>
+        <p>
+          The lesson fixture proves schema-backed Markdown rendering. The practice fixture proves in-app answer
+          selection, rationale display, bookmarking, scoring, and local attempt storage.
+        </p>
+        <div class="action-row">
+          <a class="button button-primary" href="/practice">Open in-app practice</a>
+          <a class="button button-secondary" href="/engine-preview">Open lesson fixture</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
