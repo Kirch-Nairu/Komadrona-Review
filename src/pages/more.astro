@@ -1,0 +1,52 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/learner-app.css';
+---
+
+<BaseLayout
+  title="More"
+  description="Project transparency, source, status, about, and legal pages for Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">More</span>
+      <h1>Project information and transparency.</h1>
+      <p>
+        Learner tasks stay in the main navigation. Examination mapping, source controls, development status, and legal
+        information are grouped here.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container prose">
+      <section class="more-group" aria-labelledby="project-home-heading">
+        <h2 id="project-home-heading">Project</h2>
+        <ul class="more-link-list">
+          <li><a href="/"><span><strong>Public project home</strong>Purpose, positioning, and current build state.</span></a></li>
+          <li><a href="/about"><span><strong>About</strong>Origin, creator role, project boundaries, and licensing.</span></a></li>
+          <li><a href="/credits"><span><strong>Credits</strong>Current public acknowledgments and contributor rules.</span></a></li>
+        </ul>
+      </section>
+
+      <section class="more-group" aria-labelledby="transparency-heading">
+        <h2 id="transparency-heading">Examination and content transparency</h2>
+        <ul class="more-link-list">
+          <li><a href="/exam-blueprint"><span><strong>Examination blueprint</strong>Official weights and competency emphasis.</span></a></li>
+          <li><a href="/content-map"><span><strong>Content map</strong>Planned modules, lessons, source packets, and blockers.</span></a></li>
+          <li><a href="/content-status"><span><strong>Implementation status</strong>What exists, what is fixture-only, and what remains blocked.</span></a></li>
+          <li><a href="/engine-preview"><span><strong>Engine labels</strong>How source and review statuses are interpreted.</span></a></li>
+          <li><a href="/sources"><span><strong>Sources</strong>Reference registry and source policy.</span></a></li>
+        </ul>
+      </section>
+
+      <section class="more-group" aria-labelledby="legal-heading">
+        <h2 id="legal-heading">Legal and privacy</h2>
+        <ul class="more-link-list">
+          <li><a href="/disclaimer"><span><strong>Disclaimer</strong>Educational, examination, affiliation, and clinical limits.</span></a></li>
+          <li><a href="/privacy"><span><strong>Privacy</strong>Browser-local records, hosting logs, and data-loss boundaries.</span></a></li>
+        </ul>
+      </section>
+    </div>
+  </section>
+</BaseLayout>

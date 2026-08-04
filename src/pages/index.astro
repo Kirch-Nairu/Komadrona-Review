@@ -14,7 +14,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         </p>
 
         <div class="action-row">
-          <a class="button button-primary" href="/review">Open review map</a>
+          <a class="button button-primary" href="/app">Open learner home</a>
           <button id="open-onboarding" class="button button-secondary" type="button">Review startup notice</button>
         </div>
 
@@ -32,26 +32,26 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <ol class="entry-sequence">
           <li>
             <div>
+              <strong>Open learner home</strong>
+              <span>Continue a saved session or choose a new study task.</span>
+            </div>
+          </li>
+          <li>
+            <div>
               <strong>Choose a review domain</strong>
               <span>Start from the five mapped examination subjects.</span>
             </div>
           </li>
           <li>
             <div>
-              <strong>Read a verified lesson</strong>
-              <span>Each released lesson will show its scope, sources, and review status.</span>
-            </div>
-          </li>
-          <li>
-            <div>
               <strong>Practice inside Komadrona</strong>
-              <span>Answers, rationales, attempts, and bookmarks remain in the application.</span>
+              <span>Checked answers and session position are saved locally for resume.</span>
             </div>
           </li>
           <li>
             <div>
-              <strong>Review weak areas</strong>
-              <span>Local attempt history will guide later focused practice.</span>
+              <strong>Review local progress</strong>
+              <span>Completed attempts, bookmarks, and lesson records stay in this browser.</span>
             </div>
           </li>
         </ol>
@@ -91,11 +91,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
     <div class="container hero-grid">
       <div class="section-heading">
         <span class="eyebrow">Current build state</span>
-        <h2 id="current-build-state">The application engine and content map exist. Clinical reviewer content is still gated.</h2>
+        <h2 id="current-build-state">The learner workflow and content map exist. Clinical reviewer content is still gated.</h2>
         <p>
-          The current branch contains the local practice engine, IndexedDB storage, a complete module plan for the
-          available official scope, and build-time validation. Public midwifery lessons remain at zero until required
-          source packets and review gates are complete.
+          The current branch contains resumable local practice, a learner dashboard, IndexedDB storage, a complete
+          module plan for the available official scope, and build-time validation. Public midwifery lessons remain at
+          zero until required source packets and review gates are complete.
         </p>
       </div>
 

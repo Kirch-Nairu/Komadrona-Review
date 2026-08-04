@@ -1,5 +1,6 @@
 export type QuizType = 'topic' | 'domain' | 'mixed' | 'weak-area' | 'system-preview';
 export type ConfidenceLevel = 'low' | 'medium' | 'high';
+export type QuizAttemptStatus = 'in-progress' | 'completed' | 'abandoned';
 
 export interface RuntimeChoice {
   id: string;
@@ -35,11 +36,15 @@ export interface AttemptAnswer {
 
 export interface QuizAttempt {
   id: string;
-  dataVersion: 1;
+  dataVersion: 1 | 2;
   quizId: string;
   quizType: QuizType;
+  status?: QuizAttemptStatus;
   startedAt: string;
+  updatedAt?: string;
   completedAt: string | null;
+  abandonedAt?: string | null;
+  currentQuestionIndex?: number;
   questionVersions: Array<{
     questionId: string;
     version: number;
@@ -61,4 +66,12 @@ export interface LessonProgress {
 export interface QuestionBookmark {
   questionId: string;
   createdAt: string;
+}
+
+export interface LocalLearningSummary {
+  activeAttempt: QuizAttempt | null;
+  completedAttemptCount: number;
+  bookmarkCount: number;
+  startedLessonCount: number;
+  completedLessonCount: number;
 }

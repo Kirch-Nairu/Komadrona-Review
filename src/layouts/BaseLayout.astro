@@ -38,28 +38,24 @@ const isCurrent = (href: string) =>
 
     <header class="site-header">
       <div class="container header-inner">
-        <a class="brand" href="/" aria-label="Komadrona Review home">Komadrona Review</a>
+        <a class="brand" href="/app" aria-label="Komadrona Review learner home">Komadrona Review</a>
 
         <nav class="site-nav" aria-label="Primary navigation">
-          <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
-          <a href="/exam-blueprint" aria-current={isCurrent('/exam-blueprint') ? 'page' : undefined}>Blueprint</a>
-          <a href="/content-map" aria-current={isCurrent('/content-map') ? 'page' : undefined}>Map</a>
+          <a href="/app" aria-current={isCurrent('/app') ? 'page' : undefined}>Home</a>
+          <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Study</a>
           <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
-          <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
-          <a href="/about" aria-current={isCurrent('/about') ? 'page' : undefined}>About</a>
-          <a href="/disclaimer" aria-current={isCurrent('/disclaimer') ? 'page' : undefined}>Legal</a>
+          <a href="/progress" aria-current={isCurrent('/progress') ? 'page' : undefined}>Progress</a>
+          <a href="/more" aria-current={isCurrent('/more') ? 'page' : undefined}>More</a>
         </nav>
 
         <details class="mobile-menu">
           <summary aria-label="Open navigation menu">Menu</summary>
           <nav aria-label="Mobile navigation">
-            <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
-            <a href="/exam-blueprint" aria-current={isCurrent('/exam-blueprint') ? 'page' : undefined}>Blueprint</a>
-            <a href="/content-map" aria-current={isCurrent('/content-map') ? 'page' : undefined}>Content map</a>
+            <a href="/app" aria-current={isCurrent('/app') ? 'page' : undefined}>Home</a>
+            <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Study</a>
             <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
-            <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
-            <a href="/about" aria-current={isCurrent('/about') ? 'page' : undefined}>About</a>
-            <a href="/disclaimer" aria-current={isCurrent('/disclaimer') ? 'page' : undefined}>Legal</a>
+            <a href="/progress" aria-current={isCurrent('/progress') ? 'page' : undefined}>Progress</a>
+            <a href="/more" aria-current={isCurrent('/more') ? 'page' : undefined}>More</a>
           </nav>
         </details>
       </div>
@@ -82,7 +78,8 @@ const isCurrent = (href: string) =>
           <p class="small-print">Version 1 keeps learner progress and attempts in browser-local storage.</p>
         </div>
 
-        <nav class="footer-links" aria-label="Legal and project links">
+        <nav class="footer-links" aria-label="Project and legal links">
+          <a href="/">Project home</a>
           <a href="/exam-blueprint">Blueprint</a>
           <a href="/content-map">Content map</a>
           <a href="/content-status">Content status</a>
@@ -90,7 +87,7 @@ const isCurrent = (href: string) =>
           <a href="/credits">Credits</a>
           <a href="/disclaimer">Disclaimer</a>
           <a href="/privacy">Privacy</a>
-          <a href="/sources">Source policy</a>
+          <a href="/sources">Sources</a>
         </nav>
       </div>
     </footer>

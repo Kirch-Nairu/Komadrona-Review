@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/learner-app.css';
+---
+
+<BaseLayout
+  title="Progress"
+  description="Browser-local lesson progress, bookmarks, active sessions, and completed practice attempts in Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Browser-local progress</span>
+      <h1>Your records on this device.</h1>
+      <p>
+        This page reads IndexedDB in the current browser profile. Nothing shown here is synced to another browser or
+        device, and clearing site data may permanently remove it.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container learner-layout">
+      <div>
+        <section class="learner-section" aria-labelledby="active-progress-heading">
+          <span class="eyebrow">Continue</span>
+          <h2 id="active-progress-heading">Active session</h2>
+          <div class="continue-panel" id="progress-active-session" aria-live="polite">
+            <p>Checking this browser for an unfinished session…</p>
+          </div>
+        </section>
+
+        <section class="learner-section" aria-labelledby="attempt-history-heading">
+          <span class="eyebrow">History</span>
+          <h2 id="attempt-history-heading">Completed attempts</h2>
+          <div id="progress-attempt-history" aria-live="polite">
+            <p class="small-print">Loading completed attempts…</p>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="learner-section" aria-labelledby="progress-summary-heading">
+          <span class="eyebrow">Summary</span>
+          <h2 id="progress-summary-heading">Local learning records</h2>
+          <dl class="summary-metrics">
+            <div>
+              <dt>Completed attempts</dt>
+              <dd id="progress-completed-attempts">—</dd>
+            </div>
+            <div>
+              <dt>Bookmarks</dt>
+              <dd id="progress-bookmarks">—</dd>
+            </div>
+            <div>
+              <dt>Started lessons</dt>
+              <dd id="progress-started-lessons">—</dd>
+            </div>
+            <div>
+              <dt>Completed lessons</dt>
+              <dd id="progress-completed-lessons">—</dd>
+            </div>
+          </dl>
+          <p class="small-print" id="progress-local-status" aria-live="polite">
+            Loading local progress…
+          </p>
+        </section>
+
+        <section class="learner-section" aria-labelledby="recovery-heading">
+          <span class="eyebrow">Recovery status</span>
+          <h2 id="recovery-heading">Backups are not implemented yet.</h2>
+          <p>
+            Export, import, migration, and rollback controls remain required before these records can be described as
+            recoverable. Do not treat browser storage as a permanent backup.
+          </p>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <script>
+    import { initProgressPage } from '../scripts/learnerDashboard';
+
+    initProgressPage().catch((error: unknown) => {
+      const status = document.getElementById('progress-local-status');
+      if (status) {
+        status.textContent = error instanceof Error ? error.message : 'The progress page could not start.';
+        status.dataset.tone = 'error';
+      }
+    });
+  </script>
+</BaseLayout>

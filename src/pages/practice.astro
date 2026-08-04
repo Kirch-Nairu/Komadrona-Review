@@ -33,7 +33,7 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
 
 <BaseLayout
   title="Practice Center"
-  description="Private in-app practice questions, rationales, bookmarks, scores, and browser-local attempt history for Komadrona Review."
+  description="Private in-app practice questions, rationales, resumable sessions, bookmarks, scores, and browser-local attempt history for Komadrona Review."
 >
   <header class="page-header">
     <div class="container">
@@ -41,8 +41,7 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
       <h1>Practice without leaving Komadrona.</h1>
       <p>
         Questions, answers, rationales, bookmarks, and attempt history are designed to stay inside the application.
-        This first vertical slice proves the engine using non-clinical fixture content before real reviewer questions
-        are approved.
+        An unfinished session is saved after each checked answer and can be resumed in this browser.
       </p>
     </div>
   </header>
@@ -52,8 +51,8 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
       <div class="notice">
         <strong>This preview is not a midwifery examination</strong>
         <p>
-          The {report.fixtureQuestionCount} questions below test Komadrona's source, status, and privacy rules. They are
-          deliberately excluded from the official examination coverage ledger and do not count toward the 500-question
+          The {report.fixtureQuestionCount} questions below test Komadrona's source, status, privacy, and resume rules.
+          They are excluded from the official examination coverage ledger and do not count toward the 500-question
           reviewer target.
         </p>
       </div>
@@ -67,12 +66,21 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
           <div>
             <span class="badge">Engine fixture</span>
             <h2 id="practice-preview" style="margin-top: 1rem;">Source and status orientation</h2>
-            <p>{previewQuestions.length} questions · immediate rationale · browser-local attempt record</p>
+            <p>{previewQuestions.length} questions · immediate rationale · resumable local session</p>
           </div>
           <span class="quiz-progress" id="quiz-progress">Ready</span>
         </div>
 
-        <button class="button button-primary" id="quiz-start" type="button">Start in-app preview</button>
+        <p class="small-print" id="quiz-resume-status" aria-live="polite">
+          Checking this browser for an unfinished session…
+        </p>
+
+        <div class="action-row" id="quiz-start-actions" style="margin-top: 0.75rem;">
+          <button class="button button-primary" id="quiz-start" type="button">Start in-app preview</button>
+          <button class="button button-secondary" id="quiz-abandon" type="button" hidden>
+            Discard saved session
+          </button>
+        </div>
 
         <div id="quiz-panel" hidden>
           <p class="eyebrow" id="quiz-question-number" style="margin-bottom: 0.75rem;">Question</p>
@@ -117,8 +125,8 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
         <span class="badge">On-device data</span>
         <h2 id="local-data-heading" style="margin-top: 1rem;">Local attempt history</h2>
         <p>
-          Completed preview attempts and question bookmarks are written to IndexedDB in this browser profile. They are
-          not submitted to a Komadrona learner server.
+          The active session, completed attempts, and question bookmarks are written to IndexedDB in this browser
+          profile. They are not submitted to a Komadrona learner server.
         </p>
 
         <div class="storage-state">
@@ -129,7 +137,7 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
           </button>
         </div>
 
-        <h3 style="margin-top: 1.5rem;">Recent attempts</h3>
+        <h3 style="margin-top: 1.5rem;">Recent completed attempts</h3>
         <div id="quiz-history" aria-live="polite">
           <p class="small-print">Loading local history…</p>
         </div>
