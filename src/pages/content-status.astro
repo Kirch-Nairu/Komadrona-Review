@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/blueprint.css';
 import { assertContentEngineIntegrity } from '../data/contentEngine';
 
 const lessons = await getCollection('lessons');
