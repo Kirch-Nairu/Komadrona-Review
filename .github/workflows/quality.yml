@@ -29,6 +29,9 @@ jobs:
       - name: Verify generated routes
         run: |
           test -f dist/index.html
+          test -f dist/app/index.html
+          test -f dist/progress/index.html
+          test -f dist/more/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
           test -f dist/content-map/index.html
@@ -41,7 +44,7 @@ jobs:
           test -f dist/practice/index.html
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
-          grep -q 'Study through a clear path' dist/index.html
+          grep -q 'Open learner home' dist/index.html
           grep -q 'A straightforward starting path' dist/index.html
           grep -q 'Review startup notice' dist/index.html
           grep -q 'onboarding-dialog' dist/index.html
@@ -50,6 +53,16 @@ jobs:
           grep -q 'Your learning records remain in this browser' dist/index.html
           grep -q 'In-app practice' dist/index.html
           grep -q 'external quiz provider' dist/index.html
+          grep -q 'Pick up where you stopped' dist/app/index.html
+          grep -q 'dashboard-active-session' dist/app/index.html
+          grep -q 'Your records on this device' dist/progress/index.html
+          grep -q 'progress-active-session' dist/progress/index.html
+          grep -q 'Project information and transparency' dist/more/index.html
+          grep -q '>Home<' dist/app/index.html
+          grep -q '>Study<' dist/app/index.html
+          grep -q '>Practice<' dist/app/index.html
+          grep -q '>Progress<' dist/app/index.html
+          grep -q '>More<' dist/app/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
           grep -q 'It started with Kathy' dist/about/index.html
           grep -q 'Kirch Ivan A. Balite' dist/about/index.html
@@ -69,6 +82,8 @@ jobs:
           grep -q '0/16' dist/content-status/index.html
           grep -q 'Practice without leaving Komadrona' dist/practice/index.html
           grep -q 'This preview is not a midwifery examination' dist/practice/index.html
+          grep -q 'quiz-resume-status' dist/practice/index.html
+          grep -q 'quiz-abandon' dist/practice/index.html
           grep -q 'komadrona-quiz-data' dist/practice/index.html
           grep -q 'How Komadrona source and review labels work' dist/engine-preview/index.html
           grep -q 'noindex, nofollow' dist/engine-preview/index.html
