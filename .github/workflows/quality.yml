@@ -31,6 +31,7 @@ jobs:
           test -f dist/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
+          test -f dist/content-map/index.html
           test -f dist/content-status/index.html
           test -f dist/engine-preview/index.html
           test -f dist/disclaimer/index.html
@@ -50,11 +51,17 @@ jobs:
           grep -q 'Weights guide priority; they do not guarantee questions' dist/exam-blueprint/index.html
           grep -q 'Prenatal, labor, childbirth, and postpartum care' dist/exam-blueprint/index.html
           grep -q 'Board Resolution No. 1, Series of 2013' dist/exam-blueprint/index.html
+          grep -q 'Map the whole reviewer first' dist/content-map/index.html
+          grep -q 'Five domains, sixteen weighted areas, sixty planned modules' dist/content-map/index.html
+          grep -q '261' dist/content-map/index.html
+          grep -q '500' dist/content-map/index.html
+          grep -q 'Antenatal assessment is mapped' dist/content-map/index.html
+          grep -q 'What is mapped, what exists, and what still blocks publication' dist/content-status/index.html
+          grep -q '77/77' dist/content-status/index.html
+          grep -q '0/16' dist/content-status/index.html
           grep -q 'Practice without leaving Komadrona' dist/practice/index.html
           grep -q 'This preview is not a midwifery examination' dist/practice/index.html
           grep -q 'komadrona-quiz-data' dist/practice/index.html
-          grep -q 'What exists, what is validated, and what is still missing' dist/content-status/index.html
-          grep -q '0/16' dist/content-status/index.html
           grep -q 'How Komadrona source and review labels work' dist/engine-preview/index.html
           grep -q 'noindex, nofollow' dist/engine-preview/index.html
           ! grep -q 'Google Forms' dist/index.html
