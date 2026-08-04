@@ -1,5 +1,6 @@
 export type GapCategory = 'mapping' | 'source' | 'review' | 'content' | 'assessment' | 'product';
 export type GapSeverity = 'high' | 'blocker';
+export type GapAvailability = 'available' | 'currently-unavailable';
 export type SourcePacketStatus = 'ready' | 'acquiring' | 'blocked';
 export type ModulePriority = 'highest' | 'high' | 'core' | 'pending';
 export type ModuleRisk = 'standard' | 'high' | 'critical';
@@ -19,6 +20,8 @@ export interface ContentGap {
   severity: GapSeverity;
   title: string;
   blocks: string[];
+  availability?: GapAvailability;
+  availabilityNote?: string;
 }
 
 export interface SourcePacket {
