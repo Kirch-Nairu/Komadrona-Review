@@ -170,7 +170,7 @@ const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\
     </div>
   </section>
 
-  <script id="komadrona-quiz-data" type="application/json" set:html={serializedQuestions}></script>
+  <script id="komadrona-quiz-data" type="application/json" is:inline set:html={serializedQuestions}></script>
   <script>
     import { initQuizEngine } from '../scripts/quizEngine';
 
