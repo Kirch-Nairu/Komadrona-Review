@@ -2,16 +2,18 @@
 
 ## Product purpose
 
-Komadrona Review is an independent, source-based study and practice website for aspiring Philippine midwives. Version 1 is designed to be useful without user accounts, a server-side learner database, or paid infrastructure.
+Komadrona Review is an independent, source-based midwifery study and examination application for aspiring Philippine midwives. Version 1 is designed to be useful without user accounts, a server-side learner database, an external quiz provider, or paid infrastructure.
 
 The project combines:
 
 - structured review lessons;
 - an official-weight examination blueprint;
 - traceable content references;
-- original practice questions;
-- browser-local learner progress; and
+- original in-app practice questions;
+- browser-local learner progress and attempts; and
 - visible content and review status.
+
+Vercel is a static distribution and update origin, not the product identity. The long-term product is an installable offline-first application.
 
 ## Release boundaries
 
@@ -22,23 +24,25 @@ Version 1 includes:
 - an examination blueprint based on the currently published PRC Table of Specifications;
 - source and content-status disclosures;
 - structured source-checked review lessons;
-- external Google Forms practice quizzes;
-- unlimited practice retries;
-- browser-local progress, bookmarks, and self-recorded scores;
+- an in-app question and rationale engine;
+- topic practice, weighted domain tests, mixed tests, and weak-area practice;
+- browser-local attempts, answers, scores, bookmarks, confidence, and progress;
 - progress export and import;
+- an installable offline-capable PWA release;
 - search;
 - a correction-reporting route; and
-- static deployment through Vercel.
+- static distribution through Vercel.
 
 Version 1 excludes:
 
 - accounts, authentication, and cloud syncing;
-- server-side learner profiles or scores;
+- server-side learner profiles, attempts, answers, or scores;
 - screenshot, certificate, or proof-of-completion submission;
 - first-party analytics, advertising, and behavioral tracking;
 - embedded patient or student records;
 - paid access, advertisements, donation QR codes, and payment processing;
-- confidential, leaked, recalled, reconstructed, or proprietary examinations; and
+- confidential, leaked, recalled, reconstructed, or proprietary examinations;
+- proctoring, identity verification, secure examination delivery, or credential issuance; and
 - claims of institutional or government endorsement.
 
 ## Technical architecture
@@ -47,35 +51,120 @@ Version 1 excludes:
 - Language: TypeScript
 - Rendering: static output
 - Styling: local CSS with system fonts
-- Content model: Astro content collections with strict schemas
-- Hosting target: Vercel static deployment
-- Practice provider: external Google Forms links
-- Learner state: browser `localStorage`
+- Lesson and question content: Astro content collections with strict schemas
+- Learner records: IndexedDB
+- Small preferences and acknowledgment: browser `localStorage`
+- Offline application files: service worker and Cache Storage, planned for the PWA milestone
+- Hosting and update origin: Vercel static deployment
 - Build validation: GitHub Actions
 
-No server adapter is required for Version 1.
+No server adapter or learner API is required for Version 1.
 
-## Planned local-storage keys
+## Browser-local data contract
+
+### IndexedDB
+
+Structured learner records belong in IndexedDB:
+
+- lesson progress;
+- quiz attempts;
+- selected answers;
+- scores and best scores;
+- bookmarks;
+- confidence and flagged-question state;
+- weak-area statistics;
+- exam sessions; and
+- backup and schema-migration metadata.
+
+Initial database name: `komadrona-review`  
+Initial data version: `1`
+
+Version 1 object stores begin with:
+
+- `attempts`
+- `bookmarks`
+- `lessonProgress`
+- `metadata`
+
+### localStorage
+
+Only small key-value settings belong in local storage:
 
 - `komadrona:v1:notice-acknowledged`
-- `komadrona:v1:progress`
-- `komadrona:v1:bookmarks`
-- `komadrona:v1:attempts`
-- `komadrona:v1:settings`
+- `komadrona:v1:theme`
+- `komadrona:v1:text-size`
+- `komadrona:v1:last-route`
+- `komadrona:v1:onboarding-complete`
 
-Stored progress must never be described as secure, official, verified, or recoverable by the maintainer.
+### Local-data limitation
+
+Stored progress must never be described as secure, official, server-backed, or recoverable by the maintainer. Clearing site data, using private browsing, removing the browser or application, resetting the device, or changing browsers or devices can remove local records.
+
+The application may request persistent storage, but browser approval does not replace export and import.
+
+## In-app assessment contract
+
+All Version 1 questions run inside Komadrona Review.
+
+The assessment engine must support:
+
+- focused topic practice;
+- official-weight domain tests;
+- mixed mock tests;
+- weak-area, incorrect-answer, bookmarked, and low-confidence practice;
+- immediate or end-of-test feedback;
+- source-backed rationales;
+- pause and resume;
+- question navigation and flags;
+- attempt history;
+- domain and competency breakdowns; and
+- retries without score submission.
+
+The application must not describe these activities as secure, proctored, cheat-resistant, or official examinations. Question content and answer keys are delivered to the learner's device and may be technically inspectable.
+
+## Attempt record
+
+Each stored attempt must preserve:
+
+- a unique attempt ID;
+- application data version;
+- quiz ID and quiz type;
+- start and completion times;
+- exact question IDs and versions;
+- selected answers;
+- correctness result;
+- confidence and flagged state;
+- score and total questions; and
+- elapsed time.
+
+Question versions must be retained so a later correction does not silently rewrite what an earlier learner attempted.
+
+## Backup and reset contract
+
+Before substantial learner progress is released, the application must provide:
+
+- JSON export with data version and export timestamp;
+- import validation before mutation;
+- record-count preview;
+- merge or replace behavior;
+- automatic pre-import rollback backup;
+- schema migration controls;
+- reset by attempt or domain;
+- reset all progress; and
+- a final destructive confirmation for deleting all local learning data.
 
 ## Route structure
 
 - `/` — legal-first landing page
 - `/review` — official-domain review map
 - `/exam-blueprint` — official-weight study-priority map
-- `/practice` — external quiz center
+- `/practice` — in-app practice and assessment center
+- `/content-status` — live schema, lesson, question, and coverage ledger
 - `/sources` — source registry, hierarchy, and content statuses
 - `/about` — project purpose, personal origin, and principal credits
 - `/credits` — formal contribution and attribution record
 - `/disclaimer` — full educational and affiliation disclaimer
-- `/privacy` — privacy and local-storage notice
+- `/privacy` — privacy and browser-local-data notice
 - `/report-an-error` — planned correction route
 
 Topic routes live below `/review/<domain>/<topic>`.
@@ -108,22 +197,9 @@ A domain is not complete merely because article pages exist. Completion requires
 - learner-tool and accessibility QA; and
 - no open blocker affecting the domain.
 
+Fixture content used to prove the engine is excluded from examination coverage and completion totals.
+
 Current implementation and blockers are recorded in `docs/PROJECT_STATUS.md`.
-
-## Google Forms contract
-
-Before a practice form is linked publicly, verify that it:
-
-- is configured as a quiz;
-- does not request a name, school, phone number, or email address;
-- does not limit the learner to one response;
-- contains an answer key and rationale;
-- identifies the source and competency for each answer in the internal question record;
-- allows repeated practice;
-- does not use file-upload questions; and
-- displays a confirmation message explaining how to return to Komadrona Review.
-
-The site must label Google Forms as an external service and open it in a separate tab.
 
 ## Content publication gate
 
@@ -146,30 +222,37 @@ A question may enter a public practice set only when it has:
 
 - original wording;
 - one best answer;
+- exactly four choices in Version 1;
 - plausible but unambiguous distractors;
-- a source-backed rationale;
-- domain, blueprint-area, lesson, difficulty, and cognitive-level metadata;
+- a rationale for the answer and every distractor;
+- exact source support;
+- domain, blueprint-area, lesson, difficulty, cognitive-level, and risk metadata;
+- a stable question ID and version;
 - source checking;
 - required qualified review; and
 - confirmation that it was not copied or recalled from an examination or proprietary test bank.
+
+Invalid cross-references, answer keys, source IDs, statuses, or required review metadata must fail the production build.
 
 ## Donation and monetization boundary
 
 No donation QR code, payment link, paid access, or advertising is included in the initial Vercel Hobby release. Any later funding feature requires a separate legal, hosting, privacy, accounting, and public-solicitation review before implementation.
 
-## Release sequence
+## Delivery sequence
 
 1. `M1 — Foundation and Examination Blueprint`
-2. `M2 — Content Engine and Coverage Ledger`
-3. `M3 — Obstetrics: Prenatal Assessment and Health Teaching`
-4. `M4 — Obstetrics: Labor, Childbirth, and Postpartum`
-5. `M5 — Infant Care and Feeding`
-6. `M6 — Primary Health Care`
-7. `M7 — Professional Growth and Development`
-8. `M8 — Fundamentals of Health Care`
-9. `M9 — Minimum 500-Question Validated Practice Bank`
-10. `M10 — Progress, Search, Export/Import, and Correction Workflow`
+2. `M2 — Content and Question Schemas`
+3. `M3 — IndexedDB Storage Engine`
+4. `M4 — In-App Quiz Engine`
+5. `M5 — Progress, Bookmarks, and Weak-Area Analysis`
+6. `M6 — PWA and Offline Caching`
+7. `M7 — Export, Import, Migration, and Recovery`
+8. `M8 — First Source-Checked Lesson and Question Set`
+9. `M9 — Domain-by-Domain Content Completion`
+10. `M10 — Minimum 500-Question Validated Practice Bank`
 11. `M11 — Accessibility, Mobile, Source-Freshness, and Release Hardening`
-12. `V1 — Public Complete Release`
+12. `V1 — Public Complete Offline-First Release`
 
-Research to close the remaining Fundamentals Table of Specifications gap runs in parallel with `M2`.
+The current content-engine branch deliberately implements parts of M2, M3, and M4 as one vertical fixture slice so schema, rendering, local storage, and in-app assessment can be validated together before real clinical content is added.
+
+Research to close the remaining Fundamentals Table of Specifications gap runs in parallel.
