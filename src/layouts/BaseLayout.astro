@@ -1,6 +1,8 @@
 ---
+import OnboardingWizard from '../components/OnboardingWizard.astro';
 import '../styles/global.css';
 import '../styles/mobile-menu.css';
+import '../styles/onboarding.css';
 
 interface Props {
   title?: string;
@@ -66,6 +68,8 @@ const isCurrent = (href: string) =>
     <main id="main-content">
       <slot />
     </main>
+
+    <OnboardingWizard />
 
     <footer class="site-footer">
       <div class="container footer-grid">
