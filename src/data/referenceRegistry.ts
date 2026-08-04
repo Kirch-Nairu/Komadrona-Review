@@ -21,7 +21,7 @@ export interface ReferenceRecord {
   verifiedOn: string;
 }
 
-const verifiedOn = '2026-08-03';
+const verifiedOn = '2026-08-04';
 
 export const referenceRegistry: ReferenceRecord[] = [
   {
@@ -35,6 +35,19 @@ export const referenceRegistry: ReferenceRecord[] = [
     appliesTo: ['All review domains', 'Examination structure'],
     use: 'Defines the five examination subject headings and the integrated supporting disciplines used by the Version 1 study map.',
     limitation: 'It is an examination program for the stated April 2026 administration, not a permanent Table of Specifications or guarantee of future weighting.',
+    verifiedOn
+  },
+  {
+    id: 'prc-midwifery-tos-2013',
+    title: 'Board Resolution No. 1, Series of 2013 — Tables of Specifications for the Board Licensure Examination for Midwives',
+    issuer: 'Professional Regulation Commission and Professional Regulatory Board of Midwifery',
+    year: '2013',
+    category: 'Exam and education framework',
+    priority: 'Core',
+    url: 'https://www.prc.gov.ph/sites/default/files/PRBmidwifeResoNo1s2013.pdf',
+    appliesTo: ['All review domains', 'Topic prioritization', 'Question-bank weighting'],
+    use: 'Provides the competency groupings, percentage weights, item allocations, and difficulty classifications used to prioritize lessons and assessments.',
+    limitation: 'This older table remains linked by PRC as of the verification date but must be rechecked for superseding Board issuances before each public exam-cycle release.',
     verifiedOn
   },
   {
@@ -249,7 +262,7 @@ export const referenceRegistry: ReferenceRecord[] = [
     category: 'Privacy, copyright, and operations',
     priority: 'Operational',
     url: 'https://privacy.gov.ph/implementing-rules-regulations-data-privacy-act-2012/',
-    appliesTo: ['Privacy notice', 'Future data features', 'Email and form handling'],
+    appliesTo: ['Privacy notice', 'Browser-local learner data', 'Future communication features'],
     use: 'Supports transparency, declared purpose, proportionality, data minimization, security, and data-subject rights in any personal-data processing.',
     verifiedOn
   },
@@ -263,30 +276,6 @@ export const referenceRegistry: ReferenceRecord[] = [
     url: 'https://www.ipophil.gov.ph/news/ipophl-releases-statutory-fair-use-guidelines-to-clarify-rules-on-copyright-exceptions/',
     appliesTo: ['Copyright policy', 'Question writing', 'Quotations and educational adaptation'],
     use: 'Supports the rule that educational purpose does not create unlimited permission to copy protected books, diagrams, tables, or question banks.',
-    verifiedOn
-  },
-  {
-    id: 'google-forms-quizzes',
-    title: 'Create and Grade Quizzes with Google Forms',
-    issuer: 'Google Docs Editors Help',
-    year: 'Current help documentation',
-    category: 'Privacy, copyright, and operations',
-    priority: 'Operational',
-    url: 'https://support.google.com/docs/answer/7032287?hl=en',
-    appliesTo: ['Practice quizzes', 'Answer keys', 'Feedback', 'Email-collection settings'],
-    use: 'Documents quiz mode, answer keys, point values, feedback, grade release, and the optional nature of email collection.',
-    verifiedOn
-  },
-  {
-    id: 'google-forms-sharing',
-    title: 'Publish and Share a Form with Responders',
-    issuer: 'Google Docs Editors Help',
-    year: 'Current help documentation',
-    category: 'Privacy, copyright, and operations',
-    priority: 'Operational',
-    url: 'https://support.google.com/docs/answer/2839588?hl=en',
-    appliesTo: ['Practice retries', 'Sign-in behavior', 'External form disclosure'],
-    use: 'Documents publishing, sharing, and the relationship between one-response limits and Google sign-in.',
     verifiedOn
   },
   {
@@ -305,18 +294,19 @@ export const referenceRegistry: ReferenceRecord[] = [
 
 export const legalReferenceIds = [
   'prc-midwives-program-2026',
+  'prc-midwifery-tos-2013',
   'ra-7392',
   'prc-review-materials-advisory',
   'prc-memo-57',
   'npc-dpa-irr',
   'ipophil-fair-use-2024',
-  'google-forms-quizzes',
   'dswd-public-solicitation'
 ];
 
 export const domainReferenceMap: Record<string, string[]> = {
   'Obstetrics': [
     'prc-midwives-program-2026',
+    'prc-midwifery-tos-2013',
     'ra-7392',
     'doh-safe-motherhood',
     'who-anc-2016',
@@ -327,6 +317,7 @@ export const domainReferenceMap: Record<string, string[]> = {
   ],
   'Fundamentals of Health Care': [
     'prc-midwives-program-2026',
+    'prc-midwifery-tos-2013',
     'ra-7392',
     'ched-cmo-3-2023',
     'doh-safe-motherhood',
@@ -334,6 +325,7 @@ export const domainReferenceMap: Record<string, string[]> = {
   ],
   'Infant Care and Feeding': [
     'prc-midwives-program-2026',
+    'prc-midwifery-tos-2013',
     'ra-9288',
     'ra-10028',
     'ra-11148',
@@ -343,6 +335,7 @@ export const domainReferenceMap: Record<string, string[]> = {
   ],
   'Primary Health Care': [
     'prc-midwives-program-2026',
+    'prc-midwifery-tos-2013',
     'ra-10354',
     'ra-11148',
     'doh-safe-motherhood',
@@ -350,6 +343,7 @@ export const domainReferenceMap: Record<string, string[]> = {
   ],
   'Professional Growth and Development': [
     'prc-midwives-program-2026',
+    'prc-midwifery-tos-2013',
     'ra-7392',
     'ched-cmo-3-2023',
     'prc-review-materials-advisory',
