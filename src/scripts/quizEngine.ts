@@ -38,6 +38,9 @@ const parseQuestionData = (): RuntimeQuestion[] => {
 
 export const initQuizEngine = async () => {
   const questions = parseQuestionData();
+  if (questions.length === 0) {
+    throw new Error('The in-app practice bank is empty.');
+  }
 
   const startButton = requireElement<HTMLButtonElement>('quiz-start');
   const quizPanel = requireElement<HTMLElement>('quiz-panel');
@@ -62,6 +65,14 @@ export const initQuizEngine = async () => {
   let answers: AttemptAnswer[] = [];
   let checkedCurrentQuestion = false;
   let bookmarkedIds = new Set<string>();
+
+  const currentQuestion = (): RuntimeQuestion => {
+    const question = questions[currentIndex];
+    if (!question) {
+      throw new Error(`Quiz question index ${currentIndex} is out of range.`);
+    }
+    return question;
+  };
 
   const setEngineStatus = (message: string, tone: 'normal' | 'error' = 'normal') => {
     engineStatus.textContent = message;
@@ -119,14 +130,14 @@ export const initQuizEngine = async () => {
   };
 
   const updateBookmarkButton = () => {
-    const question = questions[currentIndex];
+    const question = currentQuestion();
     const bookmarked = bookmarkedIds.has(question.questionId);
     bookmarkButton.textContent = bookmarked ? 'Remove bookmark' : 'Bookmark question';
     bookmarkButton.setAttribute('aria-pressed', String(bookmarked));
   };
 
   const renderQuestion = () => {
-    const question = questions[currentIndex];
+    const question = currentQuestion();
     checkedCurrentQuestion = false;
     questionNumber.textContent = `Question ${currentIndex + 1}`;
     progressText.textContent = `${currentIndex + 1} of ${questions.length}`;
@@ -172,7 +183,7 @@ export const initQuizEngine = async () => {
       return;
     }
 
-    const question = questions[currentIndex];
+    const question = currentQuestion();
     const selected = selectedChoiceId();
     if (!selected) {
       return;
@@ -317,7 +328,7 @@ export const initQuizEngine = async () => {
   });
 
   bookmarkButton.addEventListener('click', async () => {
-    const questionId = questions[currentIndex].questionId;
+    const questionId = currentQuestion().questionId;
     const nextState = !bookmarkedIds.has(questionId);
     try {
       await setQuestionBookmark(questionId, nextState);
