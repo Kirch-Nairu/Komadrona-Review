@@ -30,7 +30,8 @@ const domainDescriptions: Record<string, string> = {
         content.
       </p>
       <div class="action-row">
-        <a class="button button-primary" href="/exam-blueprint">Open the examination blueprint</a>
+        <a class="button button-primary" href="/content-map">Open the complete content map</a>
+        <a class="button button-secondary" href="/exam-blueprint">View official weights</a>
         <a class="button button-secondary" href="/sources">Review the source register</a>
       </div>
     </div>
@@ -66,7 +67,7 @@ const domainDescriptions: Record<string, string> = {
                   <strong>Strongest current priority:</strong> {strongestArea.label} ({strongestArea.weightPercent}%)
                 </p>
               )}
-              <a href={`/exam-blueprint#${domain.id}`}>View weights and topic plan</a>
+              <a href={`/content-map#${domain.id}`}>View planned modules and lessons</a>
             </article>
           );
         })}
@@ -83,15 +84,16 @@ const domainDescriptions: Record<string, string> = {
         with the principal examination subjects.
       </p>
       <p>
-        Komadrona Review will attach those disciplines to the clinical or professional topics where they are needed,
+        Komadrona Review attaches those disciplines to the clinical or professional modules where they are needed,
         rather than creating isolated memorization sections with no practical context.
       </p>
 
       <h2>Current publication status</h2>
       <p>
-        The weighted map is now implemented. Full reviewer articles are still pending source attachment and content
-        review. The first planned module is prenatal assessment and health teaching because prenatal, labor, and
-        postpartum care receive the strongest explicit emphasis within Obstetrics.
+        The weighted examination blueprint and machine-validated content map are implemented. Full reviewer articles
+        remain pending source-packet completion and required review. The first implementation queue begins with
+        antenatal assessment and health teaching, but those modules will not move to drafting until their Philippine
+        source gaps are closed.
       </p>
     </div>
   </section>
