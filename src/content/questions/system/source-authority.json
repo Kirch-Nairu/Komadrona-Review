@@ -1,0 +1,43 @@
+{
+  "questionId": "SYS-Q-SOURCE-AUTHORITY-001",
+  "version": 1,
+  "contentKind": "system-fixture",
+  "coverageEligible": false,
+  "domainId": "system",
+  "blueprintAreaId": "system-content-engine",
+  "lessonIds": ["SYS-SOURCE-LABELS-001"],
+  "stem": "Which source should control a Philippine-specific legal or regulatory statement in a Komadrona lesson?",
+  "choices": [
+    { "id": "anonymous-note", "text": "An anonymous reviewer note shared in a group chat" },
+    { "id": "ai-summary", "text": "An uncited AI-generated summary" },
+    { "id": "official-text", "text": "The current official law, regulation, or issuing-body publication" },
+    { "id": "social-video", "text": "A popular short-form video without source links" }
+  ],
+  "correctChoiceId": "official-text",
+  "rationale": "Philippine-specific legal and regulatory claims must be checked against the current official text or issuing-body publication. Secondary explanations can help with learning but cannot silently replace the controlling source.",
+  "distractorRationales": [
+    { "choiceId": "anonymous-note", "rationale": "Anonymous notes cannot establish authority, version, or accountability." },
+    { "choiceId": "ai-summary", "rationale": "AI output can assist drafting but is not a final authority and may omit or distort controlling details." },
+    { "choiceId": "social-video", "rationale": "Popularity does not establish accuracy, currency, or official status." }
+  ],
+  "difficulty": "basic",
+  "cognitiveLevel": "understanding",
+  "riskLevel": "low",
+  "sources": [
+    {
+      "referenceId": "ipophil-fair-use-2024",
+      "locator": "Project source-use and original-writing control"
+    },
+    {
+      "referenceId": "prc-review-materials-advisory",
+      "locator": "Non-affiliation and review-material representation control"
+    }
+  ],
+  "status": "source-checked",
+  "publicationState": "internal-preview",
+  "lastVerified": "2026-08-04",
+  "sourceChecker": "Kirch Ivan A. Balite",
+  "clinicalReviewer": null,
+  "tags": ["source hierarchy", "official authority"],
+  "estimatedSeconds": 40
+}
