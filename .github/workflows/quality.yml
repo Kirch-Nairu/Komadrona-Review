@@ -28,6 +28,7 @@ jobs:
 
       - name: Verify generated routes
         run: |
+          set -x
           test -f dist/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
