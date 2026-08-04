@@ -41,7 +41,14 @@ jobs:
           test -f dist/practice/index.html
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
-          grep -q 'Know what this app is before you begin' dist/index.html
+          grep -q 'Study through a clear path' dist/index.html
+          grep -q 'A straightforward starting path' dist/index.html
+          grep -q 'Review startup notice' dist/index.html
+          grep -q 'onboarding-dialog' dist/index.html
+          grep -q 'Step 1 of 4' dist/index.html
+          grep -q 'Created by Kirch Ivan A. Balite' dist/index.html
+          grep -q 'Your learning records remain in this browser' dist/index.html
+          grep -q 'komadrona:v1:onboarding-complete' dist/index.html
           grep -q 'In-app practice' dist/index.html
           grep -q 'No external quiz provider' dist/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
@@ -55,7 +62,9 @@ jobs:
           grep -q 'Five domains, sixteen weighted areas, sixty planned modules' dist/content-map/index.html
           grep -q '261' dist/content-map/index.html
           grep -q '500' dist/content-map/index.html
-          grep -q 'Antenatal assessment is mapped' dist/content-map/index.html
+          grep -q 'Currently unavailable' dist/content-map/index.html
+          grep -q 'SRC-PH-ANC-001' dist/content-map/index.html
+          grep -q 'SRC-PH-PCPNC-001' dist/content-map/index.html
           grep -q 'What is mapped, what exists, and what still blocks publication' dist/content-status/index.html
           grep -q '77/77' dist/content-status/index.html
           grep -q '0/16' dist/content-status/index.html
