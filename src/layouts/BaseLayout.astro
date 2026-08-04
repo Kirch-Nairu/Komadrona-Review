@@ -10,7 +10,7 @@ interface Props {
 
 const {
   title = 'Komadrona Review',
-  description = 'An independent, source-based review and practice platform for aspiring Philippine midwives.',
+  description = 'An independent, source-based review and practice application for aspiring Philippine midwives.',
   noindex = false
 } = Astro.props;
 
@@ -73,11 +73,12 @@ const isCurrent = (href: string) =>
             Independent educational project based in Bohol, Philippines. Not affiliated with or endorsed by PRC,
             the Professional Regulatory Board of Midwifery, DOH, CHED, any school, or any review center.
           </p>
-          <p class="small-print">Version 1 stores progress only in the user's browser.</p>
+          <p class="small-print">Version 1 keeps learner progress and attempts in browser-local storage.</p>
         </div>
 
         <nav class="footer-links" aria-label="Legal and project links">
           <a href="/exam-blueprint">Blueprint</a>
+          <a href="/content-status">Content status</a>
           <a href="/about">About</a>
           <a href="/credits">Credits</a>
           <a href="/disclaimer">Disclaimer</a>
