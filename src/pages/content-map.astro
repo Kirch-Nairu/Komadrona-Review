@@ -274,20 +274,31 @@ const getPacketGaps = (module: PlannedModule) => {
         <span class="eyebrow">Gap ledger</span>
         <h2 id="source-gaps">{report.openGapCount} open mapping and source gaps.</h2>
         <p>
-          {report.blockerCount} are blockers. Closing these gaps—not producing unsourced prose—is the immediate work
-          required before the first clinical module can be drafted responsibly.
+          {report.blockerCount} are blockers. {report.currentlyUnavailableGapCount} are explicitly marked currently
+          unavailable to the project. Closing these gaps—not producing unsourced prose—is the immediate work required
+          before the first clinical module can be drafted responsibly.
         </p>
       </div>
 
       <div class="gap-list">
         {contentGaps.map((gap) => (
-          <article class="gap-card" data-severity={gap.severity}>
+          <article
+            class="gap-card"
+            data-severity={gap.severity}
+            data-availability={gap.availability ?? 'available'}
+          >
             <div class="badge-row" style="margin-top: 0;">
               <span class="badge">{gap.id}</span>
               <span class="badge">{gap.category}</span>
               <span class="badge">{gap.severity}</span>
+              {gap.availability === 'currently-unavailable' && (
+                <span class="badge">Currently unavailable</span>
+              )}
             </div>
             <h3>{gap.title}</h3>
+            {gap.availabilityNote && (
+              <p><strong>Availability:</strong> {gap.availabilityNote}</p>
+            )}
             <p><strong>Blocks:</strong> {gap.blocks.join('; ')}.</p>
           </article>
         ))}
@@ -299,22 +310,22 @@ const getPacketGaps = (module: PlannedModule) => {
     <div class="container hero-grid">
       <div class="section-heading">
         <span class="eyebrow">First real content gate</span>
-        <h2 id="first-content-gate">Antenatal assessment is mapped, but not yet cleared for drafting.</h2>
+        <h2 id="first-content-gate">Antenatal assessment is mapped, but its required Philippine sources are unavailable.</h2>
         <p>
-          The module already has linked competencies, seven planned lesson units, a twelve-question target, a risk
-          classification, and an assigned source packet. It remains in source acquisition until current Philippine
-          antenatal and PCPNC materials are acquired and version-checked.
+          The module has linked competencies, seven planned lesson units, a twelve-question target, a risk
+          classification, and an assigned source packet. It remains blocked until qualifying current Philippine
+          antenatal and PCPNC sources exist, can be obtained, and pass version, applicability, and locator checks.
         </p>
       </div>
 
       <article class="card">
         <h3>Exit conditions before writing</h3>
         <ul>
-          <li>Close <code>SRC-PH-ANC-001</code>.</li>
-          <li>Close <code>SRC-PH-PCPNC-001</code>.</li>
-          <li>Record exact source locators for each planned lesson.</li>
-          <li>Resolve conflicts between Philippine and international guidance.</li>
-          <li>Approve the module brief and qualified-review path.</li>
+          <li>A qualifying source becomes available for <code>SRC-PH-ANC-001</code>.</li>
+          <li>A qualifying source becomes available for <code>SRC-PH-PCPNC-001</code>.</li>
+          <li>Exact source locators are recorded for every planned lesson.</li>
+          <li>Philippine and international guidance conflicts are resolved.</li>
+          <li>The module brief and qualified-review path are approved.</li>
         </ul>
         <div class="action-row">
           <a class="button button-primary" href="/content-status">Open implementation status</a>
