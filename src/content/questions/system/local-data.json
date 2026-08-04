@@ -1,0 +1,39 @@
+{
+  "questionId": "SYS-Q-LOCAL-DATA-001",
+  "version": 1,
+  "contentKind": "system-fixture",
+  "coverageEligible": false,
+  "domainId": "system",
+  "blueprintAreaId": "system-content-engine",
+  "lessonIds": ["SYS-SOURCE-LABELS-001"],
+  "stem": "What is the most accurate statement about progress stored only in the learner's browser?",
+  "choices": [
+    { "id": "server-backup", "text": "Komadrona can restore it from a server backup at any time." },
+    { "id": "cannot-be-deleted", "text": "It cannot be deleted once the learner finishes a quiz." },
+    { "id": "may-be-lost", "text": "It may be lost if site data is cleared or the device is reset." },
+    { "id": "official-record", "text": "It becomes an official record of examination readiness." }
+  ],
+  "correctChoiceId": "may-be-lost",
+  "rationale": "Browser-stored progress remains on the device but can be deleted with site data, lost during a reset, or unavailable in private browsing. Komadrona has no central learner backup, so export and import are required recovery features.",
+  "distractorRationales": [
+    { "choiceId": "server-backup", "rationale": "The Version 1 architecture intentionally avoids a central learner database or server-side score backup." },
+    { "choiceId": "cannot-be-deleted", "rationale": "Browser storage remains under browser and device control and can be removed." },
+    { "choiceId": "official-record", "rationale": "Local study data is private self-study information, not an official academic or licensure record." }
+  ],
+  "difficulty": "basic",
+  "cognitiveLevel": "application",
+  "riskLevel": "low",
+  "sources": [
+    {
+      "referenceId": "npc-dpa-irr",
+      "locator": "Transparency, declared purpose, proportionality, and data-minimization principles"
+    }
+  ],
+  "status": "source-checked",
+  "publicationState": "internal-preview",
+  "lastVerified": "2026-08-04",
+  "sourceChecker": "Kirch Ivan A. Balite",
+  "clinicalReviewer": null,
+  "tags": ["local progress", "browser storage", "backup"],
+  "estimatedSeconds": 45
+}
