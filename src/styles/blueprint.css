@@ -1,0 +1,193 @@
+.blueprint-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.blueprint-stat {
+  padding: 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: rgb(255 253 251 / 0.9);
+  box-shadow: var(--shadow-sm);
+}
+
+.blueprint-stat strong,
+.blueprint-stat span {
+  display: block;
+}
+
+.blueprint-stat strong {
+  color: var(--plum-950);
+  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  font-size: 1.65rem;
+}
+
+.blueprint-stat span {
+  margin-top: 0.2rem;
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.blueprint-domain-list {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.blueprint-domain {
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--paper);
+  box-shadow: var(--shadow-sm);
+}
+
+.blueprint-domain-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+  padding: 1.4rem;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(135deg, rgb(75 33 66 / 0.055), rgb(156 71 87 / 0.035));
+}
+
+.blueprint-domain-header h2 {
+  margin-bottom: 0.35rem;
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+}
+
+.blueprint-domain-header p {
+  margin: 0;
+  color: var(--muted);
+}
+
+.coverage-meter {
+  min-width: 8rem;
+  text-align: right;
+}
+
+.coverage-meter strong,
+.coverage-meter span {
+  display: block;
+}
+
+.coverage-meter strong {
+  color: var(--plum-800);
+  font-size: 1.15rem;
+}
+
+.coverage-meter span {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+.blueprint-area-list {
+  display: grid;
+  gap: 1rem;
+  padding: 1.4rem;
+}
+
+.blueprint-area {
+  padding: 1.15rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: white;
+}
+
+.blueprint-area-topline {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: start;
+}
+
+.blueprint-area h3 {
+  margin-bottom: 0.3rem;
+}
+
+.blueprint-area-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.65rem;
+}
+
+.weight-number {
+  min-width: 4.5rem;
+  color: var(--plum-800);
+  font-family: Georgia, "Times New Roman", ui-serif, serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1;
+  text-align: right;
+}
+
+.weight-track {
+  height: 0.55rem;
+  margin: 1rem 0;
+  overflow: hidden;
+  border-radius: 999px;
+  background: #efe5e8;
+}
+
+.weight-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--plum-800), var(--rose-600));
+}
+
+.blueprint-area ul {
+  margin-bottom: 0;
+  color: #4f484d;
+}
+
+.blueprint-area-note {
+  margin-top: 0.85rem;
+  padding: 0.85rem;
+  border-left: 4px solid var(--amber-800);
+  border-radius: 0.45rem;
+  color: var(--amber-800);
+  background: var(--amber-100);
+  font-size: 0.86rem;
+}
+
+.priority-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.priority-card {
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: white;
+}
+
+.priority-card h3 {
+  margin-bottom: 0.35rem;
+}
+
+.priority-card p {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+@media (max-width: 760px) {
+  .blueprint-summary,
+  .priority-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .blueprint-domain-header,
+  .blueprint-area-topline {
+    grid-template-columns: 1fr;
+  }
+
+  .coverage-meter,
+  .weight-number {
+    text-align: left;
+  }
+}

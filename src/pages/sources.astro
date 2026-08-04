@@ -1,0 +1,165 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { blueprintSource } from '../data/examBlueprint';
+import {
+  domainReferenceMap,
+  getReferencesByIds,
+  referenceRegistry,
+  type ReferenceCategory
+} from '../data/referenceRegistry';
+
+const categoryOrder: ReferenceCategory[] = [
+  'Exam and education framework',
+  'Philippine law and policy',
+  'Philippine health programs',
+  'International clinical guidance',
+  'Privacy, copyright, and operations'
+];
+---
+
+<BaseLayout
+  title="Sources and References"
+  description="The verified official source registry, examination blueprint source, subject mapping, citation requirements, and review statuses used by Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Evidence and content governance</span>
+      <h1>Sources and references</h1>
+      <p>
+        This registry identifies the official laws, examination documents, Philippine health-program references,
+        international clinical guidance, and operational rules approved for Version 1 drafting.
+      </p>
+    </div>
+  </header>
+
+  <article class="container prose">
+    <div class="notice">
+      <strong>A source link is not permission to copy</strong>
+      <p>
+        Komadrona Review will write original explanations and practice questions. Official documents are used to check
+        accuracy and scope. Full books, diagrams, tables, test banks, and confidential examination content will not be
+        reproduced merely because they are accessible online.
+      </p>
+    </div>
+
+    <h2>How the registry is used</h2>
+    <p>
+      Philippine law, PRC issuances, CHED standards, and current DOH policy control Philippine legal, regulatory,
+      curriculum, and program-specific questions. WHO material supplies international evidence-informed guidance where
+      relevant, but it must be reconciled with Philippine policy, professional scope, referral systems, and facility
+      protocols before publication.
+    </p>
+    <p>
+      Every future article and practice question must cite the exact record it relies on, identify the relevant section
+      or page, and record when that source was checked. The registry is a starting set, not an exhaustive bibliography.
+    </p>
+
+    <h2>Examination-weighting source</h2>
+    <div class="card">
+      <div class="badge-row" style="margin: 0 0 0.75rem;">
+        <span class="badge">Core</span>
+        <span class="badge">{blueprintSource.year}</span>
+        <span class="badge">Verified {blueprintSource.verifiedOn}</span>
+      </div>
+      <h3>{blueprintSource.title}</h3>
+      <p>{blueprintSource.issuer}</p>
+      <p><strong>Use:</strong> {blueprintSource.use}</p>
+      <p><strong>Limit:</strong> {blueprintSource.limitation}</p>
+      <div class="action-row">
+        <a
+          class="button button-primary"
+          href={blueprintSource.url}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open official TOS PDF
+        </a>
+        <a class="button button-secondary" href="/exam-blueprint">View Komadrona blueprint</a>
+      </div>
+    </div>
+
+    <h2>Approved Version 1 reference register</h2>
+    <p class="small-print">Registry verification date: 4 August 2026.</p>
+
+    {categoryOrder.map((category) => {
+      const records = referenceRegistry.filter((reference) => reference.category === category);
+
+      return (
+        <section aria-labelledby={`category-${category.toLowerCase().replaceAll(' ', '-')}`}>
+          <h3 id={`category-${category.toLowerCase().replaceAll(' ', '-')}`}>{category}</h3>
+          <ul class="source-list">
+            {records.map((reference) => (
+              <li>
+                <div class="badge-row" style="margin: 0 0 0.75rem;">
+                  <span class="badge">{reference.priority}</span>
+                  <span class="badge">{reference.year}</span>
+                </div>
+                <strong>{reference.title}</strong>
+                <span>{reference.issuer}</span>
+                <p style="margin-top: 0.75rem;"><strong>Use:</strong> {reference.use}</p>
+                {reference.limitation && <p><strong>Limit:</strong> {reference.limitation}</p>}
+                <p class="small-print">Applies to: {reference.appliesTo.join(' · ')}</p>
+                <a href={reference.url} target="_blank" rel="noopener noreferrer">Open official source</a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      );
+    })}
+
+    <h2>Initial subject-to-source map</h2>
+    <p>
+      These are the planned baseline references for each principal review domain. Individual topics will use a narrower
+      set and may require additional current DOH issuances, specialty guidelines, or peer-reviewed evidence.
+    </p>
+
+    <div class="card-grid two-column">
+      {Object.entries(domainReferenceMap).map(([domain, ids]) => {
+        const records = getReferencesByIds(ids);
+
+        return (
+          <section class="card">
+            <h3>{domain}</h3>
+            <ul>
+              <li><a href="/exam-blueprint">PRC Midwifery Table of Specifications and topic weights</a></li>
+              {records.map((reference) => (
+                <li><a href={`#category-${reference.category.toLowerCase().replaceAll(' ', '-')}`}>{reference.title}</a></li>
+              ))}
+            </ul>
+          </section>
+        );
+      })}
+    </div>
+
+    <h2>Required citation metadata</h2>
+    <p>Every published review topic and question record must identify:</p>
+    <ul>
+      <li>the examination domain, topic, and internal content identifier;</li>
+      <li>the exact source title, issuing body, date or version, and direct official link;</li>
+      <li>the relevant article, section, recommendation, page, or paragraph;</li>
+      <li>the date the source was checked and the person who checked it;</li>
+      <li>the content status and any qualified clinical reviewer; and</li>
+      <li>corrections, conflicts, and superseded guidance where applicable.</li>
+    </ul>
+
+    <h2>Content statuses</h2>
+    <ul>
+      <li><strong>Draft:</strong> incomplete and not cleared as relied-upon review material.</li>
+      <li><strong>Source checked:</strong> citations and core statements were compared with identified primary sources.</li>
+      <li><strong>Clinically reviewed:</strong> reviewed by a qualified professional whose role and consent are recorded.</li>
+      <li><strong>Needs re-verification:</strong> a source may have changed or the review interval has expired.</li>
+      <li><strong>Archived:</strong> retained for correction history but removed from current study paths.</li>
+    </ul>
+
+    <h2>Sources not accepted as final authority</h2>
+    <ul>
+      <li>unsourced social-media posts, short-form videos, anonymous blogs, and AI-generated text;</li>
+      <li>Quizlet, CourseHero, Scribd uploads, and similar user-upload repositories;</li>
+      <li>commercial reviewer scans, copied textbook pages, and proprietary test banks;</li>
+      <li>recalled, reconstructed, leaked, or claimed actual board-examination questions; and</li>
+      <li>outdated guidance when a current official replacement exists.</li>
+    </ul>
+
+    <p class="small-print">Registry and policy version: 1.2 — 4 August 2026.</p>
+  </article>
+</BaseLayout>
