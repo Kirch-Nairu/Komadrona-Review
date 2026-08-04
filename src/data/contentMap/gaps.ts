@@ -19,15 +19,21 @@ export const contentGaps: ContentGap[] = [
     id: 'SRC-PH-ANC-001',
     category: 'source',
     severity: 'blocker',
-    title: 'Acquire and version-check current Philippine antenatal-care guidance',
-    blocks: ['Antenatal assessment and teaching modules']
+    title: 'Current Philippine antenatal-care source is unavailable to the project',
+    blocks: ['Antenatal assessment and teaching modules'],
+    availability: 'currently-unavailable',
+    availabilityNote:
+      'No complete, current, officially controlled Philippine antenatal-care source has been located and verified for Komadrona Review. Keep the affected modules blocked until a qualifying source exists, can be obtained, and passes version and applicability checks.'
   },
   {
     id: 'SRC-PH-PCPNC-001',
     category: 'source',
     severity: 'blocker',
-    title: 'Acquire the complete current Philippine PCPNC manual',
-    blocks: ['Antenatal, postpartum, newborn, and home-care modules']
+    title: 'Complete current Philippine PCPNC manual is unavailable to the project',
+    blocks: ['Antenatal, postpartum, newborn, and home-care modules'],
+    availability: 'currently-unavailable',
+    availabilityNote:
+      'No complete, current, officially controlled PCPNC manual has been located and verified for Komadrona Review. Keep the affected modules blocked until a qualifying edition exists, can be obtained, and passes supersession and locator checks.'
   },
   {
     id: 'SRC-PH-BEMONC-001',
