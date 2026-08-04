@@ -6,19 +6,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Independent Philippine review project</span>
-        <h1>Know what this site is before you begin.</h1>
+        <span class="eyebrow">Independent Philippine review application</span>
+        <h1>Know what this app is before you begin.</h1>
         <p>
-          Komadrona Review is a free, source-based study companion for aspiring Philippine midwives. It is not an
-          official reviewer, not a clinical protocol, and not connected to any government agency, school, or review
-          center.
+          Komadrona Review is a free, source-based study and practice application for aspiring Philippine midwives. It
+          is not an official reviewer, not a clinical protocol, and not connected to any government agency, school, or
+          review center.
         </p>
 
         <div class="badge-row" aria-label="Version 1 characteristics">
           <span class="badge">No account required</span>
           <span class="badge">No learner database</span>
-          <span class="badge">Local progress only</span>
-          <span class="badge">External practice forms</span>
+          <span class="badge">On-device progress</span>
+          <span class="badge">In-app practice</span>
         </div>
       </div>
 
@@ -86,11 +86,12 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="section" aria-labelledby="storage-warning">
     <div class="container">
       <div class="notice">
-        <strong id="storage-warning">Your progress exists only in this browser</strong>
+        <strong id="storage-warning">Your learning records exist only in this browser</strong>
         <p>
-          Completed topics, bookmarks, and self-recorded scores will be stored locally on this device. Clearing site
-          data or browser storage, using private browsing, reinstalling the browser, changing browsers, or moving to
-          another device may permanently reset that progress. Komadrona Review cannot recover it.
+          Lesson progress, bookmarks, selected answers, attempts, and scores are designed to remain on this device.
+          Clearing site data, using private browsing, removing the browser or installed application, resetting the
+          device, changing browsers, or moving to another device may permanently remove those records. Komadrona Review
+          has no learner server backup and cannot recover them.
         </p>
       </div>
     </div>
@@ -103,15 +104,16 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <h2 id="privacy-at-launch">Minimal by design</h2>
         <p>
           Version 1 has no accounts, no first-party analytics, no advertising trackers, and no server-side learner
-          profile. Google Forms quizzes open as clearly labeled external services.
+          profile. Lessons, practice questions, rationales, bookmarks, scores, and attempts are designed to stay inside
+          Komadrona and on the learner's device.
         </p>
         <a href="/privacy">Read the privacy notice</a>
       </div>
 
       <ul class="status-list" aria-label="Privacy design choices">
-        <li>No names requested by the website</li>
-        <li>No email address required by the website</li>
-        <li>No screenshot or score submission</li>
+        <li>No name or email required</li>
+        <li>No score or screenshot submission</li>
+        <li>No external quiz provider</li>
         <li>No automatic cross-device syncing</li>
       </ul>
     </div>
