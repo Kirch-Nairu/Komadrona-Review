@@ -53,6 +53,7 @@ export interface ContentMapReport {
   blockedModuleCount: number;
   openGapCount: number;
   blockerCount: number;
+  currentlyUnavailableGapCount: number;
   domains: DomainMappingReport[];
   errors: string[];
 }
@@ -67,6 +68,15 @@ export const inspectContentMap = (): ContentMapReport => {
 
   if (gapById.size !== contentGaps.length) errors.push('Content-gap IDs must be unique.');
   if (packetById.size !== sourcePackets.length) errors.push('Source-packet IDs must be unique.');
+
+  for (const gap of contentGaps) {
+    if (gap.availability === 'currently-unavailable' && !gap.availabilityNote) {
+      errors.push(`Unavailable gap ${gap.id} must explain its availability state.`);
+    }
+    if (gap.availabilityNote && gap.availability !== 'currently-unavailable') {
+      errors.push(`Gap ${gap.id} has an availability note without an unavailable state.`);
+    }
+  }
 
   for (const packet of sourcePackets) {
     if (packet.referenceIds.length === 0) {
@@ -236,6 +246,9 @@ export const inspectContentMap = (): ContentMapReport => {
     blockedModuleCount: plannedModules.filter((module) => module.stage === 'blocked').length,
     openGapCount: contentGaps.length,
     blockerCount: contentGaps.filter((gap) => gap.severity === 'blocker').length,
+    currentlyUnavailableGapCount: contentGaps.filter(
+      (gap) => gap.availability === 'currently-unavailable'
+    ).length,
     domains,
     errors
   };
