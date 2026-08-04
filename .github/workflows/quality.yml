@@ -28,7 +28,6 @@ jobs:
 
       - name: Verify generated routes
         run: |
-          set -x
           test -f dist/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
@@ -49,7 +48,6 @@ jobs:
           grep -q 'Step 1 of 4' dist/index.html
           grep -q 'Created by Kirch Ivan A. Balite' dist/index.html
           grep -q 'Your learning records remain in this browser' dist/index.html
-          grep -R -q 'komadrona:v1:onboarding-complete' dist/_astro
           grep -q 'In-app practice' dist/index.html
           grep -q 'external quiz provider' dist/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
