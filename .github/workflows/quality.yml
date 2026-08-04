@@ -31,6 +31,8 @@ jobs:
           test -f dist/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
+          test -f dist/content-status/index.html
+          test -f dist/engine-preview/index.html
           test -f dist/disclaimer/index.html
           test -f dist/privacy/index.html
           test -f dist/sources/index.html
@@ -46,6 +48,15 @@ jobs:
           grep -q 'Weights guide priority; they do not guarantee questions' dist/exam-blueprint/index.html
           grep -q 'Prenatal, labor, childbirth, and postpartum care' dist/exam-blueprint/index.html
           grep -q 'Board Resolution No. 1, Series of 2013' dist/exam-blueprint/index.html
+          grep -q 'Practice without leaving Komadrona' dist/practice/index.html
+          grep -q 'This preview is not a midwifery examination' dist/practice/index.html
+          grep -q 'komadrona-quiz-data' dist/practice/index.html
+          grep -q 'What exists, what is validated, and what is still missing' dist/content-status/index.html
+          grep -q '0/16' dist/content-status/index.html
+          grep -q 'How Komadrona source and review labels work' dist/engine-preview/index.html
+          grep -q 'noindex, nofollow' dist/engine-preview/index.html
+          ! grep -q 'Google Forms' dist/practice/index.html
+          ! grep -q 'Google Forms practice quizzes' dist/privacy/index.html
 
       - name: Upload static build
         uses: actions/upload-artifact@v4
