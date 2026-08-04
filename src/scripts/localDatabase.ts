@@ -1,7 +1,12 @@
-import type { LessonProgress, QuestionBookmark, QuizAttempt } from '../types/quiz';
+import type {
+  LessonProgress,
+  LocalLearningSummary,
+  QuestionBookmark,
+  QuizAttempt
+} from '../types/quiz';
 
 const DATABASE_NAME = 'komadrona-review';
-const DATABASE_VERSION = 1;
+const DATABASE_VERSION = 2;
 
 const ATTEMPTS_STORE = 'attempts';
 const BOOKMARKS_STORE = 'bookmarks';
@@ -29,6 +34,15 @@ const transactionToPromise = (transaction: IDBTransaction): Promise<void> =>
     transaction.onabort = () => reject(transaction.error ?? new Error('IndexedDB transaction was aborted.'));
   });
 
+const isCompletedAttempt = (attempt: QuizAttempt) =>
+  attempt.status === 'completed' || attempt.completedAt !== null;
+
+const isActiveAttempt = (attempt: QuizAttempt) =>
+  !isCompletedAttempt(attempt) && attempt.status !== 'abandoned' && !attempt.abandonedAt;
+
+const attemptUpdatedAt = (attempt: QuizAttempt) =>
+  attempt.updatedAt ?? attempt.completedAt ?? attempt.startedAt;
+
 export const openKomadronaDatabase = (): Promise<IDBDatabase> => {
   requireIndexedDb();
 
@@ -41,11 +55,29 @@ export const openKomadronaDatabase = (): Promise<IDBDatabase> => {
 
     request.onupgradeneeded = () => {
       const database = request.result;
+      const transaction = request.transaction;
+      if (!transaction) {
+        throw new Error('Komadrona local-data upgrade transaction is unavailable.');
+      }
 
-      if (!database.objectStoreNames.contains(ATTEMPTS_STORE)) {
-        const attempts = database.createObjectStore(ATTEMPTS_STORE, { keyPath: 'id' });
+      const attempts = database.objectStoreNames.contains(ATTEMPTS_STORE)
+        ? transaction.objectStore(ATTEMPTS_STORE)
+        : database.createObjectStore(ATTEMPTS_STORE, { keyPath: 'id' });
+
+      if (!attempts.indexNames.contains('completedAt')) {
         attempts.createIndex('completedAt', 'completedAt', { unique: false });
+      }
+      if (!attempts.indexNames.contains('quizType')) {
         attempts.createIndex('quizType', 'quizType', { unique: false });
+      }
+      if (!attempts.indexNames.contains('quizId')) {
+        attempts.createIndex('quizId', 'quizId', { unique: false });
+      }
+      if (!attempts.indexNames.contains('status')) {
+        attempts.createIndex('status', 'status', { unique: false });
+      }
+      if (!attempts.indexNames.contains('updatedAt')) {
+        attempts.createIndex('updatedAt', 'updatedAt', { unique: false });
       }
 
       if (!database.objectStoreNames.contains(BOOKMARKS_STORE)) {
@@ -88,7 +120,17 @@ export const saveQuizAttempt = async (attempt: QuizAttempt): Promise<void> => {
   await transactionToPromise(transaction);
 };
 
-export const listQuizAttempts = async (limit = 10): Promise<QuizAttempt[]> => {
+export const deleteQuizAttempt = async (attemptId: string): Promise<void> => {
+  const database = await openKomadronaDatabase();
+  const transaction = database.transaction(ATTEMPTS_STORE, 'readwrite');
+  transaction.objectStore(ATTEMPTS_STORE).delete(attemptId);
+  await transactionToPromise(transaction);
+};
+
+export const listQuizAttempts = async (
+  limit = 10,
+  includeIncomplete = false
+): Promise<QuizAttempt[]> => {
   const database = await openKomadronaDatabase();
   const transaction = database.transaction(ATTEMPTS_STORE, 'readonly');
   const attempts = await requestToPromise(
@@ -97,8 +139,16 @@ export const listQuizAttempts = async (limit = 10): Promise<QuizAttempt[]> => {
   await transactionToPromise(transaction);
 
   return attempts
-    .sort((left, right) => right.startedAt.localeCompare(left.startedAt))
+    .filter((attempt) => includeIncomplete || isCompletedAttempt(attempt))
+    .sort((left, right) => attemptUpdatedAt(right).localeCompare(attemptUpdatedAt(left)))
     .slice(0, Math.max(0, limit));
+};
+
+export const getActiveQuizAttempt = async (quizId?: string): Promise<QuizAttempt | null> => {
+  const attempts = await listQuizAttempts(Number.MAX_SAFE_INTEGER, true);
+  return (
+    attempts.find((attempt) => isActiveAttempt(attempt) && (!quizId || attempt.quizId === quizId)) ?? null
+  );
 };
 
 export const saveLessonProgress = async (progress: LessonProgress): Promise<void> => {
@@ -106,6 +156,16 @@ export const saveLessonProgress = async (progress: LessonProgress): Promise<void
   const transaction = database.transaction(LESSON_PROGRESS_STORE, 'readwrite');
   transaction.objectStore(LESSON_PROGRESS_STORE).put(progress);
   await transactionToPromise(transaction);
+};
+
+export const listLessonProgress = async (): Promise<LessonProgress[]> => {
+  const database = await openKomadronaDatabase();
+  const transaction = database.transaction(LESSON_PROGRESS_STORE, 'readonly');
+  const progress = await requestToPromise(
+    transaction.objectStore(LESSON_PROGRESS_STORE).getAll() as IDBRequest<LessonProgress[]>
+  );
+  await transactionToPromise(transaction);
+  return progress.sort((left, right) => right.updatedAt.localeCompare(left.updatedAt));
 };
 
 export const getBookmarkedQuestionIds = async (): Promise<Set<string>> => {
@@ -137,6 +197,22 @@ export const setQuestionBookmark = async (
   }
 
   await transactionToPromise(transaction);
+};
+
+export const getLocalLearningSummary = async (): Promise<LocalLearningSummary> => {
+  const [attempts, bookmarks, lessonProgress] = await Promise.all([
+    listQuizAttempts(Number.MAX_SAFE_INTEGER, true),
+    getBookmarkedQuestionIds(),
+    listLessonProgress()
+  ]);
+
+  return {
+    activeAttempt: attempts.find(isActiveAttempt) ?? null,
+    completedAttemptCount: attempts.filter(isCompletedAttempt).length,
+    bookmarkCount: bookmarks.size,
+    startedLessonCount: lessonProgress.filter((item) => item.status !== 'not-started').length,
+    completedLessonCount: lessonProgress.filter((item) => item.status === 'completed').length
+  };
 };
 
 export const getStoragePersistenceState = async (): Promise<'granted' | 'available' | 'unsupported'> => {
