@@ -1,0 +1,326 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/blueprint.css';
+import '../styles/content-map.css';
+import { examBlueprint } from '../data/examBlueprint';
+import {
+  contentGaps,
+  initialImplementationSequence,
+  plannedModules,
+  sourcePackets,
+  type PlannedModule
+} from '../data/contentMap';
+import { assertContentMapIntegrity } from '../data/contentMapValidation';
+
+const report = assertContentMapIntegrity();
+const moduleById = new Map(plannedModules.map((module) => [module.id, module]));
+const packetById = new Map(sourcePackets.map((packet) => [packet.id, packet]));
+const gapById = new Map(contentGaps.map((gap) => [gap.id, gap]));
+const areaById = new Map(examBlueprint.flatMap((domain) => domain.areas.map((area) => [area.id, area] as const)));
+
+const initialQueue = initialImplementationSequence
+  .map((moduleId) => moduleById.get(moduleId))
+  .filter((module): module is PlannedModule => Boolean(module));
+
+const mappedCompetencyPercent = Math.round(
+  (report.mappedCompetencyCount / Math.max(1, report.competencyCount)) * 100
+);
+const weightedTranscriptionPercent = Math.round(
+  examBlueprint.reduce((sum, domain) => sum + domain.transcriptionCoveragePercent, 0) /
+    examBlueprint.length
+);
+
+const getModuleCompetencies = (module: PlannedModule) => {
+  const area = areaById.get(module.blueprintAreaId);
+  if (!area) return [];
+  return module.competencyIndexes
+    .map((index) => area.competencies[index])
+    .filter((competency): competency is string => Boolean(competency));
+};
+
+const getPacketGaps = (module: PlannedModule) => {
+  const packet = packetById.get(module.sourcePacketId);
+  if (!packet) return [];
+  return packet.openGapIds
+    .map((gapId) => gapById.get(gapId))
+    .filter((gap): gap is NonNullable<typeof gap> => Boolean(gap));
+};
+---
+
+<BaseLayout
+  title="Content Map"
+  description="The machine-validated competency, module, lesson, source-packet, and question-allocation plan for Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Mapping before drafting</span>
+      <h1>Map the whole reviewer first. Then write without leaving hidden gaps.</h1>
+      <p>
+        This page converts the examination blueprint into planned modules, lessons, source packets, and an internal
+        500-question allocation. The build fails when a mapped competency disappears, an area receives the wrong
+        question total, or a module claims readiness without a complete source packet.
+      </p>
+
+      <div class="content-map-summary" aria-label="Content-map summary">
+        <div class="content-map-stat">
+          <strong>{report.mappedCompetencyCount}/{report.competencyCount}</strong>
+          <span>currently transcribed competency statements mapped</span>
+        </div>
+        <div class="content-map-stat">
+          <strong>{report.moduleCount}</strong>
+          <span>planned modules</span>
+        </div>
+        <div class="content-map-stat">
+          <strong>{report.plannedLessonCount}</strong>
+          <span>planned lesson units</span>
+        </div>
+        <div class="content-map-stat">
+          <strong>{report.questionTarget}</strong>
+          <span>minimum validated-question allocation</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="notice">
+        <strong>{mappedCompetencyPercent}% mapped does not mean the reviewer is ready</strong>
+        <p>
+          Every competency statement currently transcribed from the official table is assigned to at least one module.
+          The underlying official weighted-table transcription remains {weightedTranscriptionPercent}% because the
+          unresolved 60% of Fundamentals is still blocked. Source-ready modules: {report.sourceReadyModuleCount}.
+          Public midwifery lessons and questions remain at zero.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="why-map-first">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Implementation decision</span>
+        <h2 id="why-map-first">Mapping comes before clinical writing.</h2>
+        <p>
+          Content implementation begins only after a module has a verified scope, proportional assessment target,
+          planned lesson boundaries, and a source packet strong enough to support every material claim.
+        </p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Prevents silent omissions</h3>
+          <p>Every transcribed competency must appear in the map or the production build fails.</p>
+        </article>
+        <article class="card">
+          <h3>Prevents duplicate articles</h3>
+          <p>Modules and lessons have stable IDs, defined boundaries, and explicit relationships to weighted areas.</p>
+        </article>
+        <article class="card">
+          <h3>Prevents unsupported drafting</h3>
+          <p>A module cannot move to ready-to-draft while its source packet has unresolved gaps.</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="implementation-order">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Initial production queue</span>
+        <h2 id="implementation-order">The order after source acquisition.</h2>
+        <p>
+          This sequence follows official emphasis and prerequisite flow. It is an implementation queue, not a claim
+          that these exact topics are guaranteed to appear in a future examination.
+        </p>
+      </div>
+
+      <div class="implementation-queue">
+        {initialQueue.map((module) => {
+          const packet = packetById.get(module.sourcePacketId);
+          const gaps = getPacketGaps(module);
+
+          return (
+            <article class="queue-card">
+              <div>
+                <div class="badge-row" style="margin-top: 0;">
+                  <span class="badge">{module.questionTarget} planned questions</span>
+                  <span class="badge">{module.plannedLessons.length} lessons</span>
+                  <span class="badge">{packet?.status ?? 'missing packet'}</span>
+                </div>
+                <h3>{module.title}</h3>
+                <p>
+                  <strong>{module.id}</strong> · {module.priority} priority · {module.riskLevel} risk
+                </p>
+                <p>
+                  Source packet: {packet?.title ?? module.sourcePacketId}. Open packet gaps: {gaps.length}.
+                </p>
+              </div>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="complete-map">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Complete Version 1 map</span>
+        <h2 id="complete-map">Five domains, sixteen weighted areas, sixty planned modules.</h2>
+        <p>
+          Question targets below are Komadrona’s internal allocation within each official weighted area. They preserve
+          the published area totals but are not presented as an official subtopic distribution.
+        </p>
+      </div>
+
+      <div class="map-domain-list">
+        {report.domains.map((domain, domainIndex) => (
+          <details class="map-domain" open={domainIndex === 0}>
+            <summary>
+              <div>
+                <h3>{domain.domainTitle}</h3>
+                <p>
+                  {domain.mappedCompetencyCount}/{domain.competencyCount} competencies · {domain.moduleCount} modules ·
+                  {' '}{domain.plannedLessonCount} lessons
+                </p>
+              </div>
+              <div class="badge-row" style="margin: 0;">
+                <span class="badge">{domain.questionTarget} questions</span>
+                <span class="badge">{domain.sourceReadyModuleCount} source-ready</span>
+                {domain.blockedModuleCount > 0 && <span class="badge">{domain.blockedModuleCount} blocked</span>}
+              </div>
+            </summary>
+
+            <div class="map-domain-body map-area-list">
+              {domain.areas.map((area) => {
+                const areaModules = plannedModules.filter(
+                  (module) => module.blueprintAreaId === area.blueprintAreaId
+                );
+
+                return (
+                  <section class="map-area">
+                    <div class="map-area-header">
+                      <div>
+                        <h3>{area.blueprintAreaLabel}</h3>
+                        <p>
+                          {area.mappedCompetencyCount}/{area.competencyCount} competencies mapped · {area.moduleCount}
+                          {' '}modules · {area.plannedLessonCount} planned lessons
+                        </p>
+                      </div>
+                      <div class="badge-row" style="margin: 0;">
+                        <span class="badge">{area.evidenceStatus}</span>
+                        <span class="badge">{area.questionTarget}/{area.expectedQuestionTarget} questions</span>
+                      </div>
+                    </div>
+
+                    <div class="module-map-list" style="margin-top: 1rem;">
+                      {areaModules.map((module) => {
+                        const packet = packetById.get(module.sourcePacketId);
+                        const gaps = getPacketGaps(module);
+                        const competencies = getModuleCompetencies(module);
+
+                        return (
+                          <details class="module-map-card">
+                            <summary>
+                              <div class="badge-row" style="margin-top: 0;">
+                                <span class="badge">{module.id}</span>
+                                <span class="badge">{module.questionTarget} questions</span>
+                                <span class="badge">{module.riskLevel} risk</span>
+                                <span class="badge">{module.stage}</span>
+                              </div>
+                              <h4>{module.title}</h4>
+                              <p>{competencies.length} competency links · {module.plannedLessons.length} planned lessons</p>
+                            </summary>
+
+                            <div class="module-map-body">
+                              <p>
+                                <strong>Source packet:</strong> {packet?.title ?? module.sourcePacketId} ({packet?.status ?? 'missing'})
+                              </p>
+                              {gaps.length > 0 && (
+                                <p><strong>Open gaps:</strong> {gaps.map((gap) => gap.id).join(', ')}</p>
+                              )}
+                              {module.note && <p>{module.note}</p>}
+
+                              <h4>Mapped competency statements</h4>
+                              <ul>
+                                {competencies.map((competency) => <li>{competency}</li>)}
+                              </ul>
+
+                              <h4>Planned lesson units</h4>
+                              <ol>
+                                {module.plannedLessons.map((lesson) => (
+                                  <li><code>{lesson.id}</code> — {lesson.title}</li>
+                                ))}
+                              </ol>
+                            </div>
+                          </details>
+                        );
+                      })}
+                    </div>
+                  </section>
+                );
+              })}
+            </div>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="source-gaps">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Gap ledger</span>
+        <h2 id="source-gaps">{report.openGapCount} open mapping and source gaps.</h2>
+        <p>
+          {report.blockerCount} are blockers. Closing these gaps—not producing unsourced prose—is the immediate work
+          required before the first clinical module can be drafted responsibly.
+        </p>
+      </div>
+
+      <div class="gap-list">
+        {contentGaps.map((gap) => (
+          <article class="gap-card" data-severity={gap.severity}>
+            <div class="badge-row" style="margin-top: 0;">
+              <span class="badge">{gap.id}</span>
+              <span class="badge">{gap.category}</span>
+              <span class="badge">{gap.severity}</span>
+            </div>
+            <h3>{gap.title}</h3>
+            <p><strong>Blocks:</strong> {gap.blocks.join('; ')}.</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="first-content-gate">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">First real content gate</span>
+        <h2 id="first-content-gate">Antenatal assessment is mapped, but not yet cleared for drafting.</h2>
+        <p>
+          The module already has linked competencies, seven planned lesson units, a twelve-question target, a risk
+          classification, and an assigned source packet. It remains in source acquisition until current Philippine
+          antenatal and PCPNC materials are acquired and version-checked.
+        </p>
+      </div>
+
+      <article class="card">
+        <h3>Exit conditions before writing</h3>
+        <ul>
+          <li>Close <code>SRC-PH-ANC-001</code>.</li>
+          <li>Close <code>SRC-PH-PCPNC-001</code>.</li>
+          <li>Record exact source locators for each planned lesson.</li>
+          <li>Resolve conflicts between Philippine and international guidance.</li>
+          <li>Approve the module brief and qualified-review path.</li>
+        </ul>
+        <div class="action-row">
+          <a class="button button-primary" href="/content-status">Open implementation status</a>
+          <a class="button button-secondary" href="/exam-blueprint">Compare official weights</a>
+        </div>
+      </article>
+    </div>
+  </section>
+</BaseLayout>
