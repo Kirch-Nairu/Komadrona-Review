@@ -40,7 +40,9 @@ jobs:
           test -f dist/practice/index.html
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
-          grep -q 'Know what this site is before you begin' dist/index.html
+          grep -q 'Know what this app is before you begin' dist/index.html
+          grep -q 'In-app practice' dist/index.html
+          grep -q 'No external quiz provider' dist/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
           grep -q 'It started with Kathy' dist/about/index.html
           grep -q 'Kirch Ivan A. Balite' dist/about/index.html
@@ -55,6 +57,7 @@ jobs:
           grep -q '0/16' dist/content-status/index.html
           grep -q 'How Komadrona source and review labels work' dist/engine-preview/index.html
           grep -q 'noindex, nofollow' dist/engine-preview/index.html
+          ! grep -q 'Google Forms' dist/index.html
           ! grep -q 'Google Forms' dist/practice/index.html
           ! grep -q 'Google Forms practice quizzes' dist/privacy/index.html
 
