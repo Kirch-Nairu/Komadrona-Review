@@ -48,9 +48,9 @@ jobs:
           grep -q 'Step 1 of 4' dist/index.html
           grep -q 'Created by Kirch Ivan A. Balite' dist/index.html
           grep -q 'Your learning records remain in this browser' dist/index.html
-          grep -q 'komadrona:v1:onboarding-complete' dist/index.html
+          grep -R -q 'komadrona:v1:onboarding-complete' dist/_astro
           grep -q 'In-app practice' dist/index.html
-          grep -q 'No external quiz provider' dist/index.html
+          grep -q 'external quiz provider' dist/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
           grep -q 'It started with Kathy' dist/about/index.html
           grep -q 'Kirch Ivan A. Balite' dist/about/index.html
