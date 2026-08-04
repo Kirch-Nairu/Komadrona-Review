@@ -77,5 +77,5 @@ export const defineModule = (
   priority,
   riskLevel,
   stage,
-  note
+  ...(note ? { note } : {})
 });
