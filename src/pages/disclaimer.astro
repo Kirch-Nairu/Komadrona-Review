@@ -7,13 +7,13 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
 
 <BaseLayout
   title="Educational Disclaimer"
-  description="The educational, examination, clinical, affiliation, accuracy, and external-service limitations of Komadrona Review."
+  description="The educational, examination, clinical, affiliation, accuracy, local-storage, and in-app assessment limitations of Komadrona Review."
 >
   <header class="page-header">
     <div class="container">
       <span class="eyebrow">Legal and educational limits</span>
       <h1>Educational disclaimer</h1>
-      <p>Read this page before relying on any review article, practice question, score, or external link.</p>
+      <p>Read this page before relying on any review article, practice question, score, source link, or local progress record.</p>
     </div>
   </header>
 
@@ -41,13 +41,13 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
     <h2>No examination guarantee</h2>
     <p>
       The project does not guarantee that its material is complete, that any topic will appear in a licensure
-      examination, that a learner is eligible to take an examination, or that use of the site will produce a passing
-      score. Examination coverage, schedules, application requirements, and instructions may change.
+      examination, that a learner is eligible to take an examination, or that use of the application will produce a
+      passing score. Examination coverage, schedules, application requirements, and instructions may change.
     </p>
     <p>
       Users must verify current examination information directly through official PRC publications and announcements.
-      The linked April 2026 examination program is used to structure the current Version 1 review map only and is not
-      represented as a permanent Table of Specifications.
+      The linked examination program and Table of Specifications are used to structure and prioritize the current
+      review map; they do not guarantee exact future questions.
     </p>
 
     <h2>Original practice questions only</h2>
@@ -59,6 +59,14 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
     <p>
       Submissions containing confidential examinations, commercial reviewer scans, faculty test banks, copied
       question sets, or instructions for obtaining restricted examination content will not be accepted.
+    </p>
+
+    <h2>In-app practice is not a controlled examination</h2>
+    <p>
+      Questions, answer keys, rationales, scores, bookmarks, and attempt history are designed to run inside the
+      application and remain on the learner's device. Because the content and answer logic are delivered to the
+      browser, technically knowledgeable users may inspect them. The system is not proctored, cheat-resistant, or
+      suitable for certification, identity verification, official grading, or controlled examination delivery.
     </p>
 
     <h2>Copyright and permitted use</h2>
@@ -83,17 +91,21 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
 
     <h2>Privacy and local progress</h2>
     <p>
-      Version 1 does not operate user accounts or a server-side learner database. Browser progress is local to the
-      device and may be lost when site data is cleared or when the user changes browsers or devices. Hosting providers,
-      external quiz services, and voluntary email communication may still process technical or identifying information
-      under their own systems and policies.
+      Version 1 does not operate learner accounts or a server-side score database. Browser-local acknowledgments,
+      progress, attempts, selected answers, bookmarks, and scores may be lost when site data is cleared, private
+      browsing ends, the browser or application is removed, or the user changes or resets devices. The maintainer has
+      no central learner backup and cannot restore deleted local records.
+    </p>
+    <p>
+      Export and import are required before local progress can be described as recoverable. A browser's persistent-
+      storage grant can reduce some eviction risk but cannot prevent the learner from deleting data.
     </p>
 
-    <h2>External services</h2>
+    <h2>Hosting and external links</h2>
     <p>
-      Practice activities may open through Google Forms or another clearly identified external service. Komadrona
-      Review does not control the availability, interface, security, grading behavior, or privacy practices of that
-      external service. Its own terms and privacy notice apply after the user leaves this website.
+      The application may link to official publications, agency pages, repository resources, and other third-party
+      websites. Komadrona Review does not control their availability, content, security, accessibility, or privacy
+      practices. Static hosting providers may process ordinary technical and security logs needed to deliver the app.
     </p>
 
     <h2>Funding and donation features</h2>
@@ -106,15 +118,15 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
     <h2>Use at your own judgment</h2>
     <p>
       Users remain responsible for evaluating the material, consulting current primary sources, and deciding how to
-      use the site. Nothing on Komadrona Review creates a professional, instructional, fiduciary, clinical, or legal
-      relationship between the maintainer and the user.
+      use the application. Nothing on Komadrona Review creates a professional, instructional, fiduciary, clinical, or
+      legal relationship between the maintainer and the user.
     </p>
 
     <h2>Official references supporting this disclosure</h2>
     <p>
       These sources explain the examination framework, non-affiliation position, examination-integrity rule, privacy
-      approach, copyright boundary, quiz configuration, and current exclusion of public donation features. Their
-      inclusion does not mean any issuing body reviewed or approved Komadrona Review.
+      approach, copyright boundary, and current exclusion of public donation features. Their inclusion does not mean
+      any issuing body reviewed or approved Komadrona Review.
     </p>
 
     <ul class="source-list">
@@ -132,6 +144,6 @@ const legalReferences = getReferencesByIds(legalReferenceIds);
       ))}
     </ul>
 
-    <p class="small-print">Last reviewed: 3 August 2026. This page is project disclosure, not legal advice.</p>
+    <p class="small-print">Last reviewed: 4 August 2026. This page is project disclosure, not legal advice.</p>
   </article>
 </BaseLayout>

@@ -1,77 +1,185 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/quiz.css';
+import { assertContentEngineIntegrity } from '../data/contentEngine';
 
-const plannedQuizzes = [
-  ['Obstetrics Practice 01', '25 items', 'Link pending review'],
-  ['Fundamentals of Health Care 01', '25 items', 'Link pending review'],
-  ['Infant Care and Feeding 01', '25 items', 'Link pending review'],
-  ['Primary Health Care 01', '25 items', 'Link pending review'],
-  ['Professional Growth and Development 01', '25 items', 'Link pending review'],
-  ['Mixed Practice Examination 01', '50 items', 'Link pending review']
-];
+const lessons = await getCollection('lessons');
+const questions = await getCollection('questions');
+const report = assertContentEngineIntegrity(lessons, questions);
+
+const previewQuestions = questions
+  .filter(
+    (question) =>
+      question.data.contentKind === 'system-fixture' &&
+      question.data.publicationState === 'internal-preview'
+  )
+  .sort((left, right) => left.data.questionId.localeCompare(right.data.questionId))
+  .map((question) => ({
+    questionId: question.data.questionId,
+    version: question.data.version,
+    stem: question.data.stem,
+    choices: question.data.choices,
+    correctChoiceId: question.data.correctChoiceId,
+    rationale: question.data.rationale,
+    distractorRationales: question.data.distractorRationales,
+    difficulty: question.data.difficulty,
+    cognitiveLevel: question.data.cognitiveLevel,
+    sources: question.data.sources
+  }));
+
+const serializedQuestions = JSON.stringify(previewQuestions).replaceAll('<', '\\u003c');
 ---
 
 <BaseLayout
   title="Practice Center"
-  description="External Google Forms practice quizzes, retry rules, score handling, and privacy boundaries for Komadrona Review."
+  description="Private in-app practice questions, rationales, bookmarks, scores, and browser-local attempt history for Komadrona Review."
 >
   <header class="page-header">
     <div class="container">
-      <span class="eyebrow">External quizzes</span>
-      <h1>Practice center</h1>
+      <span class="eyebrow">In-app practice engine</span>
+      <h1>Practice without leaving Komadrona.</h1>
       <p>
-        Version 1 practice activities will open in Google Forms. The website will not receive quiz screenshots or
-        automatically collect scores.
+        Questions, answers, rationales, bookmarks, and attempt history are designed to stay inside the application.
+        This first vertical slice proves the engine using non-clinical fixture content before real reviewer questions
+        are approved.
       </p>
     </div>
   </header>
 
-  <section class="section">
+  <section class="section" style="padding-top: 1rem;">
     <div class="container">
       <div class="notice">
-        <strong>Quiz links are not public yet</strong>
+        <strong>This preview is not a midwifery examination</strong>
         <p>
-          Forms will be linked only after the answer key, rationale, source, and settings have been checked. Placeholder
-          cards below show the intended Version 1 set.
+          The {report.fixtureQuestionCount} questions below test Komadrona's source, status, and privacy rules. They are
+          deliberately excluded from the official examination coverage ledger and do not count toward the 500-question
+          reviewer target.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="practice-preview">
+    <div class="container practice-shell">
+      <article class="quiz-card">
+        <div class="quiz-card-header">
+          <div>
+            <span class="badge">Engine fixture</span>
+            <h2 id="practice-preview" style="margin-top: 1rem;">Source and status orientation</h2>
+            <p>{previewQuestions.length} questions · immediate rationale · browser-local attempt record</p>
+          </div>
+          <span class="quiz-progress" id="quiz-progress">Ready</span>
+        </div>
+
+        <button class="button button-primary" id="quiz-start" type="button">Start in-app preview</button>
+
+        <div id="quiz-panel" hidden>
+          <p class="eyebrow" id="quiz-question-number" style="margin-bottom: 0.75rem;">Question</p>
+          <h3 class="quiz-stem" id="quiz-stem"></h3>
+          <div class="quiz-choices" id="quiz-choices" role="radiogroup" aria-label="Answer choices"></div>
+
+          <div class="quiz-options">
+            <label for="quiz-confidence">
+              Confidence
+              <select id="quiz-confidence">
+                <option value="low">Low</option>
+                <option value="medium" selected>Medium</option>
+                <option value="high">High</option>
+              </select>
+            </label>
+
+            <label class="checkbox-row" style="padding: 0.65rem 0.8rem;">
+              <input id="quiz-flagged" type="checkbox" />
+              <span>Flag for review</span>
+            </label>
+
+            <button class="button button-secondary" id="quiz-bookmark" type="button" aria-pressed="false">
+              Bookmark question
+            </button>
+          </div>
+
+          <div class="quiz-feedback" id="quiz-feedback" aria-live="polite" hidden></div>
+
+          <div class="quiz-controls">
+            <button class="button button-primary" id="quiz-check" type="button" disabled>Check answer</button>
+            <button class="button button-primary" id="quiz-next" type="button" hidden>Next question</button>
+          </div>
+        </div>
+
+        <div class="quiz-result" id="quiz-result" aria-live="polite" hidden></div>
+        <p class="small-print" id="quiz-engine-status" aria-live="polite">
+          Preparing browser-local storage…
+        </p>
+      </article>
+
+      <aside class="local-data-card" aria-labelledby="local-data-heading">
+        <span class="badge">On-device data</span>
+        <h2 id="local-data-heading" style="margin-top: 1rem;">Local attempt history</h2>
+        <p>
+          Completed preview attempts and question bookmarks are written to IndexedDB in this browser profile. They are
+          not submitted to a Komadrona learner server.
+        </p>
+
+        <div class="storage-state">
+          <strong>Storage protection</strong>
+          <p class="small-print" id="storage-status">Checking browser support…</p>
+          <button class="button button-secondary" id="request-persistence" type="button" hidden>
+            Request persistent storage
+          </button>
+        </div>
+
+        <h3 style="margin-top: 1.5rem;">Recent attempts</h3>
+        <div id="quiz-history" aria-live="polite">
+          <p class="small-print">Loading local history…</p>
+        </div>
+
+        <p class="small-print">
+          Browser data can still be deleted. Export and import will be added before learner progress is considered
+          recoverable.
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="planned-modes">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Planned assessment modes</span>
+        <h2 id="planned-modes">One engine, several ways to practice</h2>
+        <p>
+          The validated question collection will drive focused practice, weighted subject tests, mixed mock exams, and
+          weak-area review without sending scores outside the application.
         </p>
       </div>
 
-      <div class="card-grid" style="margin-top: 1.5rem;">
-        {plannedQuizzes.map(([title, items, status]) => (
-          <article class="card">
-            <span class="badge">{items}</span>
-            <h2 style="font-size: 1.45rem; margin-top: 1rem;">{title}</h2>
-            <p>{status}</p>
-            <p class="small-print">Unlimited practice retries planned.</p>
-          </article>
-        ))}
+      <div class="card-grid">
+        <article class="card">
+          <h3>Topic practice</h3>
+          <p>Short focused sets connected to one lesson or competency, with immediate rationale and retry support.</p>
+        </article>
+        <article class="card">
+          <h3>Weighted domain tests</h3>
+          <p>Questions selected proportionally from the official blueprint for each principal subject.</p>
+        </article>
+        <article class="card">
+          <h3>Weak-area review</h3>
+          <p>Local attempt history will identify missed, low-confidence, bookmarked, and under-practiced competencies.</p>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="section section-muted">
-    <div class="container prose" style="padding-bottom: 0;">
-      <h2>How Version 1 quizzes work</h2>
-      <ul>
-        <li>The quiz opens on an external Google Forms page in a new tab.</li>
-        <li>The form is intended not to request a name, school, or email address.</li>
-        <li>Practice retries are unlimited because the quizzes are for learning, not controlled assessment.</li>
-        <li>Correct answers and explanations may be released immediately after submission.</li>
-        <li>Users may manually record a score in their own browser when local progress features are added.</li>
-        <li>No screenshot, score email, or proof of completion is required.</li>
-      </ul>
+  <script id="komadrona-quiz-data" type="application/json" is:inline set:html={serializedQuestions}></script>
+  <script>
+    import { initQuizEngine } from '../scripts/quizEngine';
 
-      <h2>Score limitation</h2>
-      <p>
-        A self-recorded score is private study information only. It is not verified, not an official grade, and not
-        evidence of examination eligibility or readiness.
-      </p>
-
-      <h2>Before opening a form</h2>
-      <p>
-        Each quiz card will identify the number of questions, expected duration, review date, answer-release behavior,
-        and the fact that the user is leaving Komadrona Review for an external service.
-      </p>
-    </div>
-  </section>
+    initQuizEngine().catch((error: unknown) => {
+      const status = document.getElementById('quiz-engine-status');
+      if (status) {
+        status.textContent = error instanceof Error ? error.message : 'The in-app practice engine could not start.';
+        status.dataset.tone = 'error';
+      }
+    });
+  </script>
 </BaseLayout>

@@ -1,0 +1,39 @@
+{
+  "questionId": "SYS-Q-STATUS-001",
+  "version": 1,
+  "contentKind": "system-fixture",
+  "coverageEligible": false,
+  "domainId": "system",
+  "blueprintAreaId": "system-content-engine",
+  "lessonIds": ["SYS-SOURCE-LABELS-001"],
+  "stem": "Which Komadrona content label requires a documented review by a qualified professional?",
+  "choices": [
+    { "id": "draft", "text": "Draft" },
+    { "id": "source-checked", "text": "Source checked" },
+    { "id": "clinically-reviewed", "text": "Clinically reviewed" },
+    { "id": "archived", "text": "Archived" }
+  ],
+  "correctChoiceId": "clinically-reviewed",
+  "rationale": "The clinically reviewed label is reserved for material that a qualified professional has reviewed through a documented process. Source checking alone does not establish clinical review.",
+  "distractorRationales": [
+    { "choiceId": "draft", "rationale": "Draft content is incomplete and has not passed the publication gates." },
+    { "choiceId": "source-checked", "rationale": "Source checked means claims and citations were compared with references, not that a clinician reviewed them." },
+    { "choiceId": "archived", "rationale": "Archived describes removal from current study paths, not a review qualification." }
+  ],
+  "difficulty": "basic",
+  "cognitiveLevel": "understanding",
+  "riskLevel": "low",
+  "sources": [
+    {
+      "referenceId": "prc-review-materials-advisory",
+      "locator": "Project non-affiliation and review-material representation control"
+    }
+  ],
+  "status": "source-checked",
+  "publicationState": "internal-preview",
+  "lastVerified": "2026-08-04",
+  "sourceChecker": "Kirch Ivan A. Balite",
+  "clinicalReviewer": null,
+  "tags": ["content status", "review labels"],
+  "estimatedSeconds": 35
+}

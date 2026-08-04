@@ -6,146 +6,109 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   <section class="hero">
     <div class="container hero-grid">
       <div class="hero-copy">
-        <span class="eyebrow">Independent Philippine review project</span>
-        <h1>Know what this site is before you begin.</h1>
+        <span class="eyebrow">Offline-first review application</span>
+        <h1>Study through a clear path, practice inside the app, and keep progress on your device.</h1>
         <p>
-          Komadrona Review is a free, source-based study companion for aspiring Philippine midwives. It is not an
-          official reviewer, not a clinical protocol, and not connected to any government agency, school, or review
-          center.
+          Komadrona Review organizes Philippine midwifery subjects into mapped modules, source-backed lessons, in-app
+          practice, and local progress. No account or external quiz provider is required.
         </p>
 
-        <div class="badge-row" aria-label="Version 1 characteristics">
+        <div class="action-row">
+          <a class="button button-primary" href="/review">Open review map</a>
+          <button id="open-onboarding" class="button button-secondary" type="button">Review startup notice</button>
+        </div>
+
+        <div class="badge-row" aria-label="Application characteristics">
           <span class="badge">No account required</span>
-          <span class="badge">No learner database</span>
-          <span class="badge">Local progress only</span>
-          <span class="badge">External practice forms</span>
+          <span class="badge">On-device progress</span>
+          <span class="badge">In-app practice</span>
+          <span class="badge">Source-traceable content</span>
         </div>
       </div>
 
-      <aside class="panel legal-gate" aria-labelledby="before-you-enter">
-        <h2 id="before-you-enter">Before you enter</h2>
-        <p>By continuing, you acknowledge that:</p>
-        <ul>
-          <li>The material is for independent educational review only.</li>
-          <li>It does not replace formal instruction, supervised training, or current clinical guidance.</li>
-          <li>No passing result, completeness, or examination coverage is guaranteed.</li>
-          <li>Practice questions are original exercises, not actual or recalled licensure questions.</li>
-        </ul>
-
-        <label class="checkbox-row" for="acknowledge-notice">
-          <input id="acknowledge-notice" type="checkbox" />
-          <span>I have read and understood the limitations above.</span>
-        </label>
-
-        <div class="action-row">
-          <a id="enter-reviewer" class="button button-primary" href="/review" aria-disabled="true">
-            Enter reviewer
-          </a>
-          <a class="button button-secondary" href="/disclaimer">Read full disclaimer</a>
-        </div>
+      <aside aria-labelledby="entry-path-title">
+        <span class="eyebrow">Study sequence</span>
+        <h2 id="entry-path-title">A straightforward starting path</h2>
+        <ol class="entry-sequence">
+          <li>
+            <div>
+              <strong>Choose a review domain</strong>
+              <span>Start from the five mapped examination subjects.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Read a verified lesson</strong>
+              <span>Each released lesson will show its scope, sources, and review status.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Practice inside Komadrona</strong>
+              <span>Answers, rationales, attempts, and bookmarks remain in the application.</span>
+            </div>
+          </li>
+          <li>
+            <div>
+              <strong>Review weak areas</strong>
+              <span>Local attempt history will guide later focused practice.</span>
+            </div>
+          </li>
+        </ol>
       </aside>
     </div>
   </section>
 
-  <section class="section section-muted" aria-labelledby="important-notices">
+  <section class="section section-muted" aria-labelledby="before-study">
     <div class="container">
       <div class="section-heading">
-        <span class="eyebrow">Version 1 boundaries</span>
-        <h2 id="important-notices">Important notices</h2>
-        <p>The first release is intentionally limited to reduce privacy, security, and maintenance risks.</p>
+        <span class="eyebrow">Before studying</span>
+        <h2 id="before-study">Four facts that should remain clear.</h2>
       </div>
 
-      <div class="card-grid">
-        <article class="card">
-          <h3>Educational use only</h3>
-          <p>
-            Content is intended for review and practice. Always verify current examination instructions through PRC
-            and current health guidance through the appropriate Philippine authorities.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>Independent project</h3>
-          <p>
-            Agency names and official publications are referenced only as sources. Their inclusion does not imply
-            affiliation, approval, review, sponsorship, or endorsement.
-          </p>
-        </article>
-
-        <article class="card">
-          <h3>No confidential questions</h3>
-          <p>
-            The project will not publish leaked, recalled, copied, or confidential examination questions. Practice
-            items must be written originally and supported by traceable references.
-          </p>
-        </article>
-      </div>
-    </div>
-  </section>
-
-  <section class="section" aria-labelledby="storage-warning">
-    <div class="container">
-      <div class="notice">
-        <strong id="storage-warning">Your progress exists only in this browser</strong>
-        <p>
-          Completed topics, bookmarks, and self-recorded scores will be stored locally on this device. Clearing site
-          data or browser storage, using private browsing, reinstalling the browser, changing browsers, or moving to
-          another device may permanently reset that progress. Komadrona Review cannot recover it.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-muted" aria-labelledby="privacy-at-launch">
-    <div class="container hero-grid">
-      <div class="section-heading">
-        <span class="eyebrow">Privacy at launch</span>
-        <h2 id="privacy-at-launch">Minimal by design</h2>
-        <p>
-          Version 1 has no accounts, no first-party analytics, no advertising trackers, and no server-side learner
-          profile. Google Forms quizzes open as clearly labeled external services.
-        </p>
-        <a href="/privacy">Read the privacy notice</a>
-      </div>
-
-      <ul class="status-list" aria-label="Privacy design choices">
-        <li>No names requested by the website</li>
-        <li>No email address required by the website</li>
-        <li>No screenshot or score submission</li>
-        <li>No automatic cross-device syncing</li>
+      <ul class="plain-facts">
+        <li>
+          <strong>Independent educational project</strong>
+          <span>Not produced, approved, or endorsed by PRC, DOH, CHED, a school, or a review center.</span>
+        </li>
+        <li>
+          <strong>Not clinical instruction</strong>
+          <span>It does not replace formal teaching, supervised training, current protocols, or qualified judgment.</span>
+        </li>
+        <li>
+          <strong>Original practice only</strong>
+          <span>No leaked, recalled, copied, or confidential licensure questions are permitted.</span>
+        </li>
+        <li>
+          <strong>Browser-local records</strong>
+          <span>Clearing site data or changing browsers or devices may permanently remove progress and attempts.</span>
+        </li>
       </ul>
     </div>
   </section>
 
-  <script>
-    const acknowledgmentKey = 'komadrona:v1:notice-acknowledged';
-    const checkbox = document.querySelector('#acknowledge-notice');
-    const enterLink = document.querySelector('#enter-reviewer');
+  <section class="section" aria-labelledby="current-build-state">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Current build state</span>
+        <h2 id="current-build-state">The application engine and content map exist. Clinical reviewer content is still gated.</h2>
+        <p>
+          The current branch contains the local practice engine, IndexedDB storage, a complete module plan for the
+          available official scope, and build-time validation. Public midwifery lessons remain at zero until required
+          source packets and review gates are complete.
+        </p>
+      </div>
 
-    if (checkbox instanceof HTMLInputElement && enterLink instanceof HTMLAnchorElement) {
-      const previouslyAcknowledged = localStorage.getItem(acknowledgmentKey) === 'true';
-      checkbox.checked = previouslyAcknowledged;
-
-      const updateAccess = () => {
-        const enabled = checkbox.checked;
-        enterLink.setAttribute('aria-disabled', enabled ? 'false' : 'true');
-        enterLink.tabIndex = enabled ? 0 : -1;
-      };
-
-      checkbox.addEventListener('change', () => {
-        if (checkbox.checked) {
-          localStorage.setItem(acknowledgmentKey, 'true');
-        } else {
-          localStorage.removeItem(acknowledgmentKey);
-        }
-        updateAccess();
-      });
-
-      enterLink.addEventListener('click', (event) => {
-        if (!checkbox.checked) event.preventDefault();
-      });
-
-      updateAccess();
-    }
-  </script>
+      <div>
+        <div class="action-row" style="margin-top: 0;">
+          <a class="button button-primary" href="/content-map">Inspect content map</a>
+          <a class="button button-secondary" href="/content-status">Inspect implementation status</a>
+        </div>
+        <p class="small-print" style="margin-top: 1rem;">
+          Created and maintained by Kirch Ivan A. Balite, a developer independently studying the midwifery domain to
+          structure the project responsibly.
+        </p>
+      </div>
+    </div>
+  </section>
 </BaseLayout>

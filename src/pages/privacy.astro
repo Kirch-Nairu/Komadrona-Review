@@ -4,64 +4,79 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 <BaseLayout
   title="Privacy Notice"
-  description="How Komadrona Review handles browser progress, hosting logs, external Google Forms, and voluntary contact."
+  description="How Komadrona Review handles browser-local progress, attempts, bookmarks, application storage, hosting logs, and voluntary contact."
 >
   <header class="page-header">
     <div class="container">
       <span class="eyebrow">Version 1 privacy</span>
       <h1>Privacy notice</h1>
-      <p>Version 1 is designed to avoid creating a centralized learner profile or database.</p>
+      <p>Version 1 is designed to avoid creating a centralized learner profile, score database, or account system.</p>
     </div>
   </header>
 
   <article class="container prose">
     <div class="notice">
-      <strong>Progress is local and recoverability is limited</strong>
+      <strong>Learning data stays local, but local does not mean indestructible</strong>
       <p>
-        Completed topics, bookmarks, acknowledgments, and self-recorded scores are stored in this browser. Clearing
-        site data or browser storage, using private browsing, reinstalling the browser, changing browsers, or moving
-        to another device may permanently reset them. Komadrona Review has no server backup and cannot restore them.
+        Acknowledgments, lesson progress, bookmarks, quiz attempts, selected answers, scores, and related study records
+        are designed to remain in browser storage on the learner's device. Clearing site data, using private browsing,
+        reinstalling the browser or application, resetting the device, changing browsers, or moving to another device
+        may permanently remove them. Komadrona Review has no central learner backup and cannot restore deleted records.
       </p>
     </div>
 
-    <h2>What the website does not request</h2>
-    <p>Komadrona Review Version 1 does not provide accounts and does not ask the website user to submit:</p>
+    <h2>What the application does not request</h2>
+    <p>Komadrona Review Version 1 does not provide accounts and does not require the learner to submit:</p>
     <ul>
       <li>a name, school, student number, professional license number, phone number, or home address;</li>
-      <li>an email address for access to the reviewer;</li>
+      <li>an email address to read lessons or take in-app practice questions;</li>
       <li>a quiz screenshot, score report, identification document, or educational record; or</li>
-      <li>health information or patient information.</li>
+      <li>health information, patient information, or clinical records.</li>
     </ul>
 
     <h2>Information stored in the browser</h2>
     <p>
-      The site may use browser local storage for the legal-notice acknowledgment, topic completion, bookmarks, and
-      scores that the user records manually. This information is intended to remain on the device and is not designed
-      to be transmitted to a Komadrona Review learner database.
+      Small application preferences and acknowledgments may be stored through browser local storage. Structured learner
+      data such as quiz attempts, selected answers, scores, bookmarks, lesson progress, and storage metadata is designed
+      for IndexedDB. Offline application files may later use service-worker Cache Storage when the installable offline
+      release is implemented.
     </p>
     <p>
-      Browser storage can be inspected, changed, or deleted by a person with access to the device. It should not be
-      treated as a secure record, an official grade, or proof of examination readiness.
+      The current practice-engine preview already stores completed fixture attempts and question bookmarks in IndexedDB.
+      These records are not intentionally submitted to a Komadrona learner server.
+    </p>
+    <p>
+      Browser storage can be inspected, changed, exported, imported, or deleted by a person with access to the device.
+      It must not be treated as a secure record, an official grade, proof of identity, or evidence of examination
+      eligibility or readiness.
+    </p>
+
+    <h2>Storage persistence and backups</h2>
+    <p>
+      The application may ask the browser to grant persistent storage. The browser decides whether to grant that request,
+      and the learner can still delete the data manually. Persistent-storage status therefore does not replace backups.
+    </p>
+    <p>
+      Export and import are required before learner progress is considered recoverable. Until those controls are
+      implemented and tested, local progress must be treated as disposable study data.
+    </p>
+
+    <h2>In-app questions and scores</h2>
+    <p>
+      Practice questions are delivered as part of the Komadrona application instead of through an external quiz
+      provider. Answer checking, rationales, bookmarks, scoring, and attempt history are intended to run locally in the
+      browser. No score submission, screenshot submission, or server-side learner profile is required.
+    </p>
+    <p>
+      Because question content and answer keys are delivered to the learner's device, the practice system is not a
+      secure or proctored examination. It is a private study tool only.
     </p>
 
     <h2>Hosting and technical records</h2>
     <p>
-      The site is planned for static hosting through Vercel. Like ordinary hosting providers, Vercel may process
+      The application is planned for static hosting through Vercel. Like ordinary hosting providers, Vercel may process
       technical request, network, security, and diagnostic information needed to deliver and protect the service.
-      Komadrona Review does not control the provider's independent processing and does not use those records to build
-      learner profiles.
-    </p>
-
-    <h2>Google Forms practice quizzes</h2>
-    <p>
-      Practice quizzes open on Google Forms as an external service rather than inside the website. Version 1 forms are
-      intended to avoid questions requesting names and email addresses, and they should not require score screenshots
-      to be sent to the maintainer.
-    </p>
-    <p>
-      Google may process technical, cookie, browser, or account information under its own terms and privacy practices,
-      including when a user is already signed in to a Google account. Komadrona Review cannot control or erase data
-      held independently by Google.
+      Komadrona Review does not use those provider records to create learner score profiles.
     </p>
 
     <h2>Voluntary communication</h2>
@@ -91,6 +106,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
       raised through the repository's GitHub issue process without posting sensitive personal information publicly.
     </p>
 
-    <p class="small-print">Effective date: 3 August 2026. Applies to Komadrona Review Version 1.</p>
+    <p class="small-print">Effective date: 4 August 2026. Applies to Komadrona Review Version 1.</p>
   </article>
 </BaseLayout>

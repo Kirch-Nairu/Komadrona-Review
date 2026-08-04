@@ -31,6 +31,9 @@ jobs:
           test -f dist/index.html
           test -f dist/about/index.html
           test -f dist/exam-blueprint/index.html
+          test -f dist/content-map/index.html
+          test -f dist/content-status/index.html
+          test -f dist/engine-preview/index.html
           test -f dist/disclaimer/index.html
           test -f dist/privacy/index.html
           test -f dist/sources/index.html
@@ -38,7 +41,15 @@ jobs:
           test -f dist/practice/index.html
           test -f dist/credits/index.html
           grep -q 'width=device-width' dist/index.html
-          grep -q 'Know what this site is before you begin' dist/index.html
+          grep -q 'Study through a clear path' dist/index.html
+          grep -q 'A straightforward starting path' dist/index.html
+          grep -q 'Review startup notice' dist/index.html
+          grep -q 'onboarding-dialog' dist/index.html
+          grep -q 'Step 1 of 4' dist/index.html
+          grep -q 'Created by Kirch Ivan A. Balite' dist/index.html
+          grep -q 'Your learning records remain in this browser' dist/index.html
+          grep -q 'In-app practice' dist/index.html
+          grep -q 'external quiz provider' dist/index.html
           grep -q 'Study midwifery with structure' dist/about/index.html
           grep -q 'It started with Kathy' dist/about/index.html
           grep -q 'Kirch Ivan A. Balite' dist/about/index.html
@@ -46,6 +57,24 @@ jobs:
           grep -q 'Weights guide priority; they do not guarantee questions' dist/exam-blueprint/index.html
           grep -q 'Prenatal, labor, childbirth, and postpartum care' dist/exam-blueprint/index.html
           grep -q 'Board Resolution No. 1, Series of 2013' dist/exam-blueprint/index.html
+          grep -q 'Map the whole reviewer first' dist/content-map/index.html
+          grep -q 'Five domains, sixteen weighted areas, sixty planned modules' dist/content-map/index.html
+          grep -q '261' dist/content-map/index.html
+          grep -q '500' dist/content-map/index.html
+          grep -q 'Currently unavailable' dist/content-map/index.html
+          grep -q 'SRC-PH-ANC-001' dist/content-map/index.html
+          grep -q 'SRC-PH-PCPNC-001' dist/content-map/index.html
+          grep -q 'What is mapped, what exists, and what still blocks publication' dist/content-status/index.html
+          grep -q '77/77' dist/content-status/index.html
+          grep -q '0/16' dist/content-status/index.html
+          grep -q 'Practice without leaving Komadrona' dist/practice/index.html
+          grep -q 'This preview is not a midwifery examination' dist/practice/index.html
+          grep -q 'komadrona-quiz-data' dist/practice/index.html
+          grep -q 'How Komadrona source and review labels work' dist/engine-preview/index.html
+          grep -q 'noindex, nofollow' dist/engine-preview/index.html
+          ! grep -q 'Google Forms' dist/index.html
+          ! grep -q 'Google Forms' dist/practice/index.html
+          ! grep -q 'Google Forms practice quizzes' dist/privacy/index.html
 
       - name: Upload static build
         uses: actions/upload-artifact@v4

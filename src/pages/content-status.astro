@@ -1,0 +1,240 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/blueprint.css';
+import { assertContentEngineIntegrity } from '../data/contentEngine';
+import { assertContentMapIntegrity } from '../data/contentMapValidation';
+
+const lessons = await getCollection('lessons');
+const questions = await getCollection('questions');
+const contentReport = assertContentEngineIntegrity(lessons, questions);
+const mapReport = assertContentMapIntegrity();
+---
+
+<BaseLayout
+  title="Content Status"
+  description="Live mapping, implementation, coverage, validation, lesson, question, source-packet, and blocker status for Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Live implementation ledger</span>
+      <h1>What is mapped, what exists, and what still blocks publication.</h1>
+      <p>
+        This page is generated from the same examination blueprint, content map, source packets, lesson collection, and
+        question collection used by the application. Planned work, fixture content, and public reviewer content remain
+        deliberately separate.
+      </p>
+
+      <div class="blueprint-summary" aria-label="Content implementation summary">
+        <div class="blueprint-stat">
+          <strong>{mapReport.mappedCompetencyCount}/{mapReport.competencyCount}</strong>
+          <span>transcribed competency statements mapped</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{mapReport.moduleCount}</strong>
+          <span>planned modules</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{mapReport.plannedLessonCount}</strong>
+          <span>planned lesson units</span>
+        </div>
+      </div>
+
+      <div class="blueprint-summary" aria-label="Published content summary">
+        <div class="blueprint-stat">
+          <strong>{contentReport.publicLessonCount}</strong>
+          <span>public midwifery lessons</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{contentReport.publicQuestionCount}</strong>
+          <span>public midwifery questions</span>
+        </div>
+        <div class="blueprint-stat">
+          <strong>{contentReport.coveredBlueprintAreas}/{contentReport.totalBlueprintAreas}</strong>
+          <span>official areas with lesson and question coverage</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="notice">
+        <strong>Mapping is complete for the currently transcribed scope; content is not</strong>
+        <p>
+          The map assigns all {mapReport.competencyCount} currently transcribed competency statements to
+          {mapReport.moduleCount} modules and {mapReport.plannedLessonCount} planned lessons. Its internal assessment
+          allocation totals {mapReport.questionTarget} questions. Source-ready modules: {mapReport.sourceReadyModuleCount}.
+          Open gaps: {mapReport.openGapCount}, including {mapReport.blockerCount} blockers. Public examination content
+          remains at zero until modules pass their source and review gates.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="mapping-controls">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Mapping controls</span>
+        <h2 id="mapping-controls">The build now protects the full production plan</h2>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Competency completeness</h3>
+          <p>
+            Every currently transcribed blueprint competency must map to at least one planned module. Removing one
+            without replacing its coverage fails the build.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Weighted assessment totals</h3>
+          <p>
+            Module-level question targets must add back to every official weighted area and to the 500-question
+            Version 1 minimum.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Source readiness</h3>
+          <p>
+            A module cannot be marked ready to draft while its source packet remains acquiring or blocked. Unknown
+            references, gaps, modules, areas, and lesson IDs also fail validation.
+          </p>
+        </article>
+      </div>
+
+      <div class="action-row" style="margin-top: 1.5rem;">
+        <a class="button button-primary" href="/content-map">Inspect the complete content map</a>
+        <a class="button button-secondary" href="/exam-blueprint">Compare official weights</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="engine-controls">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Content-engine controls</span>
+        <h2 id="engine-controls">Lessons and questions have separate publication gates</h2>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Collection schemas</h3>
+          <p>
+            Lesson and question files must satisfy strict metadata, source, answer, rationale, review, risk, and
+            publication-state schemas before Astro can build them.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Cross-reference integrity</h3>
+          <p>
+            The build verifies source IDs, lesson-question relationships, blueprint mappings, choice IDs, answer keys,
+            distractor rationales, and required review metadata.
+          </p>
+        </article>
+        <article class="card">
+          <h3>Publication gates</h3>
+          <p>
+            Draft, expired, archived, or insufficiently reviewed material cannot be marked public. High-risk public
+            review content requires documented clinical review.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="fixture-status">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Engine proof</span>
+        <h2 id="fixture-status">Fixture content remains isolated from reviewer totals</h2>
+        <p>
+          The current {contentReport.fixtureLessonCount} schema-valid lesson and {contentReport.fixtureQuestionCount}
+          schema-valid questions are non-clinical system fixtures. They prove rendering, rationale display, scoring,
+          bookmarks, and local attempt storage without counting toward the examination map.
+        </p>
+      </div>
+
+      <article class="card">
+        <h3>Inspect the working vertical slice</h3>
+        <div class="action-row">
+          <a class="button button-primary" href="/practice">Open in-app practice</a>
+          <a class="button button-secondary" href="/engine-preview">Open lesson fixture</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="domain-coverage">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Released-domain coverage</span>
+        <h2 id="domain-coverage">All official areas still require real lessons and questions</h2>
+        <p>
+          An area is counted as covered only when at least one coverage-eligible lesson and one coverage-eligible
+          question map to it. Full release targets remain substantially stricter than this first signal.
+        </p>
+      </div>
+
+      <div class="blueprint-domain-list">
+        {contentReport.domains.map((domain) => (
+          <article class="blueprint-domain">
+            <header class="blueprint-domain-header">
+              <div>
+                <h2>{domain.domainTitle}</h2>
+                <p>{domain.lessonCount} released-path lessons · {domain.questionCount} released-path questions</p>
+              </div>
+              <div class="coverage-meter">
+                <strong>{domain.weightedCoveragePercent}%</strong>
+                <span>weighted released coverage</span>
+              </div>
+            </header>
+
+            <div class="blueprint-area-list">
+              {domain.areas.map((area) => (
+                <section class="blueprint-area">
+                  <div class="blueprint-area-topline">
+                    <div>
+                      <h3>{area.blueprintAreaLabel}</h3>
+                      <div class="blueprint-area-meta">
+                        <span class="badge">{area.weightPercent}% official weight</span>
+                        <span class="badge">{area.lessonCount} lessons</span>
+                        <span class="badge">{area.questionCount} questions</span>
+                      </div>
+                    </div>
+                    <strong class="weight-number">{area.covered ? 'Covered' : 'Gap'}</strong>
+                  </div>
+                </section>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="next-stage">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Immediate next gate</span>
+        <h2 id="next-stage">Close the antenatal source packet before writing the first real module</h2>
+        <p>
+          Antenatal Assessment and Risk Identification is already mapped to its official area, seven planned lessons,
+          and a twelve-question target. It remains in source acquisition until current Philippine antenatal and PCPNC
+          materials are acquired, version-checked, and assigned exact locators.
+        </p>
+      </div>
+
+      <article class="card">
+        <h3>Current engineering work after mapping</h3>
+        <ul>
+          <li>Reusable domain, module, and lesson routes</li>
+          <li>Correction-history records</li>
+          <li>Weighted question-selection utilities</li>
+          <li>Incomplete-attempt saving and resume</li>
+          <li>Backup, migration, and offline/PWA stages</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+</BaseLayout>

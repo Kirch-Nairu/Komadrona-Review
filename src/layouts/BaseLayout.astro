@@ -1,6 +1,8 @@
 ---
+import OnboardingWizard from '../components/OnboardingWizard.astro';
 import '../styles/global.css';
 import '../styles/mobile-menu.css';
+import '../styles/onboarding.css';
 
 interface Props {
   title?: string;
@@ -10,7 +12,7 @@ interface Props {
 
 const {
   title = 'Komadrona Review',
-  description = 'An independent, source-based review and practice platform for aspiring Philippine midwives.',
+  description = 'An independent, source-based review and practice application for aspiring Philippine midwives.',
   noindex = false
 } = Astro.props;
 
@@ -41,6 +43,7 @@ const isCurrent = (href: string) =>
         <nav class="site-nav" aria-label="Primary navigation">
           <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
           <a href="/exam-blueprint" aria-current={isCurrent('/exam-blueprint') ? 'page' : undefined}>Blueprint</a>
+          <a href="/content-map" aria-current={isCurrent('/content-map') ? 'page' : undefined}>Map</a>
           <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
           <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
           <a href="/about" aria-current={isCurrent('/about') ? 'page' : undefined}>About</a>
@@ -52,6 +55,7 @@ const isCurrent = (href: string) =>
           <nav aria-label="Mobile navigation">
             <a href="/review" aria-current={isCurrent('/review') ? 'page' : undefined}>Review</a>
             <a href="/exam-blueprint" aria-current={isCurrent('/exam-blueprint') ? 'page' : undefined}>Blueprint</a>
+            <a href="/content-map" aria-current={isCurrent('/content-map') ? 'page' : undefined}>Content map</a>
             <a href="/practice" aria-current={isCurrent('/practice') ? 'page' : undefined}>Practice</a>
             <a href="/sources" aria-current={isCurrent('/sources') ? 'page' : undefined}>Sources</a>
             <a href="/about" aria-current={isCurrent('/about') ? 'page' : undefined}>About</a>
@@ -65,6 +69,8 @@ const isCurrent = (href: string) =>
       <slot />
     </main>
 
+    <OnboardingWizard />
+
     <footer class="site-footer">
       <div class="container footer-grid">
         <div>
@@ -73,11 +79,13 @@ const isCurrent = (href: string) =>
             Independent educational project based in Bohol, Philippines. Not affiliated with or endorsed by PRC,
             the Professional Regulatory Board of Midwifery, DOH, CHED, any school, or any review center.
           </p>
-          <p class="small-print">Version 1 stores progress only in the user's browser.</p>
+          <p class="small-print">Version 1 keeps learner progress and attempts in browser-local storage.</p>
         </div>
 
         <nav class="footer-links" aria-label="Legal and project links">
           <a href="/exam-blueprint">Blueprint</a>
+          <a href="/content-map">Content map</a>
+          <a href="/content-status">Content status</a>
           <a href="/about">About</a>
           <a href="/credits">Credits</a>
           <a href="/disclaimer">Disclaimer</a>

@@ -1,337 +1,290 @@
 # Komadrona Review — Project Status
 
 Status date: 4 August 2026  
-Current stage: Foundation and examination blueprint  
-Current pull request: `#1 Establish legal-first Version 1 foundation`  
-Current branch: `agent/legal-first-foundation`
+Current stage: Machine-validated content mapping and source acquisition  
+Foundation pull request: `#1 Establish legal-first Version 1 foundation`  
+Active stacked pull request: `#2 Build in-app content and practice engine foundation`  
+Current branch: `feature/content-engine`
 
 ## Status language
 
-Komadrona Review uses the following terms consistently:
-
 - `Planned` — documented but not implemented.
+- `Mapped` — assigned to a domain, weighted area, module, lesson boundary, source packet, and assessment target.
 - `Implemented` — code or content exists in the branch.
-- `Build verified` — automated checks pass.
+- `Build verified` — automated checks pass for the identified commit.
 - `Visually verified` — inspected at defined mobile and desktop widths.
+- `Interaction verified` — client behavior and local persistence were exercised in a browser.
+- `Source ready` — the module's primary-source packet is complete, version-checked, and has exact locators.
 - `Source checked` — factual claims were compared with cited primary sources.
 - `Clinically reviewed` — a qualified reviewer completed a documented review.
 - `Released` — merged, deployed, and available through the public release route.
 - `Blocked` — an unresolved dependency prevents responsible completion.
 
+## Pull-request state
+
+### PR #1 — Foundation
+
+Branch: `agent/legal-first-foundation`  
+Base: `main`  
+State: open draft
+
+Scope: governance, legal and privacy boundaries, responsive shell, source registry, examination blueprint, and roadmap.
+
+### PR #2 — Content and local-practice engine
+
+Branch: `feature/content-engine`  
+Base: `agent/legal-first-foundation`  
+State: open stacked draft
+
+Scope now includes:
+
+- strict lesson and question collections;
+- cross-collection publication validation;
+- in-app fixture practice and IndexedDB persistence;
+- live implementation ledger;
+- machine-readable Version 1 content map;
+- source-packet and blocker model;
+- exact 500-question internal allocation;
+- mapping-first production workflow.
+
+No clinical lesson or board-style question is represented as ready.
+
 ## Current delivery status
 
 ### Foundation and governance — implemented
 
-- Static Astro and TypeScript frontend
-- Legal-first landing page and acknowledgment
-- Educational and non-affiliation disclaimer
-- Privacy notice and local-storage warning
-- Source registry and source-policy page
-- Copyright and content-license boundaries
-- Contribution and examination-integrity rules
-- About and credits pages
-- Responsive desktop and mobile navigation
-- Baseline Vercel security headers
-- GitHub Actions type-check, build, route, and artifact workflow
+Implemented:
 
-Status: `Implemented`, `Build verified`, and visually tested during foundation QA.
+- Astro and TypeScript static application;
+- legal acknowledgment and educational disclaimer;
+- browser-local privacy notice;
+- source registry and source policy;
+- copyright, contribution, and examination-integrity rules;
+- About and Credits pages;
+- responsive navigation;
+- Vercel security headers; and
+- GitHub Actions type-check, build, route, content, and artifact workflow.
+
+Status: `Implemented` and `Build verified`.
 
 ### Examination blueprint — implemented with one controlled gap
 
-Implemented:
+Current official-table transcription:
 
-- Five principal examination subjects
-- Official percentage-weight display
-- Official-source warning and limitations
-- Proportional study-priority model
-- Weight-total and duplicate-ID build validation
-- Review-domain links to the blueprint
-- Direct PRC Table of Specifications attribution
+- Obstetrics: 100%;
+- Infant Care and Feeding: 100%;
+- Primary Health Care: 100%, including a disclosed normalized heading;
+- Professional Growth and Development: 100%;
+- Fundamentals of Health Care: 40% exact, 60% blocked.
 
-Mapping state:
+Aggregate weighted-table transcription: 440 of 500 items, or 88%.
 
-- Obstetrics: 100 percent blueprint mapping
-- Infant Care and Feeding: 100 percent blueprint mapping
-- Primary Health Care: 100 percent blueprint mapping, including a clearly labeled normalized cluster
-- Professional Growth and Development: 100 percent blueprint mapping
-- Fundamentals of Health Care: 40 percent exact mapping; remaining 60 percent blocked pending independent verification
+Open blocker: `MAP-FHC-001`.
 
-Aggregate mapped coverage across five 100-item subject tables: 440 of 500 weighted items, or 88 percent.
-
-Blocker: `MAP-FHC-001` — verify the remaining Fundamentals of Health Care Table of Specifications page without inference.
-
-### Source acquisition — started, not complete
+### Version 1 content map — implemented and build verified
 
 Implemented:
 
-- Versioned source registry
-- Official PRC examination program and Table of Specifications
-- RA 7392 and selected maternal, newborn, reproductive-health, nutrition, breastfeeding, and screening laws
-- Initial DOH program references
-- Initial WHO maternal and newborn guidance
-- Privacy, copyright, Google Forms, and public-solicitation operational references
+- 77 of 77 currently transcribed competency statements assigned to modules;
+- 60 planned modules;
+- 261 planned lesson units;
+- 16 weighted areas represented;
+- 500-question internal allocation;
+- per-area question totals that exactly match the official area weights;
+- stable module and planned-lesson IDs;
+- module priority and risk classification;
+- 17 source packets;
+- 18 explicit mapping and source gaps;
+- ordered initial implementation queue; and
+- `/content-map` generated from the same data used by the build validator.
+
+The map validator fails the build when:
+
+- a competency has no planned module;
+- a module references an unknown domain, area, source packet, or competency index;
+- a source packet references an unknown source or gap;
+- module or lesson IDs are duplicated;
+- a module claims readiness while its packet is not ready;
+- an area's internal question targets do not equal its official weight; or
+- the complete plan does not total 500 questions.
+
+Status: `Mapped`, `Implemented`, and `Build verified`.
+
+Important limitation: mapping the currently transcribed competency statements does not close the unresolved Fundamentals source gap and does not mean clinical content is complete.
+
+### Source acquisition — active and blocking clinical drafting
+
+Current source-packet state:
+
+- source packets: 17;
+- source-ready packets: 0;
+- packets in acquisition: 16;
+- blocked packets: 1;
+- open mapping/source gaps: 18.
+
+Highest-priority unresolved source needs include:
+
+- current Philippine antenatal-care guidance;
+- complete current PCPNC manual;
+- current BEmONC material;
+- current EINC or Unang Yakap guidance;
+- current Philippine family-planning standards;
+- current newborn-screening and immunization guidance;
+- current breastfeeding, Milk Code, and infant-feeding guidance;
+- current IMCI or sick-young-infant guidance;
+- current infection-prevention standards;
+- current RA 7392 implementing rules and Midwifery Code of Ethics; and
+- current PHC and disease-control operational guidance.
+
+Status: `Started`; no clinical module is source ready.
+
+### First real module — mapped, not ready to draft
+
+Module: `OBS-ANTENATAL-ASSESSMENT`  
+Title: Antenatal Assessment and Risk Identification  
+Priority: Highest  
+Risk: High  
+Planned lessons: 7  
+Internal question target: 12  
+Source packet: `antenatal-care`
+
+Formal brief: `docs/modules/OBS-ANTENATAL-ASSESSMENT.md`
+
+Blocking gaps:
+
+- `SRC-PH-ANC-001`;
+- `SRC-PH-PCPNC-001`.
+
+Status: `Mapped` and `source-acquisition`; not `ready-to-draft`.
+
+### Content and question schemas — implemented first slice
+
+Implemented:
+
+- strict lesson and question metadata;
+- stable IDs and question versions;
+- source locators;
+- lesson-question reciprocal links;
+- four-choice question contract;
+- answer and distractor rationales;
+- risk, status, and publication fields;
+- source-ID, domain, area, answer-key, and review-metadata validation; and
+- public-content review gates.
+
+Fixture proof:
+
+- non-clinical fixture lessons: 1;
+- non-clinical fixture questions: 3;
+- official midwifery lessons: 0;
+- official midwifery questions: 0.
+
+Status: `Implemented`; fixtures remain excluded from official coverage.
+
+### In-app practice and learner storage — implemented first slice
+
+Implemented:
+
+- in-app four-choice practice;
+- immediate answer and distractor rationales;
+- source-locator display;
+- confidence and flag state;
+- question bookmarks;
+- local scores and recent-attempt history;
+- exact question-version capture;
+- IndexedDB stores for attempts, bookmarks, lesson progress, and metadata; and
+- persistent-storage status/request handling.
 
 Still required:
 
-- Complete current PCPNC manual
-- Complete current BEmONC material
-- Current EINC or Unang Yakap guidance
-- Current Philippine family-planning clinical standards
-- Current National Immunization Program guidance
-- Current newborn-screening operational guidance
-- Current IMCI or sick-young-infant guidance
-- Current infection-prevention and control standards
-- Current breastfeeding, Milk Code, and infant-and-young-child-feeding guidance
-- Complete CHED CMO No. 3 competency extraction
+- incomplete-attempt persistence and resume;
+- topic, weighted-domain, and mixed-test generation;
+- question navigator;
+- weak-area and competency aggregation;
+- JSON export/import, validation, migration, rollback, and reset; and
+- large-bank performance and randomization controls.
 
-Status: `Started`; major clinical drafting remains blocked until the relevant source packet is complete.
+Status: `Implemented` as a controlled vertical slice; learner data is not yet recoverable.
 
-### Content engine — planned, not implemented
+### Released reviewer coverage — zero by design
 
-Required:
+- public clinical lessons: 0;
+- source-checked clinical lessons: 0;
+- clinically reviewed lessons: 0;
+- validated midwifery questions: 0;
+- weighted areas with both real lesson and question coverage: 0 of 16.
 
-- Astro content collections
-- Strict lesson schema
-- Strict question schema
-- Build-time metadata validation
-- Competency-to-lesson coverage ledger
-- Reusable lesson layout
-- Source-note component
-- Status and review-date component
-- Correction-history support
+Status: `Not started` beyond mapping and source acquisition.
 
-Status: `Planned`.
-
-### Reviewer lessons — not started
-
-Current published clinical lessons: 0  
-Current source-checked lessons: 0  
-Current clinically reviewed lessons: 0
-
-The first planned module is `Obstetrics — Prenatal Assessment and Health Teaching`, but drafting will not begin until its source packet and schema exist.
-
-Status: `Not started` by design.
-
-### Practice bank — not started
-
-Current original validated questions: 0  
-Current public Google Forms: 0  
-Minimum Version 1 completion target: 500 original validated questions
-
-Status: `Not started`.
-
-### Learner tools — mostly planned
-
-Implemented:
-
-- Local acknowledgment state
+### PWA and offline delivery — planned
 
 Not implemented:
 
-- Topic completion
-- Bookmarks
-- Self-recorded quiz attempts
-- Progress dashboard
-- Export and import backup
-- Search
-- Correction report route
+- web app manifest and production icons;
+- service worker and Cache Storage strategy;
+- offline shell and content precaching;
+- controlled update notification and rollback; and
+- installation guidance.
 
-Status: `Planned` except for acknowledgment state.
+Status: `Planned`. Komadrona must not yet claim complete offline-app behavior.
 
 ### Deployment — not released
 
-- Local development: available
-- Ubuntu static build: verified through GitHub Actions
-- Public Vercel deployment: not completed
-- Main branch release: not completed
-
-Status: `Not released`.
+- local development: available;
+- Ubuntu static build: verified on completed heads;
+- public Vercel release: not completed;
+- main-branch release: not completed;
+- installable PWA: not completed;
+- Android packaging: deferred until browser application stability;
+- iOS packaging: deferred.
 
 ## Current blockers
 
-### Blocker 1 — Fundamentals blueprint gap
+### MAP-FHC-001 — remaining Fundamentals table
 
-ID: `MAP-FHC-001`
+Prevents final detailed allocation of 60 Fundamentals questions and a 100% official-table transcription claim.
 
-Impact:
+### Source packet blockers
 
-- prevents final Fundamentals topic weighting;
-- prevents proportional Fundamentals question allocation;
-- prevents 100 percent blueprint-completeness claim.
+Prevent the mapped modules from moving to `ready-to-draft`. A packet closes only when current primary sources, versions, applicability, and exact locators are recorded.
 
-Exit criteria:
+### REV-CLINICAL-001 — qualified clinical review
 
-- readable official evidence obtained;
-- two-pass transcription completed;
-- exact headings and weights recorded;
-- total equals 100 percent;
-- page evidence and verification date attached.
+High-risk and critical clinical material cannot be described as complete or clinically reviewed without a documented qualified reviewer process.
 
-### Blocker 2 — Philippine clinical source packets
+### UX-CONTENT-ENGINE-001 — reusable real lesson system
 
-ID: `SRC-CLINICAL-001`
+Mapping and fixture rendering exist. Real domain/module/topic routes, reusable source/status components, and correction history remain to be finalized.
 
-Impact:
+### OPS-LOCAL-RECOVERY-001 — backup and migration
 
-- prevents responsible clinical drafting;
-- prevents exact Philippine schedules, procedures, referral rules, or treatment claims.
+Local records remain vulnerable until export/import, schema migration, rollback, and reset controls are implemented and tested.
 
-Exit criteria:
+## Current workflow
 
-- required current manuals acquired;
-- versions and issuing bodies verified;
-- source records and exact locators prepared per module.
+1. Map official competency scope.
+2. Assign modules, lesson boundaries, risk, and assessment targets.
+3. Assign a source packet and record explicit gaps.
+4. Acquire and version-check current Philippine primary sources.
+5. Attach exact locators and reconcile conflicts.
+6. Move the module to `ready-to-draft` only when its packet has no open gap.
+7. Draft lessons from approved objectives.
+8. Source-check each material claim.
+9. Obtain required qualified review.
+10. Write and validate original linked questions.
+11. Run automated, responsive, accessibility, and interaction QA.
+12. Publish with status, verification dates, and correction history.
 
-### Blocker 3 — Qualified clinical review
+## Immediate next actions
 
-ID: `REV-CLINICAL-001`
-
-Impact:
-
-- content can reach `Source checked` but not `Clinically reviewed`;
-- high-risk clinical content cannot be declared complete.
-
-Exit criteria:
-
-- qualified reviewer identified;
-- review scope and process documented;
-- consent to attribution or anonymous internal review terms recorded;
-- corrections and approvals logged.
-
-### Blocker 4 — Content engine
-
-ID: `UX-CONTENT-ENGINE-001`
-
-Impact:
-
-- articles could otherwise become inconsistent and difficult to audit;
-- coverage and source gaps would be hidden.
-
-Exit criteria:
-
-- schemas implemented;
-- invalid content fails the build;
-- coverage report generated;
-- reusable lesson template visually verified.
-
-## Branch and pull-request workflow
-
-The project will avoid one permanent branch containing every stage.
-
-### Pull Request 1 — Foundation
-
-Branch: `agent/legal-first-foundation`
-
-Scope:
-
-- legal, privacy, source, licensing, and governance foundation;
-- interface shell and responsive design;
-- examination blueprint;
-- content-completion roadmap and current status.
-
-Exit criteria before readiness:
-
-- CI green;
-- no unresolved foundation blocker;
-- roadmap and status synchronized;
-- PR description updated to reflect the final foundation scope;
-- final mobile and desktop visual check.
-
-This PR remains draft until those checks are intentionally accepted. It should not absorb full lesson content.
-
-### Pull Request 2 — Content engine
-
-Planned branch: `feature/content-engine`
-
-Scope:
-
-- content collections;
-- schemas;
-- build-time validation;
-- lesson layout;
-- coverage ledger;
-- correction metadata.
-
-No clinical lesson prose should be merged through this PR except a clearly labeled fixture used to validate the engine.
-
-### Pull Request 3 — Fundamentals blueprint completion
-
-Planned branch: `research/fundamentals-tos-completion`
-
-Scope:
-
-- close `MAP-FHC-001`;
-- replace the pending 60-percent placeholder;
-- update proportional question allocations;
-- attach source evidence and verification notes.
-
-This may run in parallel with the content-engine branch because it changes blueprint research rather than lesson rendering.
-
-### Content pull requests
-
-Each major module uses a focused branch, for example:
-
-- `content/obstetrics-antenatal-foundations`
-- `content/obstetrics-labor-childbirth`
-- `content/infant-immediate-newborn-care`
-- `content/phc-maternal-child-health`
-- `content/pgd-ethics-law`
-- `content/fundamentals-core-care`
-
-Each content PR must include:
-
-- module brief;
-- lesson metadata;
-- source packet and exact locators;
-- original lesson text;
-- coverage-ledger updates;
-- review status;
-- original questions when the lesson is ready;
-- successful build and visual QA.
-
-### Review-state rule
-
-A pull request may merge a `Draft` or `Source checked` lesson into a non-public development path, but the production study path must not represent it as clinically reviewed or complete until the required review has occurred.
-
-## Standard module workflow
-
-1. Select weighted competency.
-2. Create or update gap records.
-3. Acquire exact sources.
-4. Approve module brief.
-5. Draft lesson.
-6. Source-check every material claim.
-7. Obtain required qualified review.
-8. Write and validate original questions.
-9. Run automated checks.
-10. Perform mobile and desktop visual QA.
-11. Merge through a focused PR.
-12. Publish status and review dates.
-13. Monitor for corrections and source updates.
-
-## Immediate next milestone
-
-Milestone name: `M2 — Content Engine and Coverage Ledger`
-
-Deliverables:
-
-- strict lesson schema;
-- strict question schema;
-- competency and source relationships;
-- build-time rejection of incomplete public content;
-- generated coverage summary;
-- reusable lesson interface;
-- one non-clinical fixture page for QA;
-- updated CI checks.
-
-Parallel research task:
-
-- close `MAP-FHC-001`.
-
-Following milestone:
-
-- `M3 — Obstetrics: Prenatal Assessment and Health Teaching`.
+1. Finish content-map desktop and mobile QA.
+2. Acquire and verify the `antenatal-care` source packet.
+3. Finalize reusable real module and lesson routes.
+4. Implement source-note, review-status, and correction-history components.
+5. Add weighted question-selection utilities using the mapped question targets.
+6. Add in-progress attempt saving and resume.
+7. Close `MAP-FHC-001` in parallel.
+8. Begin `OBS-ANTENATAL-ASSESSMENT` drafting only after its packet reaches `ready`.
 
 ## Current judgment
 
-The project has a strong foundation and a defensible priority map, but it is not yet a usable reviewer. The responsible next step is infrastructure for auditable content, followed by source acquisition and focused module production. Writing many articles before those controls exist would create the appearance of completeness while preserving hidden gaps.
+Mapping was the correct first move. Komadrona now has a complete internal production plan for the currently available official scope instead of a loose list of articles. The immediate bottleneck is no longer deciding what to write; it is acquiring the current Philippine sources needed to write the first high-risk module responsibly.
