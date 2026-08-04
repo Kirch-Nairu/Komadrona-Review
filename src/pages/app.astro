@@ -1,0 +1,110 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/learner-app.css';
+---
+
+<BaseLayout
+  title="Learner Home"
+  description="Continue studying, resume local practice, and view browser-local progress in Komadrona Review."
+>
+  <header class="learner-hero">
+    <div class="container hero-copy">
+      <span class="eyebrow">Learner home</span>
+      <h1>Pick up where you stopped.</h1>
+      <p>
+        Study, practice, and local progress now begin here. Komadrona reads only the learning records stored in this
+        browser profile; no account or learner server is involved.
+      </p>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container learner-layout">
+      <div>
+        <section class="learner-section" aria-labelledby="continue-heading">
+          <span class="eyebrow">Continue</span>
+          <h2 id="continue-heading">Your next saved action</h2>
+          <div class="continue-panel" id="dashboard-active-session" aria-live="polite">
+            <p>Checking this browser for an unfinished session…</p>
+          </div>
+        </section>
+
+        <section class="learner-section" aria-labelledby="start-heading">
+          <span class="eyebrow">Start</span>
+          <h2 id="start-heading">Choose what to do</h2>
+          <ul class="learner-action-list">
+            <li>
+              <a href="/review">
+                <span><strong>Study</strong>Browse mapped review domains and released lessons.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/practice">
+                <span><strong>Practice</strong>Start or resume an in-app question session.</span>
+              </a>
+            </li>
+            <li>
+              <a href="/progress">
+                <span><strong>Progress</strong>Review attempts, bookmarks, and lesson completion stored here.</span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="learner-section" aria-labelledby="recent-heading">
+          <span class="eyebrow">Recent</span>
+          <h2 id="recent-heading">Completed practice</h2>
+          <div id="dashboard-recent-attempts" aria-live="polite">
+            <p class="small-print">Loading completed attempts…</p>
+          </div>
+        </section>
+      </div>
+
+      <aside>
+        <section class="learner-section" aria-labelledby="summary-heading">
+          <span class="eyebrow">Local summary</span>
+          <h2 id="summary-heading">This browser profile</h2>
+          <dl class="summary-metrics">
+            <div>
+              <dt>Completed attempts</dt>
+              <dd id="dashboard-completed-attempts">—</dd>
+            </div>
+            <div>
+              <dt>Bookmarks</dt>
+              <dd id="dashboard-bookmarks">—</dd>
+            </div>
+            <div>
+              <dt>Lessons completed / started</dt>
+              <dd id="dashboard-lessons">—</dd>
+            </div>
+          </dl>
+          <p class="small-print" id="dashboard-local-status" aria-live="polite">
+            Loading local learner records…
+          </p>
+        </section>
+
+        <section class="learner-section" aria-labelledby="content-boundary-heading">
+          <span class="eyebrow">Current boundary</span>
+          <h2 id="content-boundary-heading">The learner engine is ahead of the clinical content.</h2>
+          <p>
+            The current practice set is a non-clinical software fixture. Real midwifery lessons and questions remain
+            blocked until their source and review requirements are complete.
+          </p>
+          <a href="/content-status">See implementation status</a>
+        </section>
+      </aside>
+    </div>
+  </section>
+
+  <script>
+    import { initLearnerDashboard } from '../scripts/learnerDashboard';
+
+    initLearnerDashboard().catch((error: unknown) => {
+      const status = document.getElementById('dashboard-local-status');
+      if (status) {
+        status.textContent = error instanceof Error ? error.message : 'The learner dashboard could not start.';
+        status.dataset.tone = 'error';
+      }
+    });
+  </script>
+</BaseLayout>
