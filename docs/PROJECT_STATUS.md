@@ -1,9 +1,10 @@
 # Komadrona Review — Project Status
 
 Status date: 4 August 2026  
-Current stage: Foundation and examination blueprint  
-Current pull request: `#1 Establish legal-first Version 1 foundation`  
-Current branch: `agent/legal-first-foundation`
+Current stage: Content and in-app practice engine vertical slice  
+Foundation pull request: `#1 Establish legal-first Version 1 foundation`  
+Active stacked pull request: `#2 Build in-app content and practice engine foundation`  
+Current branch: `feature/content-engine`
 
 ## Status language
 
@@ -11,12 +12,48 @@ Komadrona Review uses the following terms consistently:
 
 - `Planned` — documented but not implemented.
 - `Implemented` — code or content exists in the branch.
-- `Build verified` — automated checks pass.
+- `Build verified` — automated checks pass for the identified commit.
 - `Visually verified` — inspected at defined mobile and desktop widths.
+- `Interaction verified` — client behavior and local persistence were exercised in a browser.
 - `Source checked` — factual claims were compared with cited primary sources.
 - `Clinically reviewed` — a qualified reviewer completed a documented review.
 - `Released` — merged, deployed, and available through the public release route.
 - `Blocked` — an unresolved dependency prevents responsible completion.
+
+## Pull-request state
+
+### Pull Request 1 — Foundation
+
+Branch: `agent/legal-first-foundation`  
+Base: `main`  
+State: open draft
+
+Scope:
+
+- legal, privacy, source, licensing, and governance foundation;
+- responsive interface shell;
+- official examination blueprint;
+- content-completion roadmap and gap controls.
+
+This PR remains isolated from full lesson and quiz implementation.
+
+### Pull Request 2 — Content engine
+
+Branch: `feature/content-engine`  
+Base: `agent/legal-first-foundation`  
+State: open stacked draft
+
+Scope:
+
+- strict lesson and question content collections;
+- cross-collection validation;
+- live coverage ledger;
+- schema-rendered non-clinical fixture lesson;
+- first in-app question engine;
+- IndexedDB attempts and bookmarks;
+- local-storage and privacy architecture changes.
+
+The fixture content is explicitly excluded from official examination coverage and the 500-question release target.
 
 ## Current delivery status
 
@@ -25,16 +62,16 @@ Komadrona Review uses the following terms consistently:
 - Static Astro and TypeScript frontend
 - Legal-first landing page and acknowledgment
 - Educational and non-affiliation disclaimer
-- Privacy notice and local-storage warning
+- Browser-local privacy notice
 - Source registry and source-policy page
 - Copyright and content-license boundaries
 - Contribution and examination-integrity rules
 - About and credits pages
 - Responsive desktop and mobile navigation
 - Baseline Vercel security headers
-- GitHub Actions type-check, build, route, and artifact workflow
+- GitHub Actions type-check, build, route, content, and artifact workflow
 
-Status: `Implemented`, `Build verified`, and visually tested during foundation QA.
+Status: `Implemented` and `Build verified` in the foundation branch.
 
 ### Examination blueprint — implemented with one controlled gap
 
@@ -69,7 +106,13 @@ Implemented:
 - RA 7392 and selected maternal, newborn, reproductive-health, nutrition, breastfeeding, and screening laws
 - Initial DOH program references
 - Initial WHO maternal and newborn guidance
-- Privacy, copyright, Google Forms, and public-solicitation operational references
+- Privacy, copyright, and public-solicitation operational references
+
+Removed from the active architecture:
+
+- Google Forms as a quiz provider
+- external score handling
+- external form privacy and retry dependencies
 
 Still required:
 
@@ -86,78 +129,162 @@ Still required:
 
 Status: `Started`; major clinical drafting remains blocked until the relevant source packet is complete.
 
-### Content engine — planned, not implemented
+### Content and question schemas — implemented first slice
 
-Required:
+Implemented:
 
-- Astro content collections
-- Strict lesson schema
-- Strict question schema
-- Build-time metadata validation
-- Competency-to-lesson coverage ledger
-- Reusable lesson layout
-- Source-note component
-- Status and review-date component
-- Correction-history support
+- Astro `lessons` content collection
+- Astro `questions` content collection
+- Strict lesson metadata schema
+- Strict question metadata schema
+- Stable lesson and question IDs
+- Question versioning
+- Exact source locator requirements
+- Four-choice Version 1 question contract
+- Answer and distractor rationale requirements
+- Risk, status, and publication-state fields
+- Build-time source-ID validation
+- Build-time domain and blueprint-area validation
+- Build-time lesson-question reciprocal-link validation
+- Build-time answer-key and choice-ID validation
+- Build-time review-metadata and publication-gate validation
 
-Status: `Planned`.
+Fixture proof:
+
+- Schema-valid non-clinical lessons: 1
+- Schema-valid non-clinical questions: 3
+- Official examination lessons: 0
+- Official examination questions: 0
+
+Status: `Implemented`; fixture content is isolated from official coverage.
+
+### Live coverage ledger — implemented first slice
+
+Implemented:
+
+- `/content-status` route generated from lesson, question, source, and blueprint data
+- Fixture and official content counted separately
+- Domain and weighted-area lesson/question counts
+- Build failure when integrity errors are present
+- Zero official coverage displayed honestly until real modules exist
+
+Current official area coverage: 0 of 16 represented weighted areas have both a real lesson and a real question.
+
+Status: `Implemented`; complete competency-level reporting and export remain planned.
+
+### In-app practice engine — implemented first vertical slice
+
+Implemented:
+
+- Questions delivered inside Komadrona
+- Four-choice interaction
+- Immediate answer checking
+- Correct-answer rationale
+- Selected-distractor rationale
+- Source locator display
+- Confidence selection
+- Flag-for-review state in the attempt record
+- Question bookmarks
+- Local scoring
+- Retake support
+- Local recent-attempt history
+- Question-version capture in attempts
+
+Current bank:
+
+- Non-clinical engine fixture questions: 3
+- Validated midwifery questions: 0
+- Minimum Version 1 target: 500 original validated midwifery questions
+
+Not yet implemented:
+
+- weighted question selection;
+- topic and domain configuration;
+- mixed mock examinations;
+- question navigator;
+- pause and resume;
+- incomplete-attempt recovery;
+- weak-area selection;
+- competency result breakdown;
+- large-bank performance and randomization controls.
+
+Status: `Implemented` as a controlled fixture vertical slice, not yet a complete reviewer examination engine.
+
+### Browser-local learner data — implemented first slice
+
+Implemented:
+
+- IndexedDB database `komadrona-review`
+- Data version 1
+- `attempts` object store
+- `bookmarks` object store
+- `lessonProgress` object store foundation
+- `metadata` object store foundation
+- Completed fixture-attempt persistence
+- Bookmark persistence
+- Persistent-storage status check and request control
+- Small legal acknowledgment in local storage
+
+Not yet implemented:
+
+- lesson progress interface;
+- in-progress attempt persistence and resume;
+- score and weak-area aggregation;
+- migrations beyond version 1;
+- JSON export and import;
+- pre-import rollback;
+- merge and replace modes;
+- destructive reset interface.
+
+Status: `Implemented` first slice. Local data is not yet considered recoverable.
 
 ### Reviewer lessons — not started
 
 Current published clinical lessons: 0  
-Current source-checked lessons: 0  
+Current source-checked clinical lessons: 0  
 Current clinically reviewed lessons: 0
 
-The first planned module is `Obstetrics — Prenatal Assessment and Health Teaching`, but drafting will not begin until its source packet and schema exist.
+The first planned real module remains `Obstetrics — Prenatal Assessment and Health Teaching`. Drafting will not begin until its source packet is complete and the reusable real lesson route is finalized.
 
 Status: `Not started` by design.
 
-### Practice bank — not started
-
-Current original validated questions: 0  
-Current public Google Forms: 0  
-Minimum Version 1 completion target: 500 original validated questions
-
-Status: `Not started`.
-
-### Learner tools — mostly planned
-
-Implemented:
-
-- Local acknowledgment state
+### PWA and offline delivery — planned
 
 Not implemented:
 
-- Topic completion
-- Bookmarks
-- Self-recorded quiz attempts
-- Progress dashboard
-- Export and import backup
-- Search
-- Correction report route
+- web app manifest;
+- application icons;
+- service worker;
+- Cache Storage strategy;
+- offline shell;
+- offline lesson and question precaching;
+- update notification;
+- install guidance;
+- cache-version rollback.
 
-Status: `Planned` except for acknowledgment state.
+Status: `Planned`. Static pages may be browser-cached normally, but Komadrona must not yet claim full offline-app behavior.
 
 ### Deployment — not released
 
 - Local development: available
-- Ubuntu static build: verified through GitHub Actions
+- Ubuntu static build: verified through GitHub Actions for completed commits
 - Public Vercel deployment: not completed
 - Main branch release: not completed
+- Installable PWA release: not completed
+- Android package: deferred until the browser application is stable
+- iOS packaging: explicitly deferred
 
 Status: `Not released`.
 
 ## Current blockers
 
-### Blocker 1 — Fundamentals blueprint gap
-
-ID: `MAP-FHC-001`
+### MAP-FHC-001 — Fundamentals blueprint gap
 
 Impact:
 
 - prevents final Fundamentals topic weighting;
 - prevents proportional Fundamentals question allocation;
-- prevents 100 percent blueprint-completeness claim.
+- prevents a 100 percent blueprint-completeness claim.
 
 Exit criteria:
 
@@ -167,9 +294,7 @@ Exit criteria:
 - total equals 100 percent;
 - page evidence and verification date attached.
 
-### Blocker 2 — Philippine clinical source packets
-
-ID: `SRC-CLINICAL-001`
+### SRC-CLINICAL-001 — Philippine clinical source packets
 
 Impact:
 
@@ -182,14 +307,12 @@ Exit criteria:
 - versions and issuing bodies verified;
 - source records and exact locators prepared per module.
 
-### Blocker 3 — Qualified clinical review
-
-ID: `REV-CLINICAL-001`
+### REV-CLINICAL-001 — Qualified clinical review
 
 Impact:
 
 - content can reach `Source checked` but not `Clinically reviewed`;
-- high-risk clinical content cannot be declared complete.
+- high-risk clinical content cannot be declared complete or published through the clinical study path.
 
 Exit criteria:
 
@@ -198,140 +321,57 @@ Exit criteria:
 - consent to attribution or anonymous internal review terms recorded;
 - corrections and approvals logged.
 
-### Blocker 4 — Content engine
+### UX-CONTENT-ENGINE-001 — Reusable real lesson system
 
-ID: `UX-CONTENT-ENGINE-001`
+Remaining impact:
 
-Impact:
-
-- articles could otherwise become inconsistent and difficult to audit;
-- coverage and source gaps would be hidden.
+- fixture rendering exists, but real domain/module/topic routes and reusable status/source components are not finalized;
+- correction history and competency-level reporting remain incomplete.
 
 Exit criteria:
 
-- schemas implemented;
-- invalid content fails the build;
-- coverage report generated;
-- reusable lesson template visually verified.
+- reusable lesson layout finalized;
+- domain/module/topic routes implemented;
+- source and review-status components implemented;
+- correction history implemented;
+- full coverage report generated.
 
-## Branch and pull-request workflow
+### OPS-LOCAL-RECOVERY-001 — Local backup and migration
 
-The project will avoid one permanent branch containing every stage.
+Impact:
 
-### Pull Request 1 — Foundation
+- local learner records can be lost;
+- users cannot move records between browsers or devices;
+- schema updates cannot yet migrate or roll back safely.
 
-Branch: `agent/legal-first-foundation`
+Exit criteria:
 
-Scope:
+- export and import implemented;
+- schema validation and migration implemented;
+- merge, replace, and rollback behavior tested;
+- destructive reset controls implemented.
 
-- legal, privacy, source, licensing, and governance foundation;
-- interface shell and responsive design;
-- examination blueprint;
-- content-completion roadmap and current status.
+## Branch and module workflow
 
-Exit criteria before readiness:
+1. Foundation work remains in PR #1.
+2. Content engine and local practice infrastructure remains in stacked PR #2.
+3. Fundamentals blueprint research should use `research/fundamentals-tos-completion`.
+4. Real reviewer modules use focused branches after the engine contract is stable.
+5. Each real module PR includes sources, metadata, lesson text, coverage updates, question records, review status, CI, and visual QA.
 
-- CI green;
-- no unresolved foundation blocker;
-- roadmap and status synchronized;
-- PR description updated to reflect the final foundation scope;
-- final mobile and desktop visual check.
+## Immediate next actions
 
-This PR remains draft until those checks are intentionally accepted. It should not absorb full lesson content.
-
-### Pull Request 2 — Content engine
-
-Planned branch: `feature/content-engine`
-
-Scope:
-
-- content collections;
-- schemas;
-- build-time validation;
-- lesson layout;
-- coverage ledger;
-- correction metadata.
-
-No clinical lesson prose should be merged through this PR except a clearly labeled fixture used to validate the engine.
-
-### Pull Request 3 — Fundamentals blueprint completion
-
-Planned branch: `research/fundamentals-tos-completion`
-
-Scope:
-
-- close `MAP-FHC-001`;
-- replace the pending 60-percent placeholder;
-- update proportional question allocations;
-- attach source evidence and verification notes.
-
-This may run in parallel with the content-engine branch because it changes blueprint research rather than lesson rendering.
-
-### Content pull requests
-
-Each major module uses a focused branch, for example:
-
-- `content/obstetrics-antenatal-foundations`
-- `content/obstetrics-labor-childbirth`
-- `content/infant-immediate-newborn-care`
-- `content/phc-maternal-child-health`
-- `content/pgd-ethics-law`
-- `content/fundamentals-core-care`
-
-Each content PR must include:
-
-- module brief;
-- lesson metadata;
-- source packet and exact locators;
-- original lesson text;
-- coverage-ledger updates;
-- review status;
-- original questions when the lesson is ready;
-- successful build and visual QA.
-
-### Review-state rule
-
-A pull request may merge a `Draft` or `Source checked` lesson into a non-public development path, but the production study path must not represent it as clinically reviewed or complete until the required review has occurred.
-
-## Standard module workflow
-
-1. Select weighted competency.
-2. Create or update gap records.
-3. Acquire exact sources.
-4. Approve module brief.
-5. Draft lesson.
-6. Source-check every material claim.
-7. Obtain required qualified review.
-8. Write and validate original questions.
-9. Run automated checks.
-10. Perform mobile and desktop visual QA.
-11. Merge through a focused PR.
-12. Publish status and review dates.
-13. Monitor for corrections and source updates.
-
-## Immediate next milestone
-
-Milestone name: `M2 — Content Engine and Coverage Ledger`
-
-Deliverables:
-
-- strict lesson schema;
-- strict question schema;
-- competency and source relationships;
-- build-time rejection of incomplete public content;
-- generated coverage summary;
-- reusable lesson interface;
-- one non-clinical fixture page for QA;
-- updated CI checks.
-
-Parallel research task:
-
-- close `MAP-FHC-001`.
-
-Following milestone:
-
-- `M3 — Obstetrics: Prenatal Assessment and Health Teaching`.
+1. Finish PR #2 desktop, mobile, and interaction QA.
+2. Finalize the reusable real lesson route and source/status components.
+3. Add in-progress attempt saving and resume support.
+4. Add question-selection utilities for topic, weighted-domain, and mixed modes.
+5. Add competency-level result aggregation.
+6. Implement JSON export, import, validation, migration, and rollback.
+7. Implement the PWA manifest, service worker, and offline-cache strategy.
+8. Close `MAP-FHC-001` in parallel.
+9. Acquire the complete Philippine antenatal source packet.
+10. Start the first real module only after the source packet and publication gates are ready.
 
 ## Current judgment
 
-The project has a strong foundation and a defensible priority map, but it is not yet a usable reviewer. The responsible next step is infrastructure for auditable content, followed by source acquisition and focused module production. Writing many articles before those controls exist would create the appearance of completeness while preserving hidden gaps.
+Komadrona now has more than a legal shell: the content schemas, validation model, local database, and in-app practice path exist as a working non-clinical fixture. It is still not a usable midwifery reviewer because official lessons and validated midwifery questions remain at zero. The next responsible work is to finish the reusable engine and recovery controls, then add source packets and focused reviewer modules without weakening the publication gates.
