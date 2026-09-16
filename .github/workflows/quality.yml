@@ -1,0 +1,56 @@
+name: Quality
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install dependencies
+        run: npm install --no-audit --no-fund
+
+      - name: Type-check and build
+        run: npm run build
+
+      - name: Verify generated routes
+        run: |
+          test -f dist/index.html
+          test -f dist/about/index.html
+          test -f dist/exam-blueprint/index.html
+          test -f dist/disclaimer/index.html
+          test -f dist/privacy/index.html
+          test -f dist/sources/index.html
+          test -f dist/review/index.html
+          test -f dist/practice/index.html
+          test -f dist/credits/index.html
+          grep -q 'width=device-width' dist/index.html
+          grep -q 'Know what this site is before you begin' dist/index.html
+          grep -q 'Study midwifery with structure' dist/about/index.html
+          grep -q 'It started with Kathy' dist/about/index.html
+          grep -q 'Kirch Ivan A. Balite' dist/about/index.html
+          grep -q 'strongest official emphasis' dist/exam-blueprint/index.html
+          grep -q 'Weights guide priority; they do not guarantee questions' dist/exam-blueprint/index.html
+          grep -q 'Prenatal, labor, childbirth, and postpartum care' dist/exam-blueprint/index.html
+          grep -q 'Board Resolution No. 1, Series of 2013' dist/exam-blueprint/index.html
+
+      - name: Upload static build
+        uses: actions/upload-artifact@v4
+        with:
+          name: komadrona-static-build
+          path: dist/
+          if-no-files-found: error
+          retention-days: 7

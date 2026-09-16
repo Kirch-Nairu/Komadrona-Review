@@ -1,0 +1,137 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getReferencesByIds, legalReferenceIds } from '../data/referenceRegistry';
+
+const legalReferences = getReferencesByIds(legalReferenceIds);
+---
+
+<BaseLayout
+  title="Educational Disclaimer"
+  description="The educational, examination, clinical, affiliation, accuracy, and external-service limitations of Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Legal and educational limits</span>
+      <h1>Educational disclaimer</h1>
+      <p>Read this page before relying on any review article, practice question, score, or external link.</p>
+    </div>
+  </header>
+
+  <article class="container prose">
+    <div class="notice">
+      <strong>Not medical or clinical advice</strong>
+      <p>
+        Komadrona Review is an educational study resource. It is not a clinical protocol, patient-specific advice,
+        professional consultation, or a substitute for supervised education and clinical training.
+      </p>
+    </div>
+
+    <h2>Independent and unofficial</h2>
+    <p>
+      Komadrona Review is independently created and maintained. It is not affiliated with, commissioned by, reviewed
+      by, approved by, sponsored by, or endorsed by the Professional Regulation Commission, the Professional
+      Regulatory Board of Midwifery, the Department of Health, the Commission on Higher Education, any educational
+      institution, or any review center.
+    </p>
+    <p>
+      References to agencies, laws, examination programs, and publications identify sources only. No agency seal,
+      school seal, or official branding should be interpreted as part of this project.
+    </p>
+
+    <h2>No examination guarantee</h2>
+    <p>
+      The project does not guarantee that its material is complete, that any topic will appear in a licensure
+      examination, that a learner is eligible to take an examination, or that use of the site will produce a passing
+      score. Examination coverage, schedules, application requirements, and instructions may change.
+    </p>
+    <p>
+      Users must verify current examination information directly through official PRC publications and announcements.
+      The linked April 2026 examination program is used to structure the current Version 1 review map only and is not
+      represented as a permanent Table of Specifications.
+    </p>
+
+    <h2>Original practice questions only</h2>
+    <p>
+      Practice questions are intended to be original educational exercises derived from official concepts and
+      traceable references. They are not represented as actual, leaked, recalled, reconstructed, predicted, or
+      officially endorsed licensure-examination questions.
+    </p>
+    <p>
+      Submissions containing confidential examinations, commercial reviewer scans, faculty test banks, copied
+      question sets, or instructions for obtaining restricted examination content will not be accepted.
+    </p>
+
+    <h2>Copyright and permitted use</h2>
+    <p>
+      Educational purpose does not create unlimited permission to copy protected material. Komadrona Review will write
+      explanations and practice items originally, use limited quotations only when necessary, attribute sources, and
+      link to official publications rather than rehosting full books, diagrams, tables, or question banks without clear
+      permission or a compatible license.
+    </p>
+
+    <h2>Accuracy and changing guidance</h2>
+    <p>
+      Reasonable efforts will be made to identify sources, versions, review statuses, and correction dates.
+      Nevertheless, laws, regulations, clinical guidance, examination programs, and accepted terminology can change.
+      Errors or outdated statements may remain temporarily despite review.
+    </p>
+    <p>
+      Where a site summary differs from a current official document, the current official document controls. For
+      patient care or clinical decisions, follow applicable institutional protocols, current Philippine guidance, and
+      qualified professional supervision.
+    </p>
+
+    <h2>Privacy and local progress</h2>
+    <p>
+      Version 1 does not operate user accounts or a server-side learner database. Browser progress is local to the
+      device and may be lost when site data is cleared or when the user changes browsers or devices. Hosting providers,
+      external quiz services, and voluntary email communication may still process technical or identifying information
+      under their own systems and policies.
+    </p>
+
+    <h2>External services</h2>
+    <p>
+      Practice activities may open through Google Forms or another clearly identified external service. Komadrona
+      Review does not control the availability, interface, security, grading behavior, or privacy practices of that
+      external service. Its own terms and privacy notice apply after the user leaves this website.
+    </p>
+
+    <h2>Funding and donation features</h2>
+    <p>
+      The initial release does not include a donation button, Maya QR code, visible wallet details, payment link,
+      advertising, or sponsorship facility. Any later public-funding feature requires a separate review of applicable
+      solicitation, hosting, privacy, accounting, and disclosure requirements before implementation.
+    </p>
+
+    <h2>Use at your own judgment</h2>
+    <p>
+      Users remain responsible for evaluating the material, consulting current primary sources, and deciding how to
+      use the site. Nothing on Komadrona Review creates a professional, instructional, fiduciary, clinical, or legal
+      relationship between the maintainer and the user.
+    </p>
+
+    <h2>Official references supporting this disclosure</h2>
+    <p>
+      These sources explain the examination framework, non-affiliation position, examination-integrity rule, privacy
+      approach, copyright boundary, quiz configuration, and current exclusion of public donation features. Their
+      inclusion does not mean any issuing body reviewed or approved Komadrona Review.
+    </p>
+
+    <ul class="source-list">
+      {legalReferences.map((reference) => (
+        <li>
+          <div class="badge-row" style="margin: 0 0 0.75rem;">
+            <span class="badge">{reference.priority}</span>
+            <span class="badge">{reference.year}</span>
+          </div>
+          <strong>{reference.title}</strong>
+          <span>{reference.issuer}</span>
+          <p style="margin-top: 0.75rem;">{reference.use}</p>
+          <a href={reference.url} target="_blank" rel="noopener noreferrer">Open official source</a>
+        </li>
+      ))}
+    </ul>
+
+    <p class="small-print">Last reviewed: 3 August 2026. This page is project disclosure, not legal advice.</p>
+  </article>
+</BaseLayout>

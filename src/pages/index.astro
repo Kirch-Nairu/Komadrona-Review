@@ -1,0 +1,151 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow">Independent Philippine review project</span>
+        <h1>Know what this site is before you begin.</h1>
+        <p>
+          Komadrona Review is a free, source-based study companion for aspiring Philippine midwives. It is not an
+          official reviewer, not a clinical protocol, and not connected to any government agency, school, or review
+          center.
+        </p>
+
+        <div class="badge-row" aria-label="Version 1 characteristics">
+          <span class="badge">No account required</span>
+          <span class="badge">No learner database</span>
+          <span class="badge">Local progress only</span>
+          <span class="badge">External practice forms</span>
+        </div>
+      </div>
+
+      <aside class="panel legal-gate" aria-labelledby="before-you-enter">
+        <h2 id="before-you-enter">Before you enter</h2>
+        <p>By continuing, you acknowledge that:</p>
+        <ul>
+          <li>The material is for independent educational review only.</li>
+          <li>It does not replace formal instruction, supervised training, or current clinical guidance.</li>
+          <li>No passing result, completeness, or examination coverage is guaranteed.</li>
+          <li>Practice questions are original exercises, not actual or recalled licensure questions.</li>
+        </ul>
+
+        <label class="checkbox-row" for="acknowledge-notice">
+          <input id="acknowledge-notice" type="checkbox" />
+          <span>I have read and understood the limitations above.</span>
+        </label>
+
+        <div class="action-row">
+          <a id="enter-reviewer" class="button button-primary" href="/review" aria-disabled="true">
+            Enter reviewer
+          </a>
+          <a class="button button-secondary" href="/disclaimer">Read full disclaimer</a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="important-notices">
+    <div class="container">
+      <div class="section-heading">
+        <span class="eyebrow">Version 1 boundaries</span>
+        <h2 id="important-notices">Important notices</h2>
+        <p>The first release is intentionally limited to reduce privacy, security, and maintenance risks.</p>
+      </div>
+
+      <div class="card-grid">
+        <article class="card">
+          <h3>Educational use only</h3>
+          <p>
+            Content is intended for review and practice. Always verify current examination instructions through PRC
+            and current health guidance through the appropriate Philippine authorities.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>Independent project</h3>
+          <p>
+            Agency names and official publications are referenced only as sources. Their inclusion does not imply
+            affiliation, approval, review, sponsorship, or endorsement.
+          </p>
+        </article>
+
+        <article class="card">
+          <h3>No confidential questions</h3>
+          <p>
+            The project will not publish leaked, recalled, copied, or confidential examination questions. Practice
+            items must be written originally and supported by traceable references.
+          </p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" aria-labelledby="storage-warning">
+    <div class="container">
+      <div class="notice">
+        <strong id="storage-warning">Your progress exists only in this browser</strong>
+        <p>
+          Completed topics, bookmarks, and self-recorded scores will be stored locally on this device. Clearing site
+          data or browser storage, using private browsing, reinstalling the browser, changing browsers, or moving to
+          another device may permanently reset that progress. Komadrona Review cannot recover it.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted" aria-labelledby="privacy-at-launch">
+    <div class="container hero-grid">
+      <div class="section-heading">
+        <span class="eyebrow">Privacy at launch</span>
+        <h2 id="privacy-at-launch">Minimal by design</h2>
+        <p>
+          Version 1 has no accounts, no first-party analytics, no advertising trackers, and no server-side learner
+          profile. Google Forms quizzes open as clearly labeled external services.
+        </p>
+        <a href="/privacy">Read the privacy notice</a>
+      </div>
+
+      <ul class="status-list" aria-label="Privacy design choices">
+        <li>No names requested by the website</li>
+        <li>No email address required by the website</li>
+        <li>No screenshot or score submission</li>
+        <li>No automatic cross-device syncing</li>
+      </ul>
+    </div>
+  </section>
+
+  <script>
+    const acknowledgmentKey = 'komadrona:v1:notice-acknowledged';
+    const checkbox = document.querySelector('#acknowledge-notice');
+    const enterLink = document.querySelector('#enter-reviewer');
+
+    if (checkbox instanceof HTMLInputElement && enterLink instanceof HTMLAnchorElement) {
+      const previouslyAcknowledged = localStorage.getItem(acknowledgmentKey) === 'true';
+      checkbox.checked = previouslyAcknowledged;
+
+      const updateAccess = () => {
+        const enabled = checkbox.checked;
+        enterLink.setAttribute('aria-disabled', enabled ? 'false' : 'true');
+        enterLink.tabIndex = enabled ? 0 : -1;
+      };
+
+      checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+          localStorage.setItem(acknowledgmentKey, 'true');
+        } else {
+          localStorage.removeItem(acknowledgmentKey);
+        }
+        updateAccess();
+      });
+
+      enterLink.addEventListener('click', (event) => {
+        if (!checkbox.checked) event.preventDefault();
+      });
+
+      updateAccess();
+    }
+  </script>
+</BaseLayout>

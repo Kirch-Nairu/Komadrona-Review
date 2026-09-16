@@ -1,0 +1,98 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { examBlueprint } from '../../data/examBlueprint';
+
+const domainDescriptions: Record<string, string> = {
+  Obstetrics:
+    'Pregnancy, labor, childbirth, postpartum care, maternal complications, gynecology, family planning, and related sciences.',
+  'Fundamentals of Health Care':
+    'Core prenatal, labor, delivery, postpartum, safety, procedural, and foundational health-care competencies.',
+  'Infant Care and Feeding':
+    'Immediate newborn care, infant assessment, feeding, nutrition, growth, prevention, and illness recognition.',
+  'Primary Health Care':
+    'Community assessment, maternal and child programs, home visits, epidemiology, prevention, and disease control.',
+  'Professional Growth and Development':
+    'Law, ethics, professional responsibility, personality development, employment practice, and current issues.'
+};
+---
+
+<BaseLayout
+  title="Review Domains"
+  description="The five principal review domains and their official-weight study priorities used by Komadrona Review."
+>
+  <header class="page-header">
+    <div class="container">
+      <span class="eyebrow">Version 1 study map</span>
+      <h1>Review by subject, then follow the strongest official priorities.</h1>
+      <p>
+        The five principal subjects follow the revised April 2026 PRC examination program. Topic priority is informed
+        by the PRC Midwifery Table of Specifications, while current laws and clinical guidance control the actual
+        content.
+      </p>
+      <div class="action-row">
+        <a class="button button-primary" href="/exam-blueprint">Open the examination blueprint</a>
+        <a class="button button-secondary" href="/sources">Review the source register</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" style="padding-top: 1rem;">
+    <div class="container">
+      <div class="notice">
+        <strong>Weights are priorities, not predictions</strong>
+        <p>
+          A higher official percentage tells us where the reviewer should provide deeper coverage. It does not
+          guarantee a specific future question, and it does not replace current PRC announcements or updated clinical
+          guidance.
+        </p>
+      </div>
+
+      <div class="card-grid" style="margin-top: 1.5rem;">
+        {examBlueprint.map((domain, index) => {
+          const strongestArea = [...domain.areas]
+            .filter((area) => area.releasePriority !== 'Pending verification')
+            .sort((a, b) => b.weightPercent - a.weightPercent)[0];
+
+          return (
+            <article class="card">
+              <div class="badge-row" style="margin-top: 0;">
+                <span class="badge">Domain {index + 1}</span>
+                <span class="badge">{domain.transcriptionCoveragePercent}% transcribed</span>
+              </div>
+              <h2 style="font-size: 1.55rem; margin-top: 1rem;">{domain.title}</h2>
+              <p>{domainDescriptions[domain.title]}</p>
+              {strongestArea && (
+                <p>
+                  <strong>Strongest current priority:</strong> {strongestArea.label} ({strongestArea.weightPercent}%)
+                </p>
+              )}
+              <a href={`/exam-blueprint#${domain.id}`}>View weights and topic plan</a>
+            </article>
+          );
+        })}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-muted">
+    <div class="container prose" style="padding-bottom: 0;">
+      <h2>Integrated supporting disciplines</h2>
+      <p>
+        The referenced PRC program states that fundamentals of sociology, principles of bacteriology, general anatomy
+        and physiology, general psychology, nutrition, parasitology, microbiology, and pharmacology are integrated
+        with the principal examination subjects.
+      </p>
+      <p>
+        Komadrona Review will attach those disciplines to the clinical or professional topics where they are needed,
+        rather than creating isolated memorization sections with no practical context.
+      </p>
+
+      <h2>Current publication status</h2>
+      <p>
+        The weighted map is now implemented. Full reviewer articles are still pending source attachment and content
+        review. The first planned module is prenatal assessment and health teaching because prenatal, labor, and
+        postpartum care receive the strongest explicit emphasis within Obstetrics.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
