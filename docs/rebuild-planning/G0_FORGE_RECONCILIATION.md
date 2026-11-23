@@ -48,3 +48,13 @@ State: **G0 IN PROGRESS — planning documents only; no rebuild code authorizati
 ## Stop / non-goals
 
 Do not copy old implementation code, merge, deploy, publish clinical claims, mark missing files as present, simulate external reviewers, or self-approve the PRD.
+
+## G0 continuation — logical content/publication contract, 23 November 2026
+
+**Work completed (proposal, not product acceptance):** `KOM-G0-CONTENT-CONTRACT-R1` is drafted in [G0 Content, Evidence & Publication Contract](G0_CONTENT_PUBLICATION_CONTRACT.md). It specifies source-document versions, exact locators, claim evidence, versioned competency alignment, lesson/question provenance, verification decisions, release manifests, corrections/withdrawals, and 12 prospective acceptance cases.
+
+**Notion research graph:** [Komadrona Review — Research & Forge Knowledge Graph](https://app.notion.com/p/42129cbe9a938113b933eb003f57ff52), with [Notion G0 contract companion](https://app.notion.com/p/42129cbe9a93813ba7f0f5db6ae3cf8b). Current readback verified 49 nodes and 82 typed edges, all references valid; 10 new proposed model nodes and 27 proposed logical links were added beyond the previously seeded graph.
+
+**Authority still restricted:** OD-001 remains the sole newly approved release-breadth decision. The logical data model, editorial workflow, exact release quantities, contributor roles, CMS/stack, hosting and implementation are not owner-approved. No human clinical review, CI, runtime qualification, new rebuild source code, release, or merge occurred during this work.
+
+**G0 disposition:** `CONTRACT_DRAFTED / OWNER_REVIEW_PENDING / G0_IN_PROGRESS`. Missing JSON inventories still limit exact historical ID reconciliation. Next planning step is to reconcile contract edge cases with existing recorded research and obtain explicit acceptance of the contract before selecting implementation architecture. This addendum is a status record, not an independent acceptance.
