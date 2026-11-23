@@ -1,6 +1,6 @@
 # KOMADRONA Education Board — initial falsifiable hypothesis register
 
-**Status:** HYPOTHESES AUDITED IN R1 / PAPER REPAIRS RUN (PAPER-002 TO 005) / SYNTHESIS IN [G0_EDUCATION_BOARD_R1_SYNTHESIS.md](G0_EDUCATION_BOARD_R1_SYNTHESIS.md) / NO OWNER APPROVAL YET  
+**Status:** HYPOTHESES RE-AUDITED IN R2 / BOUNDED REMEDIATION COMPLETE / SYNTHESIS IN [G0_EDUCATION_BOARD_R2_SYNTHESIS.md](G0_EDUCATION_BOARD_R2_SYNTHESIS.md) / OWNER DECISION PENDING  
 **Date:** 23 November 2026 (Asia/Manila)  
 **Protocol:** [Research & Debate](../../.agents/skills/komadrona-education-board/references/RESEARCH_AND_DEBATE_PROTOCOL.md).  
 **Unit of test:** learner objective with exact evidence and an *original* assessment item; no clinical vignette text without a separately verified source.
