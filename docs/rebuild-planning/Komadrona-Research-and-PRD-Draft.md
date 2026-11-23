@@ -14,6 +14,18 @@ Komadrona Review will help BISU Calape midwifery students prepare for the Philip
 - **Owner Decision 001 (approved 23 November 2026):** The initial public release represents all five Midwives Licensure Examination subjects and progressively publishes verified starter lessons and original questions across them. Incomplete and unsupported areas must be labeled honestly. This approves breadth, not a numerical lesson/question quota, a particular module sequence, or a technology stack.
 - This is an open-source contribution for BISU Calape board examinees. Idea validation, demand research, and a learner pilot are not prerequisites for planning or delivery. Mandatory clinical review is not a publication requirement; documented source verification is.
 
+## Pedagogy and learning-experience readiness — NOT YET APPROVED
+
+**Owner direction, 23 November 2026:** Do not proceed to a UI/technical build merely because five subjects, a publication contract, and source materials exist. The learner's method of study, how concepts are explained, how knowledge is retrieved and revisited, how reasoning is practised, and how assessment meaning is communicated require deliberate educational design.
+
+The companion [Learning Science & Instructional Experience Concept](G0_LEARNING_EXPERIENCE_RESEARCH_CONCEPT.md) records an evidence-informed **PROPOSED** model: **Explain → Recall → Reason → Revisit → Reflect**. It cites retrieval and spaced-practice research, instructional guidance/worked examples, case-based reasoning evidence, feedback, confidence calibration and inclusive design, with applicability limitations.
+
+**Current status:** `PEDAGOGY_CONCEPT_DRAFTED / OWNER_REVIEW_PENDING / CODE_START_ON_HOLD`. None of the proposed lesson templates, study schedules, question modes, metrics, confidence prompts, user flows, accessibility targets or stack choices is owner-accepted simply because a document exists.
+
+Source verification is necessary for clinical accuracy but does not by itself make a lesson educationally sound. Accordingly, the concept proposes **separate instructional-quality criteria** (objective alignment, explanation, recall, case appropriateness, feedback, later review, accessibility, truthful scoring) to deliberate **before implementation**. This does not create a mandatory clinical reviewer, learner interview or pilot, nor change OD-001.
+
+A digital reviewer is not supervised clinical practice; question correctness and website engagement must never be represented as clinical competence or a predicted licensure passing probability.
+
 ## Research findings
 
 ### BISU Calape context
@@ -87,6 +99,12 @@ Design for mobile use and accessible reading. Offline access, accounts, cloud sy
 ## Maintenance and feedback
 
 Provide a correction route and maintain a public change history. Student feedback may inform later improvements, but interviews, pilots, and impact studies are not delivery gates. Do not claim demonstrated pass-rate improvements without supporting evidence.
+
+## Learning-concept decisions to resolve before technical implementation
+
+This is an unresolved **educational design** dimension, not a product launch authorization. Critique the linked proposed learning cycle, a paper-only sample lesson/assessment presentation, question feedback and spaced-review assumptions, health-professions reasoning boundaries, and how learner progress is interpreted. Select or revise those pedagogical choices explicitly before selecting frameworks or starting the new G1 UI branch.
+
+The [G1 materials inventory](G1_MATERIALS_AND_RESOURCES.md) remains evidence custody/readiness, **not** an approved instruction design. [GitHub Issue #5](https://github.com/Kirch-Nairu/Komadrona-Review/issues/5) is the implementation-control record and should remain **ON HOLD** pending educational concept review.
 
 ## Decisions still needed
 
