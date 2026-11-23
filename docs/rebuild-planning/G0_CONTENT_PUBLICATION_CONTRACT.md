@@ -1,10 +1,11 @@
 # Komadrona Review — G0 Content, Evidence & Publication Contract
 
-**Artifact:** `KOM-G0-CONTENT-CONTRACT-R1`  
+**Artifact:** `KOM-G0-CONTENT-CONTRACT-R2` (bounded F-01/F-02 repair of R1; original remains immutable at `463f79d1d5202bc82e7dfdf8434d87ed0c18b797`)  
 **Date:** 23 November 2026 (Asia/Manila)  
 **Disposition:** **PROPOSED / NOT OWNER-ACCEPTED**. This is a logical product and editorial contract, **not a code schema, CMS selection, application implementation, clinical review, or publishing authorization**.  
 **Authority:** OD-001 alone is approved: all five examination subjects are represented in the first public release, with verified starter lessons/questions populated progressively. See [Owner Decisions](OWNER_DECISIONS.md).  
-**Evidence baseline:** [Working PRD](Komadrona-Research-and-PRD-Draft.md), [Online Evidence Report](Komadrona-Online-Evidence-Report.md), [G0 Requirements Matrix](G0_REQUIREMENTS_TRACEABILITY.md), [G0 Reconciliation](G0_FORGE_RECONCILIATION.md).
+**Evidence baseline:** [Working PRD](Komadrona-Research-and-PRD-Draft.md), [Online Evidence Report](Komadrona-Online-Evidence-Report.md), [G0 Requirements Matrix](G0_REQUIREMENTS_TRACEABILITY.md), [G0 Reconciliation](G0_FORGE_RECONCILIATION.md).  
+**Independent R1 finding:** [Kirion-Nox F-01 / F-02 `REVISE_REQUIRED`](https://github.com/Kirch-Nairu/Komadrona-Review/issues/4#issuecomment-7100582023). This R2 revision is **NOT independently accepted** and remains a proposed contract.
 
 ## 1. Outcome, boundaries and precedence
 
@@ -54,14 +55,21 @@ VerificationDecision ─────────▶ PublicationManifest
 | **SourceDocumentVersion** | stable source ID and immutable revision ID; publisher; title; authority class; edition/date; primary URL; retrieved/check timestamps; version fingerprint/snapshot pointer if lawful; intended Philippine and topic applicability; rights/reuse assessment | An authoritative document can be historical or limited to benefits/records, not universal clinical procedure authority |
 | **SourceLocator** | stable locator ID; source-version ID; printed page and/or PDF page index; section/table/paragraph anchors; excerpt reference or concise paraphrase; scope description | A generic homepage URL is not a sufficient clinical claim citation |
 | **ClaimVersion** | claim ID and revision; exact proposed statement; kind `clinical / legal-scope / examination-alignment / curriculum / administrative`; PH context/population; explicit evidence edges; conflict status; editorial disposition | New claims begin **unverified**; evidence must support the specific statement and scope |
-| **EvidenceEdge** | claim-version ID; source-locator ID; relationship `supports / limits / contradicts / contextual-only`; support assessment; verifier and date; rationale for decision | Multiple citations do not convert a contextual-only source into direct support |
+| **EvidenceEdge** | immutable edge ID/revision (or immutable full edge snapshot); claim-version ID; source-locator + source-document version IDs; exact relationship `supports / limits / contradicts / contextual-only`; support scope and applicability; verifier/date and rationale | Changing the relationship, locator, scope or source revision creates a distinct dependency revision; a contextual-only edge never becomes direct support by citation count |
 | **LessonVersion** | stable lesson ID and revision; title; objectives; exam-subject + competency links (or explicit unknown); ordered claim-version references; authorship; source-check state; editorial state; reviewed/updated dates | No complete lesson label merely because its title is mapped or its source packet exists |
 | **QuestionVersion** | stable question ID and revision; original stem; options; exact correct response; objective/competency link; explanation of correct response **and** each distractor; supporting claim-version/evidence links; author; state | No copied protected exam items; question's correct key **and** clinical rationale must both be independently supported |
-| **VerificationDecision** | decision ID; item/version; outcomes for authority, currency, Philippine applicability, exact-source support, conflict resolution, and rights; named contributor/checker, date, notes | Not necessarily a licensed clinical reviewer. Label `clinically reviewed` **only if that review actually happened** |
-| **PublicationManifest** | immutable release ID/date; approved item IDs with exact versions; exposed subjects; source/competency map versions; publishing actor, decision record, rollback pointer | Learner counts and visible coverage derive only from published items in this manifest |
-| **CorrectionRecord** | report ID; item ID + version; issue class and supplied evidence; triage outcome; affected claims/questions/attempts/releases; replacement or withdrawal; dated history | Prior published/attempted versions remain traceable; corrections must not silently rewrite learner history |
+| **VerificationDecision** | immutable decision ID; exact item version; complete frozen dependency-closure reference/fingerprint (claim revisions, evidence edge IDs/revisions and support scope, source locators and source-document versions, exam map and PH applicability); outcomes for authority, currency, exact support, conflicts and rights; named checker, date, notes | A prior `verified` decision is ineligible for a changed dependency closure. Not necessarily a licensed clinical reviewer; label `clinically reviewed` only if that review happened |
+| **PublicationManifest** | immutable release ID/date; exact item versions plus the verified dependency-closure reference/fingerprint and supporting verification/editorial decision IDs; subjects; publishing actor; rollback pointer | Historical manifest membership alone cannot authorize current serving: current withdrawal/revocation status overrides all old manifests and rollbacks. Coverage counts derive only from currently eligible published items |
+| **CorrectionRecord / RevocationEvent** | report and immutable event IDs; affected exact item version; evidence/reason; dated triage outcome; dependencies and released manifests; withdrawal effective status; replacement version if any; affected learner attempts; recorded actor | Append-only revocation applies across releases and persists through rollback; history remains visible but an unsafe version is never automatically served again |
 
 **Identifier principle:** stable IDs identify a conceptual entity; versions identify the historical content that existed when a learner encountered it. Proposed example ID shapes `SRC-...`, `LOC-...`, `CLM-...`, `COMP-...`, `LES-...`, `QUE-...`, `REL-...`; do **not** replace confirmed historical IDs with guessed identifiers. The two extracted JSON inventories are still missing from planning custody.
+
+### F-01 — immutable dependency closure and approval binding (PROPOSED)
+
+A `VerificationDecision` and its subsequent `EDITORIALLY_APPROVED` decision are valid **only** for an explicitly pinned **item content version plus a reproducible immutable evidence-dependency closure**. That closure includes: exact lesson/question text (including keyed answer and every distractor rationale); linked `ClaimVersion` revisions; **all applicable evidence edge identities and revisions, including supporting, limiting, contradictory and contextual edges and their stated scope**; exact `SourceLocator` versions and parent `SourceDocumentVersion` revisions; versioned `ExamPublication`/subject/competency mapping; Philippine jurisdiction, population and professional-role applicability; and recorded rights/conflict dispositions. Closure membership and relationships must be reproducible by immutable snapshot or a canonical dependency fingerprint, with the underlying references retrievable for audit. Hashing or listing references alone does not establish source validity.
+
+**Fail closed:** duplicate, dangling, orphaned, unresolvable or cross-version references, or a mismatch between a decision's pinned closure and the actual candidate closure, make the old decision **ineligible for any new publication or rollback**. Editing, deleting, retargeting, reclassifying or substituting an evidence edge/locator/source revision, claim, answer key, rationale, applicable exam mapping or scope **cannot silently mutate an already approved version**. Such a material change creates new versioned dependencies and requires recorded source re-verification **and new editorial approval** for the affected item before a subsequent release. Unaffected items are not invalidated by unrelated source changes. An item already in an earlier immutable manifest remains historically auditable; newly discovered safety concerns are handled by the withdrawal rule below.
+
 
 ## 3. Source assessment and evidence precision (PROPOSED)
 
@@ -104,21 +112,32 @@ DRAFT
 - A withdrawn item's public page should give a safe non-deceptive withdrawal state with a correction notice and version reference, not quietly serve disputed instructions.
 - New exam publications or guideline versions trigger targeted re-verification of dependent items; a previous published version/quiz attempt retains its historical version link.
 
+### F-02 — global current-serving withdrawal precedence (PROPOSED)
+
+A withdrawal for safety, materially unsupported claims, or another documented disqualifying defect creates an **append-only authoritative revocation event** keyed to the **exact item version**, with reason, effective date and affected dependency/release references. The **current revocation state** applies to all historical and future manifests, release switches, backups, cached manifest selections, rollback and republish operations. It is not overwritten by restoring an older manifest. `SUPERSEDED` describes replacement chronology; an already superseded historical version may also become `WITHDRAWN` later.
+
+**Current-serving eligibility (logical predicate):** an item version may be served as active learning content only when it is included in the selected valid release, its exact frozen dependency closure matches an eligible verification/editorial decision, its references and source support remain valid under applicable publication rules, **and no authoritative current revocation prohibits that version**. This is a conjunctive decision: a historical release's former validity never overrides a later withdrawal. When the authoritative eligibility/revocation status for a proposed serve or rollback cannot be established, **do not activate the item**; display a safe unavailable/withdrawn state rather than the disputed instruction. Restoration of a withdrawn version by an old manifest or rollback is forbidden; any corrected return requires a distinct new content version, re-verification and explicit new editorial release approval. Immutable historical attempts and manifests stay readable as historical records with correction/withdrawal notices, **not** as authorization to answer or teach from revoked material.
+
+The future platform's handling of already downloaded, disconnected/offline copies remains **undecided**; this contract does not claim remote instantaneous deletion of inaccessible cached copies. Any serving or rollback performed by the future publisher must honor current revocations and cannot use offline staleness as authorization to republish a withdrawn item.
+
+
 ### Publication eligibility — conjunctive checks
 
 Publish an item **only if all applicable checks pass**:
 
 | Gate | Required proof | Negative case |
 |---|---|---|
-| G-P01 Identity/version | Unique item ID, immutable version, author/change record | Orphaned/duplicate IDs or silent replacement |
+| G-P01 Identity/version | Unique item ID, immutable version, author/change record, valid distinct references | Orphaned/duplicate/dangling IDs, cross-version substitution or silent replacement |
 | G-P02 Exam relation | Subject, named PRC program/TOS version and competency mapping (or clear `unmapped due to missing scan` note without claiming exact match) | Invented competency or claimed official weight from unrecoverable scan |
-| G-P03 Source support | Each substantive factual claim has at least one directly supporting current/applicable locator; any exceptions explicitly scoped (e.g. historical context) | Lesson footer link with no claim-level support |
+| G-P03 Source support and frozen dependency closure | Each substantive claim has directly applicable locators; entire item/claim/edge/locator/source/exam-map dependency closure pinned in verification and editorial decisions and rechecked for the candidate release | Generic lesson-footer link, tampered evidence relation or previously approved but stale closure |
 | G-P04 Clinical-sensitive precision | Thresholds, doses, procedural steps, referral triggers and legal scope claims have exact support and applicability | DOH form's data fields presented as full Leopold hand-placement instructions |
 | G-P05 Contradiction handling | No unresolved material conflicting source guidance touching the content being published; signed-off scoped disposition recorded | OHG folate discrepancy copied into dosage question without resolution |
 | G-P06 Question completeness | Original stem/options, single defensible keyed answer as applicable, correct-answer rationale, **every distractor's** rationale and supporting evidence | Correct option supported but distractor explanation invented |
 | G-P07 Reuse and claims | Copyright/reuse check; non-endorsement copy and clinical-review labels accurate | Copying protected test bank or implying PRC/BISU approval |
-| G-P08 Explicit publication record | Recorded source-check outcome, editorial decision, versioned release manifest and rollback/withdrawal reference | Publish triggered by mere presence of a draft or Notion row |
-| G-P09 Learner truthfulness | Counts/coverage describe only manifested published items; unavailable content shown as planned/unverified, not completed | 500 planned questions displayed as available |
+| G-P08 Explicit publication record | Recorded source-check and editorial decisions for the **exact current pinned closure**, immutable release manifest, applicable current withdrawal/rollback checks | Publish based on a draft, Notion row, or stale approval for a changed evidence graph |
+| G-P09 Learner truthfulness | Counts/coverage describe only currently eligible manifested published items; unavailable/withdrawn content shown honestly | Planned 500 questions or withdrawn historical questions counted as available |
+| G-P10 Revocation precedence | Current authoritative append-only revocation check blocks an exact withdrawn item version, independent of selected manifest/rollback; correction history retained | Revert to old release to resurrect revoked question or lesson version |
+| G-P11 Referential integrity | Source/claim/edge/locator/decision/manifest references resolve uniquely to the pinned versions and are rechecked on publication and rollback | Dangling/duplicate/cross-version reference or changed answer rationale passes old approval |
 
 A publisher's check is a **future** product behavior specified here, not a claim that such a system currently exists.
 
@@ -127,7 +146,7 @@ A publisher's check is a **future** product behavior specified here, not a claim
 - Every subject landing entry distinguishes `published`, `planned`, and `under verification` topics. OD-001 covers presence of all five subject entries, **not** a percentage of filled content.
 - Each lesson/question displays its item version, last source-checked date, relevant references and correction/report action. Expose useful readable citations without assuming copyright permits full-source republication.
 - A submitted answer/result references the **exact QuestionVersion** and, where possible, publication manifest. Never change what a historical attempt answered when a question is fixed; show a later correction notice instead.
-- A content issue captures item ID, item version, location/claim, suspected error, received time and status. Triage links to affected claims, lessons, questions and released versions; record replacement/withdrawal decisions.
+- A content issue captures item ID, item version, location/claim, suspected error, received time and status. Triage links to affected claims, lessons, questions and released versions; record replacement/withdrawal decisions. A withdrawal revokes **active serving** across all prior release manifests; historic attempts and citations are retained with correction notices, never rewritten or reactivated by rollback.
 - Releasing an updated content set must not depend on already deciding whether learner history is stored in an account, on a device, or both. The logical version contract holds for any chosen storage implementation.
 - Avoid recording real patient data; use fictional or de-identified teaching examples only under appropriately verified policies. This is a design constraint, not a retrospective claim of data protection compliance.
 
@@ -161,10 +180,16 @@ Other lessons may proceed independently when their own claim-level support is ad
 | C-06 | A question has a keyed answer but one distractor rationale lacks evidence | Question cannot publish |
 | C-07 | PRC examination program changes; published lesson still cites older program | Targeted alignment recheck; preserve older historic release record |
 | C-08 | Clinical source newer revision affects one claim | List dependent claims/questions/releases; unaffected lessons stay eligible |
-| C-09 | Released item found materially wrong | Withdraw or replace with version-linked correction; historical attempts preserved |
+| C-09 | Released item found materially wrong | Withdraw the exact affected version across all active/historical release selections; corrected version requires new checks; historical attempts preserved |
 | C-10 | Published subject has zero lessons | Clearly display empty/planned coverage; do not invent available count |
 | C-11 | Draft lesson in Notion graph is mislabeled `Verified` | Notion status alone cannot satisfy source-check and manifest gates |
 | C-12 | A clinical-review badge is requested without actual review evidence | Badge rejected; source verification label retained only if supported |
+| C-13 | After approval, change/delete/retarget a supporting edge, locator or source version, including reclassifying `supports` to `contextual-only` | Prior source-check/editorial decisions no longer match the exact closure; affected item cannot publish without new recorded verification and editorial approval |
+| C-14 | Withdraw an unsafe published question version, then roll back to a manifest previously containing it | Current global revocation blocks its serving despite valid historical manifest; keep historical attempt and show correction notice |
+| C-15 | Claim/locator reference orphaned or duplicated, or a locator targets the wrong source revision | Fail-closed reference-integrity validation; reject publication/rollback for the affected item |
+| C-16 | High-authority source offered as evidence for wrong jurisdiction, population, role or document purpose | Reject the claim under PH applicability/scope checks despite reputation of publisher |
+| C-17 | Internal non-clinical fixture included in an otherwise valid manifest | Exclude fixture from actual examination content and coverage counts; no falsely published question claim |
+| C-18 | Change lesson claim text, answer key or one distractor rationale after editorial approval without a new immutable item version | Stale decision/closure mismatch; reject publish, require version bump and renewed evidence/editorial decisions |
 
 These are acceptance **specifications**, not passing test results. No application tests, runtime behavior, publishing integration or clinical review were performed for this planning artifact.
 
@@ -176,6 +201,6 @@ These are acceptance **specifications**, not passing test results. No applicatio
 - No additional first-release numeric quota is established. No author/checker headcount, vendor, hosting pattern, or runtime choice is prescribed.
 - Two referenced source packets remain unavailable to this G0 working copy: `Komadrona-Content-Inventory.json` and `Komadrona-Source-Packets-and-Gaps.json`. Exact inherited module/competency ID crosswalk is therefore **NOT VERIFIED**.
 
-**G0 disposition:** CONTRACT_DRAFTED / REVIEW_PENDING. This file is a proposed logical and publication contract. **Next permitted work:** connect it to the Notion graph as `Proposed`, inspect for contradictions with verified G0 source records, and request explicit owner acceptance only when the requirements are ready. It is **not** permission to implement, merge, release, or self-accept.
+**G0 disposition:** R2_BOUNDED_REWORK / INDEPENDENT_REREVIEW_PENDING / OWNER_ACCEPTANCE_PENDING. This file is a **proposed** logical publication contract amended after Nox R1 review F-01/F-02. **Next permitted work:** record the new exact-SHA evidence, request a fresh independent Nox read-only review, and seek explicit owner acceptance only after review disposition is resolved. The 2013 TOS scan gaps and two missing legacy inventories remain unresolved but do not inherently block review of this logical contract. This is **not** permission to implement, merge, release or self-accept.
 
 **GitHub source path:** `docs/rebuild-planning/G0_CONTENT_PUBLICATION_CONTRACT.md`.
