@@ -1,6 +1,6 @@
 # KOMADRONA — 12-matrix educational and board-experience research register
 
-**Status:** PROPOSED RESEARCH COVERAGE / NOT OWNER-ACCEPTED  
+**Status:** R1 DELIBERATIONS CONCLUDED / SYNTHESIS IN [G0_EDUCATION_BOARD_R1_SYNTHESIS.md](G0_EDUCATION_BOARD_R1_SYNTHESIS.md) / NOT OWNER-ACCEPTED  
 **Branch:** research/komadrona-education-board-r1  
 **Scope:** Connected planning questions, **not** 12 individually binding approvals.
 
